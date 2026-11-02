@@ -1,0 +1,824 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * The Pack Music Co-operative — design system.
+ * Colours, gradations and gradients come from The Pack Style Guide V3.
+ * Never hardcode colour utilities in components; use these tokens.
+ */
+
+@theme inline {
+  --radius-sm: 0.75rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2rem;
+  --radius-2xl: 2.5rem;
+  --radius-3xl: 3rem;
+  --radius-4xl: 4rem;
+
+
+  /* Headline: rounded quirky (Gothiks Round substitute). Body: Inter Variable. */
+  --font-display: "Fredoka", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, SFMono-Regular, monospace;
+
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Brand base */
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-cream: var(--cream);
+  --color-peach: var(--peach);
+  --color-electric: var(--electric);
+  --color-ember: var(--ember);
+  --color-cyan: var(--cyan);
+  --color-pink: var(--pink);
+  --color-magenta: var(--magenta);
+  --color-green: var(--green);
+  --color-yellow: var(--yellow);
+
+  /* Legacy aliases kept so existing components stay on brand */
+  --color-acid: var(--yellow);
+  --color-sun: var(--yellow);
+  --color-lime: var(--green);
+  --color-hot: var(--pink);
+  --color-sand: var(--peach);
+  --color-electric-deep: var(--electric-800);
+
+  /* Gradations — electric blue */
+  --color-electric-100: var(--electric-100);
+  --color-electric-200: var(--electric-200);
+  --color-electric-300: var(--electric-300);
+  --color-electric-400: var(--electric-400);
+  --color-electric-600: var(--electric-600);
+  --color-electric-700: var(--electric-700);
+  --color-electric-800: var(--electric-800);
+  --color-electric-900: var(--electric-900);
+
+  /* Gradations — ember orange */
+  --color-ember-100: var(--ember-100);
+  --color-ember-200: var(--ember-200);
+  --color-ember-300: var(--ember-300);
+  --color-ember-400: var(--ember-400);
+  --color-ember-600: var(--ember-600);
+  --color-ember-700: var(--ember-700);
+  --color-ember-800: var(--ember-800);
+  --color-ember-900: var(--ember-900);
+
+  /* Gradations — cyan */
+  --color-cyan-100: var(--cyan-100);
+  --color-cyan-200: var(--cyan-200);
+  --color-cyan-300: var(--cyan-300);
+  --color-cyan-400: var(--cyan-400);
+  --color-cyan-600: var(--cyan-600);
+  --color-cyan-700: var(--cyan-700);
+  --color-cyan-800: var(--cyan-800);
+  --color-cyan-900: var(--cyan-900);
+
+  /* Gradations — pink */
+  --color-pink-100: var(--pink-100);
+  --color-pink-200: var(--pink-200);
+  --color-pink-300: var(--pink-300);
+  --color-pink-400: var(--pink-400);
+  --color-pink-600: var(--pink-600);
+  --color-pink-700: var(--pink-700);
+  --color-pink-800: var(--pink-800);
+  --color-pink-900: var(--pink-900);
+
+  /* Gradations — magenta */
+  --color-magenta-100: var(--magenta-100);
+  --color-magenta-200: var(--magenta-200);
+  --color-magenta-300: var(--magenta-300);
+  --color-magenta-400: var(--magenta-400);
+  --color-magenta-600: var(--magenta-600);
+  --color-magenta-700: var(--magenta-700);
+  --color-magenta-800: var(--magenta-800);
+  --color-magenta-900: var(--magenta-900);
+
+  /* Gradations — green */
+  --color-green-100: var(--green-100);
+  --color-green-200: var(--green-200);
+  --color-green-300: var(--green-300);
+  --color-green-400: var(--green-400);
+  --color-green-600: var(--green-600);
+  --color-green-700: var(--green-700);
+  --color-green-800: var(--green-800);
+  --color-green-900: var(--green-900);
+
+  /* Gradations — yellow */
+  --color-yellow-100: var(--yellow-100);
+  --color-yellow-200: var(--yellow-200);
+  --color-yellow-300: var(--yellow-300);
+  --color-yellow-400: var(--yellow-400);
+  --color-yellow-600: var(--yellow-600);
+  --color-yellow-700: var(--yellow-700);
+  --color-yellow-800: var(--yellow-800);
+  --color-yellow-900: var(--yellow-900);
+
+  /* Gradations — peach */
+  --color-peach-100: var(--peach-100);
+  --color-peach-200: var(--peach-200);
+  --color-peach-300: var(--peach-300);
+  --color-peach-600: var(--peach-600);
+  --color-peach-700: var(--peach-700);
+}
+
+:root {
+  --radius: 1.5rem;
+
+  /* Organic torn-paper masks (fractal-noise displaced edges) */
+  --torn-mask-top: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200' preserveAspectRatio='none'%3E%3Cfilter id='f' x='-30%' y='-30%' width='160%' height='160%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.014 0.42' numOctaves='4' seed='11' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='16' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='-30' y='14' width='460' height='260' fill='white' filter='url(%23f)'/%3E%3C/svg%3E");
+  --torn-mask-both: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 200' preserveAspectRatio='none'%3E%3Cfilter id='f' x='-30%' y='-30%' width='160%' height='160%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.014 0.42' numOctaves='4' seed='5' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='16' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='-30' y='14' width='460' height='172' fill='white' filter='url(%23f)'/%3E%3C/svg%3E");
+  --torn-mask-tape: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 48' preserveAspectRatio='none'%3E%3Cfilter id='f' x='-30%' y='-30%' width='160%' height='160%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.03 0.55' numOctaves='4' seed='3' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='9' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='-10' y='7' width='320' height='34' fill='white' filter='url(%23f)'/%3E%3C/svg%3E");
+  --torn-mask-tape-alt: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 48' preserveAspectRatio='none'%3E%3Cfilter id='f' x='-30%' y='-30%' width='160%' height='160%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.03 0.55' numOctaves='4' seed='17' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='9' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='-10' y='7' width='320' height='34' fill='white' filter='url(%23f)'/%3E%3C/svg%3E");
+  --torn-mask-label: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 64' preserveAspectRatio='none'%3E%3Cfilter id='f' x='-30%' y='-30%' width='160%' height='160%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.05 0.45' numOctaves='4' seed='23' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='11' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='5' y='5' width='230' height='54' fill='white' filter='url(%23f)'/%3E%3C/svg%3E");
+  --torn-mask-panel: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300' preserveAspectRatio='none'%3E%3Cfilter id='f' x='-30%' y='-30%' width='160%' height='160%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.03 0.05' numOctaves='4' seed='7' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='15' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='11' y='11' width='378' height='278' fill='white' filter='url(%23f)'/%3E%3C/svg%3E");
+  --torn-mask-panel-b: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300' preserveAspectRatio='none'%3E%3Cfilter id='f' x='-30%' y='-30%' width='160%' height='160%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.028 0.055' numOctaves='4' seed='31' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='15' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='11' y='11' width='378' height='278' fill='white' filter='url(%23f)'/%3E%3C/svg%3E");
+  --torn-mask-panel-b-mid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300' preserveAspectRatio='none'%3E%3Cfilter id='f' x='-30%' y='-30%' width='160%' height='160%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.028 0.055' numOctaves='4' seed='31' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='15' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='11' y='-24' width='378' height='348' fill='white' filter='url(%23f)'/%3E%3C/svg%3E");
+  --torn-mask-panel-c: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300' preserveAspectRatio='none'%3E%3Cfilter id='f' x='-30%' y='-30%' width='160%' height='160%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.033 0.048' numOctaves='4' seed='47' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='15' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='11' y='11' width='378' height='278' fill='white' filter='url(%23f)'/%3E%3C/svg%3E");
+  --torn-mask-panel-mid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300' preserveAspectRatio='none'%3E%3Cfilter id='f' x='-30%' y='-30%' width='160%' height='160%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.03 0.05' numOctaves='4' seed='7' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='15' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='11' y='-24' width='378' height='348' fill='white' filter='url(%23f)'/%3E%3C/svg%3E");
+  --torn-mask-panel-c-mid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300' preserveAspectRatio='none'%3E%3Cfilter id='f' x='-30%' y='-30%' width='160%' height='160%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.033 0.048' numOctaves='4' seed='47' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='15' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='11' y='-24' width='378' height='348' fill='white' filter='url(%23f)'/%3E%3C/svg%3E");
+  --torn-mask-frame: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 320' preserveAspectRatio='none'%3E%3Cfilter id='f' x='-30%' y='-30%' width='160%' height='160%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.035 0.045' numOctaves='4' seed='13' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='13' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='10' y='10' width='380' height='300' fill='white' filter='url(%23f)'/%3E%3C/svg%3E");
+  --torn-mask-frame-b: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 320' preserveAspectRatio='none'%3E%3Cfilter id='f' x='-30%' y='-30%' width='160%' height='160%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04 0.05' numOctaves='4' seed='53' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='13' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='10' y='10' width='380' height='300' fill='white' filter='url(%23f)'/%3E%3C/svg%3E");
+  --torn-mask-disc: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cfilter id='f' x='-30%' y='-30%' width='160%' height='160%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.055' numOctaves='5' seed='19' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='22' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Ccircle cx='200' cy='200' r='180' fill='white' filter='url(%23f)'/%3E%3C/svg%3E");
+
+
+  /* Style guide primaries + secondaries */
+  --ink: #000000;
+  --paper: #f7f0e2;
+  --tape: #cfc3a4;
+  --electric: #0014ff;
+  --ember: #ef4623;
+  --cyan: #74f0ee;
+  --pink: #ff005b;
+  --magenta: #ff2cdf;
+  --green: #00ff5b;
+  --yellow: #ffe53b;
+  --peach: #fdd8a3;
+  --cream: #fff6ea;
+
+  /* Gradations: tints toward paper, shades toward ink */
+  --electric-100: color-mix(in oklab, var(--electric) 12%, var(--paper));
+  --electric-200: color-mix(in oklab, var(--electric) 25%, var(--paper));
+  --electric-300: color-mix(in oklab, var(--electric) 45%, var(--paper));
+  --electric-400: color-mix(in oklab, var(--electric) 70%, var(--paper));
+  --electric-600: color-mix(in oklab, var(--electric) 85%, var(--ink));
+  --electric-700: color-mix(in oklab, var(--electric) 70%, var(--ink));
+  --electric-800: color-mix(in oklab, var(--electric) 50%, var(--ink));
+  --electric-900: color-mix(in oklab, var(--electric) 32%, var(--ink));
+
+  --ember-100: color-mix(in oklab, var(--ember) 12%, var(--paper));
+  --ember-200: color-mix(in oklab, var(--ember) 25%, var(--paper));
+  --ember-300: color-mix(in oklab, var(--ember) 45%, var(--paper));
+  --ember-400: color-mix(in oklab, var(--ember) 70%, var(--paper));
+  --ember-600: color-mix(in oklab, var(--ember) 85%, var(--ink));
+  --ember-700: color-mix(in oklab, var(--ember) 70%, var(--ink));
+  --ember-800: color-mix(in oklab, var(--ember) 50%, var(--ink));
+  --ember-900: color-mix(in oklab, var(--ember) 32%, var(--ink));
+
+  --cyan-100: color-mix(in oklab, var(--cyan) 12%, var(--paper));
+  --cyan-200: color-mix(in oklab, var(--cyan) 25%, var(--paper));
+  --cyan-300: color-mix(in oklab, var(--cyan) 45%, var(--paper));
+  --cyan-400: color-mix(in oklab, var(--cyan) 70%, var(--paper));
+  --cyan-600: color-mix(in oklab, var(--cyan) 85%, var(--ink));
+  --cyan-700: color-mix(in oklab, var(--cyan) 70%, var(--ink));
+  --cyan-800: color-mix(in oklab, var(--cyan) 50%, var(--ink));
+  --cyan-900: color-mix(in oklab, var(--cyan) 32%, var(--ink));
+
+  --pink-100: color-mix(in oklab, var(--pink) 12%, var(--paper));
+  --pink-200: color-mix(in oklab, var(--pink) 25%, var(--paper));
+  --pink-300: color-mix(in oklab, var(--pink) 45%, var(--paper));
+  --pink-400: color-mix(in oklab, var(--pink) 70%, var(--paper));
+  --pink-600: color-mix(in oklab, var(--pink) 85%, var(--ink));
+  --pink-700: color-mix(in oklab, var(--pink) 70%, var(--ink));
+  --pink-800: color-mix(in oklab, var(--pink) 50%, var(--ink));
+  --pink-900: color-mix(in oklab, var(--pink) 32%, var(--ink));
+
+  --magenta-100: color-mix(in oklab, var(--magenta) 12%, var(--paper));
+  --magenta-200: color-mix(in oklab, var(--magenta) 25%, var(--paper));
+  --magenta-300: color-mix(in oklab, var(--magenta) 45%, var(--paper));
+  --magenta-400: color-mix(in oklab, var(--magenta) 70%, var(--paper));
+  --magenta-600: color-mix(in oklab, var(--magenta) 85%, var(--ink));
+  --magenta-700: color-mix(in oklab, var(--magenta) 70%, var(--ink));
+  --magenta-800: color-mix(in oklab, var(--magenta) 50%, var(--ink));
+  --magenta-900: color-mix(in oklab, var(--magenta) 32%, var(--ink));
+
+  --green-100: color-mix(in oklab, var(--green) 12%, var(--paper));
+  --green-200: color-mix(in oklab, var(--green) 25%, var(--paper));
+  --green-300: color-mix(in oklab, var(--green) 45%, var(--paper));
+  --green-400: color-mix(in oklab, var(--green) 70%, var(--paper));
+  --green-600: color-mix(in oklab, var(--green) 85%, var(--ink));
+  --green-700: color-mix(in oklab, var(--green) 70%, var(--ink));
+  --green-800: color-mix(in oklab, var(--green) 50%, var(--ink));
+  --green-900: color-mix(in oklab, var(--green) 32%, var(--ink));
+
+  --yellow-100: color-mix(in oklab, var(--yellow) 12%, var(--paper));
+  --yellow-200: color-mix(in oklab, var(--yellow) 25%, var(--paper));
+  --yellow-300: color-mix(in oklab, var(--yellow) 45%, var(--paper));
+  --yellow-400: color-mix(in oklab, var(--yellow) 70%, var(--paper));
+  --yellow-600: color-mix(in oklab, var(--yellow) 85%, var(--ink));
+  --yellow-700: color-mix(in oklab, var(--yellow) 70%, var(--ink));
+  --yellow-800: color-mix(in oklab, var(--yellow) 50%, var(--ink));
+  --yellow-900: color-mix(in oklab, var(--yellow) 32%, var(--ink));
+
+  --peach-100: color-mix(in oklab, var(--peach) 30%, var(--paper));
+  --peach-200: color-mix(in oklab, var(--peach) 55%, var(--paper));
+  --peach-300: color-mix(in oklab, var(--peach) 78%, var(--paper));
+  --peach-600: color-mix(in oklab, var(--peach) 85%, var(--ember));
+  --peach-700: color-mix(in oklab, var(--peach) 60%, var(--ember));
+
+  /* Style guide gradients */
+  --gradient-blue-magenta: linear-gradient(135deg, var(--electric), var(--magenta));
+  --gradient-green-blue: linear-gradient(135deg, var(--green), var(--electric));
+  --gradient-orange-yellow: linear-gradient(135deg, var(--ember), var(--yellow));
+  --gradient-yellow-cyan: linear-gradient(135deg, var(--yellow), var(--cyan));
+  --gradient-pink-orange: linear-gradient(135deg, var(--pink), var(--ember));
+  --gradient-pink-peach: linear-gradient(135deg, var(--pink), var(--peach));
+
+  --background: var(--cream);
+  --foreground: var(--ink);
+  --card: var(--paper);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--electric);
+  --primary-foreground: var(--paper);
+  --secondary: var(--peach);
+  --secondary-foreground: var(--ink);
+  --muted: var(--peach-100);
+  --muted-foreground: color-mix(in oklab, var(--ink) 62%, var(--paper));
+  --accent: var(--ember);
+  --accent-foreground: var(--paper);
+  --destructive: var(--pink);
+  --destructive-foreground: var(--paper);
+  --border: var(--ink);
+  --input: var(--ink);
+  --ring: var(--electric);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+    text-wrap: balance;
+    filter: url(#rough-text);
+  }
+
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.16;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    background: var(--color-yellow);
+    color: var(--color-ink);
+  }
+}
+
+/* Soft brand card — rounded, borderless, gentle depth. */
+@utility soft-card {
+  border-radius: 2rem;
+  box-shadow: 0 18px 40px -24px color-mix(in oklab, var(--ink) 55%, transparent);
+}
+
+@utility soft-card-sm {
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 24px -18px color-mix(in oklab, var(--ink) 55%, transparent);
+}
+
+/* Cut-out photography: thick white sticker outline. */
+@utility sticker {
+  border-radius: 2rem;
+  border: 10px solid var(--paper);
+  box-shadow: 0 24px 50px -28px color-mix(in oklab, var(--ink) 70%, transparent);
+}
+
+@utility sticker-cutout {
+  filter: drop-shadow(2px 0 0 var(--paper)) drop-shadow(-2px 0 0 var(--paper))
+    drop-shadow(0 2px 0 var(--paper)) drop-shadow(0 -2px 0 var(--paper))
+    drop-shadow(0 16px 20px rgba(0, 0, 0, 0.25));
+}
+
+/* Hand-drawn, blobby speech-bubble callout with a bubbly tail pointing left. */
+@utility bubble {
+  position: relative;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  /* uneven, organic corners rather than a uniform rounded rect */
+  border-radius: 2.6rem 2.2rem 2.8rem 2.4rem / 2.2rem 2.9rem 2.1rem 2.7rem;
+  box-shadow:
+    0 3px 0 0 color-mix(in oklab, var(--color-ink) 85%, transparent),
+    0 22px 44px -26px rgba(0, 0, 0, 0.8);
+  &::before {
+    content: "";
+    position: absolute;
+    left: -0.6rem;
+    top: 38%;
+    width: 1.15rem;
+    height: 1rem;
+    background: var(--color-paper);
+    border-radius: 60% 40% 55% 45% / 55% 45% 60% 40%;
+    transform: rotate(-12deg);
+    box-shadow:
+      -0.75rem 0.85rem 0 -0.35rem var(--color-paper),
+      0 3px 0 0 color-mix(in oklab, var(--color-ink) 85%, transparent);
+  }
+}
+
+
+
+/* Halftone dot field, layered over gradients. */
+@utility halftone {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image: radial-gradient(
+      color-mix(in oklab, var(--paper) 55%, transparent) 1.6px,
+      transparent 1.7px
+    );
+    background-size: 12px 12px;
+    -webkit-mask-image: radial-gradient(120% 90% at 15% 100%, #000 0%, transparent 68%);
+    mask-image: radial-gradient(120% 90% at 15% 100%, #000 0%, transparent 68%);
+  }
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+@utility halftone-ink {
+  &::before {
+    background-image: radial-gradient(
+      color-mix(in oklab, var(--ink) 30%, transparent) 1.6px,
+      transparent 1.7px
+    );
+  }
+}
+
+@utility press {
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px -16px color-mix(in oklab, var(--ink) 60%, transparent);
+  }
+}
+
+
+/* Style guide gradation fields */
+@utility grad-blue-magenta {
+  background-image: var(--gradient-blue-magenta);
+}
+@utility grad-green-blue {
+  background-image: var(--gradient-green-blue);
+}
+@utility grad-orange-yellow {
+  background-image: var(--gradient-orange-yellow);
+}
+@utility grad-yellow-cyan {
+  background-image: var(--gradient-yellow-cyan);
+}
+@utility grad-pink-orange {
+  background-image: var(--gradient-pink-orange);
+}
+@utility grad-pink-peach {
+  background-image: var(--gradient-pink-peach);
+}
+
+@utility grad-text {
+  background-image: var(--gradient-blue-magenta);
+  background-clip: text;
+  color: transparent;
+}
+
+@utility marquee-track {
+  display: inline-flex;
+  min-width: 200%;
+  animation: pack-marquee 28s linear infinite;
+}
+
+@keyframes pack-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+@utility grad-cyan-green-yellow {
+  background-image: linear-gradient(120deg, var(--cyan), var(--green) 48%, var(--yellow));
+}
+
+@utility grad-deep-blue {
+  background-image: linear-gradient(160deg, var(--electric-800), var(--electric) 60%, var(--magenta-700));
+}
+
+/* ---------------------------------------------------------------
+   Wave particle field — smaller, fully coloured dots layered over
+   full-page gradients. Uses CSS-generated dots instead of an image
+   so the dots stay crisp and filled at any size.
+---------------------------------------------------------------- */
+@utility wave-field {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image: url("./assets/wave-dots-paper.svg");
+    background-size: 1600px 1000px;
+    background-repeat: repeat;
+    background-position: center top;
+    opacity: 0.55;
+
+  }
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+@utility wave-field-ink {
+  &::before {
+    background-image: url("./assets/wave-dots-ink.svg");
+    opacity: 0.22;
+  }
+}
+
+
+
+
+/* ---------------------------------------------------------------
+   DIY / zine kit — photocopied flyer energy.
+---------------------------------------------------------------- */
+/* Hand-torn paper panel: the paper itself lives on a masked layer behind the
+   content, so the drop shadow follows the torn silhouette and text is never
+   clipped by the mask. */
+@utility zine {
+  /* Tiled tear pattern: the bite depth stays constant no matter how tall the
+     card is. Top and bottom strips carry the torn end edges; the middle strip
+     repeats seamlessly for ragged sides along the full height. */
+  --zine-mask: var(--torn-mask-panel);
+  --zine-mask-mid: var(--torn-mask-panel-mid);
+  position: relative;
+  isolation: isolate;
+  background: transparent;
+  color: var(--color-ink);
+  border-radius: 0;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -1.1rem -1.4rem;
+    z-index: -1;
+    background: var(--color-paper);
+    -webkit-mask-image: var(--zine-mask), var(--zine-mask), var(--zine-mask-mid);
+    mask-image: var(--zine-mask), var(--zine-mask), var(--zine-mask-mid);
+    -webkit-mask-size: 100% 640px, 100% 640px, 100% 640px;
+    mask-size: 100% 640px, 100% 640px, 100% 640px;
+    -webkit-mask-position: top, bottom, 0 0;
+    mask-position: top, bottom, 0 0;
+    -webkit-mask-repeat: no-repeat, no-repeat, repeat-y;
+    mask-repeat: no-repeat, no-repeat, repeat-y;
+    filter: drop-shadow(4px 5px 0 color-mix(in oklab, var(--color-ink) 82%, transparent))
+      drop-shadow(0 18px 26px rgba(0, 0, 0, 0.4));
+  }
+}
+
+/* Alternate tear patterns so no two panels are torn identically. */
+@utility zine-b {
+  --zine-mask: var(--torn-mask-panel-b);
+  --zine-mask-mid: var(--torn-mask-panel-b-mid);
+}
+
+@utility zine-c {
+  --zine-mask: var(--torn-mask-panel-c);
+  --zine-mask-mid: var(--torn-mask-panel-c-mid);
+}
+
+/* Torn paper mount for photographs — the picture sits on ripped paper. */
+@utility torn-frame {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -0.3rem;
+    z-index: -1;
+    background: var(--color-paper);
+    -webkit-mask-image: var(--torn-mask-frame);
+    mask-image: var(--torn-mask-frame);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    filter: drop-shadow(5px 6px 0 color-mix(in oklab, var(--color-ink) 82%, transparent))
+      drop-shadow(0 22px 34px rgba(0, 0, 0, 0.45));
+  }
+}
+
+@utility torn-frame-b {
+  &::before {
+    -webkit-mask-image: var(--torn-mask-frame-b);
+    mask-image: var(--torn-mask-frame-b);
+  }
+}
+
+/* Round torn-paper mount for portraits — a rough-edged paper disc.
+   The shadow lives on the element itself: a mask on the same box would
+   clip the drop-shadow away, so it is applied after the group renders. */
+@utility torn-disc {
+  position: relative;
+  isolation: isolate;
+  filter: drop-shadow(5px 6px 0 color-mix(in oklab, var(--color-ink) 82%, transparent))
+    drop-shadow(0 22px 34px rgba(0, 0, 0, 0.45));
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -0.75rem;
+    z-index: -1;
+    background: color-mix(in oklab, var(--color-peach) 62%, var(--color-paper));
+    -webkit-mask-image: var(--torn-mask-disc);
+    mask-image: var(--torn-mask-disc);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+}
+
+
+@utility grain {
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: 0.22;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  }
+}
+
+/* Strip of masking tape across the top edge. */
+@utility tape {
+  &::before {
+    content: "";
+    position: absolute;
+    top: -0.75rem;
+    left: 1.75rem;
+    width: 6.5rem;
+    height: 1.5rem;
+    rotate: -4deg;
+    background: color-mix(in oklab, var(--tape) 80%, transparent);
+    opacity: 0.85;
+    mix-blend-mode: multiply;
+    -webkit-mask-image: var(--torn-mask-tape);
+    mask-image: var(--torn-mask-tape);
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+}
+
+@utility tape-r {
+  &::before {
+    left: auto;
+    right: 1.75rem;
+    rotate: 5deg;
+    -webkit-mask-image: var(--torn-mask-tape-alt);
+    mask-image: var(--torn-mask-tape-alt);
+  }
+}
+
+
+@utility tilt-l {
+  rotate: -1.4deg;
+}
+
+@utility tilt-r {
+  rotate: 1.4deg;
+}
+
+/* Rubber-stamp / cut-out label. */
+@utility stamp {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  border: 2px dashed currentColor;
+  border-radius: 0.35rem;
+}
+
+@utility mono-kicker {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.7rem;
+}
+
+
+/* Photocopied black block — knocked-out text. */
+@utility xerox {
+  background: var(--color-ink);
+  color: var(--color-paper);
+  border-radius: 0.3rem;
+}
+
+
+
+
+/* Standalone torn masking-tape strip. */
+@utility tape-strip {
+  background: color-mix(in oklab, var(--tape) 80%, transparent);
+  opacity: 0.85;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: var(--torn-mask-tape);
+  mask-image: var(--torn-mask-tape);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* ---------------------------------------------------------------
+   Cut-and-paste collage kit — torn paper, checkers, ransom labels.
+---------------------------------------------------------------- */
+
+/* Torn paper edge along the top of a panel. */
+@utility torn-top {
+  -webkit-mask-image: var(--torn-mask-top);
+  mask-image: var(--torn-mask-top);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* Torn paper edge on both top and bottom. */
+@utility torn-edge {
+  -webkit-mask-image: var(--torn-mask-both);
+  mask-image: var(--torn-mask-both);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* Photocopied checkerboard accent strip. */
+@utility checker-strip {
+  background-image:
+    linear-gradient(45deg, currentColor 25%, transparent 25%, transparent 75%, currentColor 75%),
+    linear-gradient(45deg, currentColor 25%, transparent 25%, transparent 75%, currentColor 75%);
+  background-size: 18px 18px;
+  background-position: 0 0, 9px 9px;
+  opacity: 0.85;
+}
+
+/* Cut-out "ransom note" label. */
+@utility cutout-label {
+  display: inline-block;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.68rem;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  padding: 0.35rem 0.8rem;
+  -webkit-mask-image: var(--torn-mask-label);
+  mask-image: var(--torn-mask-label);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+
+}
+
+/* Photocopied photograph: crushed contrast, warm paper tint. */
+@utility xerox-photo {
+  filter: grayscale(0.35) contrast(1.32) brightness(1.04) sepia(0.22) saturate(1.05);
+}
+
+/* Hard offset cut-out shadow used on pasted photos. */
+@utility paste-shadow {
+  box-shadow:
+    5px 6px 0 0 color-mix(in oklab, var(--color-ink) 82%, transparent),
+    0 26px 46px -28px rgba(0, 0, 0, 0.85);
+}
+
+/* ---------------------------------------------------------------
+   Disclosure folds — depth on demand, zine style.
+---------------------------------------------------------------- */
+.fold > summary::-webkit-details-marker {
+  display: none;
+}
+
+.fold > summary {
+  transition: background-color 120ms ease;
+}
+
+.fold > summary:hover {
+  background: color-mix(in oklab, var(--color-ink) 5%, transparent);
+  border-radius: 0.4rem;
+}
+
+.fold[open] > summary {
+  border-bottom: 2px dashed color-mix(in oklab, var(--color-ink) 25%, transparent);
+  border-radius: 0.4rem 0.4rem 0 0;
+}
+
+/* Stanley illustrations keep one consistent size everywhere on the site. */
+@utility stanley-size {
+  height: 8rem;
+  width: auto;
+  max-width: none;
+}
+@media (min-width: 640px) {
+  .stanley-size {
+    height: 11rem;
+  }
+}
+
+/* Page container: fills wide laptop/desktop screens instead of stopping at 1152px. */
+@utility page-wrap {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 72rem;
+}
+@media (min-width: 1280px) {
+  .page-wrap {
+    max-width: 84rem;
+  }
+}
+@media (min-width: 1536px) {
+  .page-wrap {
+    max-width: 92rem;
+  }
+}
