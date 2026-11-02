@@ -67,7 +67,14 @@ export function SignInForm({
   return (
     <form onSubmit={submit} className={`space-y-4 ${dark ? "[&_span]:text-paper" : ""}`}>
       <Field label="Email">
-        <Input type="email" required autoComplete="email" value={email} readOnly={lockEmail} onChange={(e) => setEmail(e.target.value)} />
+        <Input
+          type="email"
+          required
+          autoComplete="email"
+          value={email}
+          readOnly={lockEmail}
+          onChange={(e) => setEmail(e.target.value)}
+        />
       </Field>
       {mode !== "link" ? (
         <Field label="Password">
@@ -82,8 +89,19 @@ export function SignInForm({
         </Field>
       ) : null}
       {error ? <Notice tone="error">{error}</Notice> : null}
-      <Button type="submit" disabled={busy} className="w-full" variant={mode === "create" ? "ember" : "primary"}>
-        {busy ? "Hold on…" : mode === "link" ? "Email me a link" : mode === "create" ? "Create account" : "Sign in"}
+      <Button
+        type="submit"
+        disabled={busy}
+        className="w-full"
+        variant={mode === "create" ? "ember" : "primary"}
+      >
+        {busy
+          ? "Hold on…"
+          : mode === "link"
+            ? "Email me a link"
+            : mode === "create"
+              ? "Create account"
+              : "Sign in"}
       </Button>
       <div className="flex flex-wrap justify-center gap-4 text-xs font-bold uppercase tracking-widest">
         {mode !== "link" ? (
@@ -91,7 +109,11 @@ export function SignInForm({
             Email me a link instead
           </button>
         ) : (
-          <button type="button" className="underline" onClick={() => setMode(initialMode === "create" ? "create" : "password")}>
+          <button
+            type="button"
+            className="underline"
+            onClick={() => setMode(initialMode === "create" ? "create" : "password")}
+          >
             Use a password
           </button>
         )}

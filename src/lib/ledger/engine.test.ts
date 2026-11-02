@@ -1,6 +1,13 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { computeMonth, formatCents, largestRemainder, splitFee, type PlayInput, type TrackInput } from "./engine.ts";
+import {
+  computeMonth,
+  formatCents,
+  largestRemainder,
+  splitFee,
+  type PlayInput,
+  type TrackInput,
+} from "./engine.ts";
 
 const settings = { artistShareBp: 7000, playThresholdSeconds: 30 };
 
@@ -14,18 +21,32 @@ test("PAY-2: $49.99 gives $34.99 to artists and $15.00 to The Pack", () => {
 
 test("PAY-3: the worked example in section 8 matches to the cent", () => {
   const tracks = new Map<string, TrackInput>([
-    ["a-night-bus", { splits: [{ personId: "sam", shareBp: 6000 }, { personId: "jo", shareBp: 4000 }], held: false }],
+    [
+      "a-night-bus",
+      {
+        splits: [
+          { personId: "sam", shareBp: 6000 },
+          { personId: "jo", shareBp: 4000 },
+        ],
+        held: false,
+      },
+    ],
     ["b-tide-tables", { splits: [{ personId: "sam", shareBp: 10000 }], held: false }],
     ["c-slow-water", { splits: [{ personId: "marlo", shareBp: 10000 }], held: false }],
   ]);
   const result = computeMonth({
     sites: [{ siteId: "cafe", feeCents: 4999 }],
-    plays: [...plays("cafe", "a-night-bus", 90), ...plays("cafe", "b-tide-tables", 70), ...plays("cafe", "c-slow-water", 40)],
+    plays: [
+      ...plays("cafe", "a-night-bus", 90),
+      ...plays("cafe", "b-tide-tables", 70),
+      ...plays("cafe", "c-slow-water", 40),
+    ],
     tracks,
     settings,
   });
 
-  const byTrack = (id: string) => result.entries.filter((e) => e.trackId === id).reduce((a, e) => a + e.cents, 0);
+  const byTrack = (id: string) =>
+    result.entries.filter((e) => e.trackId === id).reduce((a, e) => a + e.cents, 0);
   assert.equal(byTrack("a-night-bus"), 1574);
   assert.equal(byTrack("b-tide-tables"), 1225);
   assert.equal(byTrack("c-slow-water"), 700);
@@ -51,7 +72,10 @@ test("PAY-1: a play under the threshold does not qualify", () => {
 
 test("PAY-2: an artist not played at a site is never paid from its pot", () => {
   const result = computeMonth({
-    sites: [{ siteId: "cafe", feeCents: 4999 }, { siteId: "books", feeCents: 4999 }],
+    sites: [
+      { siteId: "cafe", feeCents: 4999 },
+      { siteId: "books", feeCents: 4999 },
+    ],
     plays: [...plays("cafe", "t1", 5), ...plays("books", "t2", 5)],
     tracks: new Map([
       ["t1", { splits: [{ personId: "p1", shareBp: 10000 }], held: false }],
@@ -87,10 +111,16 @@ test("PAY-4: property test, allocations always sum to the pot", () => {
   const random = rng(42);
   for (let round = 0; round < 500; round++) {
     const total = Math.floor(random() * 1_000_000);
-    const weights = Array.from({ length: 1 + Math.floor(random() * 12) }, () => Math.floor(random() * 500));
+    const weights = Array.from({ length: 1 + Math.floor(random() * 12) }, () =>
+      Math.floor(random() * 500),
+    );
     const parts = largestRemainder(total, weights);
     const expected = weights.some((w) => w > 0) ? total : 0;
-    assert.equal(parts.reduce((a, p) => a + p, 0), expected, `round ${round}`);
+    assert.equal(
+      parts.reduce((a, p) => a + p, 0),
+      expected,
+      `round ${round}`,
+    );
     weights.forEach((w, i) => {
       if (w === 0) assert.equal(parts[i], 0);
     });
@@ -108,9 +138,17 @@ test("PAY-4 / PAY-10: property test, every random month reconciles to $0.00", ()
     const tracks = new Map<string, TrackInput>();
     for (const id of trackIds) {
       const people = 1 + Math.floor(random() * 4);
-      const shares = largestRemainder(10000, Array.from({ length: people }, () => 1 + Math.floor(random() * 100)));
+      const shares = largestRemainder(
+        10000,
+        Array.from({ length: people }, () => 1 + Math.floor(random() * 100)),
+      );
       tracks.set(id, {
-        splits: random() < 0.1 ? null : shares.map((shareBp, i) => ({ personId: `p${i}`, shareBp })).filter((s) => s.shareBp > 0),
+        splits:
+          random() < 0.1
+            ? null
+            : shares
+                .map((shareBp, i) => ({ personId: `p${i}`, shareBp }))
+                .filter((s) => s.shareBp > 0),
         held: random() < 0.1,
       });
     }

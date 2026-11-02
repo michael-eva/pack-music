@@ -10,13 +10,57 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as BusinessRouteImport } from './routes/business'
+import { Route as SavedRouteImport } from './routes/saved'
 import { Route as SignInRouteImport } from './routes/sign-in'
+import { Route as StudioRouteImport } from './routes/studio'
 import { Route as WelcomeRouteImport } from './routes/welcome'
+import { Route as AArtistIdRouteImport } from './routes/a.$artistId'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminAuditRouteImport } from './routes/admin.audit'
+import { Route as AdminLedgerRouteImport } from './routes/admin.ledger'
+import { Route as AdminPlaylistsRouteImport } from './routes/admin.playlists'
+import { Route as AdminPolicyRouteImport } from './routes/admin.policy'
+import { Route as AdminReviewRouteImport } from './routes/admin.review'
+import { Route as AdminSitesRouteImport } from './routes/admin.sites'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as BusinessIndexRouteImport } from './routes/business.index'
+import { Route as BusinessNoticeRouteImport } from './routes/business.notice'
+import { Route as BusinessPlanRouteImport } from './routes/business.plan'
+import { Route as BusinessPlayerRouteImport } from './routes/business.player'
+import { Route as BusinessPlaylistsRouteImport } from './routes/business.playlists'
+import { Route as CCodeRouteImport } from './routes/c.$code'
 import { Route as InviteTokenRouteImport } from './routes/invite.$token'
+import { Route as PlaceCodeRouteImport } from './routes/place.$code'
+import { Route as StudioIndexRouteImport } from './routes/studio.index'
+import { Route as StudioAgreementRouteImport } from './routes/studio.agreement'
+import { Route as StudioDataRouteImport } from './routes/studio.data'
+import { Route as StudioEarningsRouteImport } from './routes/studio.earnings'
+import { Route as StudioProfileRouteImport } from './routes/studio.profile'
+import { Route as AdminPlaylistsIdRouteImport } from './routes/admin.playlists.$id'
+import { Route as AdminReviewIdRouteImport } from './routes/admin.review.$id'
+import { Route as StudioReleasesIdRouteImport } from './routes/studio.releases.$id'
+import { Route as StudioReleasesNewRouteImport } from './routes/studio.releases.new'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BusinessRoute = BusinessRouteImport.update({
+  id: '/business',
+  path: '/business',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SavedRoute = SavedRouteImport.update({
+  id: '/saved',
+  path: '/saved',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignInRoute = SignInRouteImport.update({
@@ -24,9 +68,89 @@ const SignInRoute = SignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StudioRoute = StudioRouteImport.update({
+  id: '/studio',
+  path: '/studio',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WelcomeRoute = WelcomeRouteImport.update({
   id: '/welcome',
   path: '/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AArtistIdRoute = AArtistIdRouteImport.update({
+  id: '/a/$artistId',
+  path: '/a/$artistId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAuditRoute = AdminAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLedgerRoute = AdminLedgerRouteImport.update({
+  id: '/ledger',
+  path: '/ledger',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPlaylistsRoute = AdminPlaylistsRouteImport.update({
+  id: '/playlists',
+  path: '/playlists',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPolicyRoute = AdminPolicyRouteImport.update({
+  id: '/policy',
+  path: '/policy',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminReviewRoute = AdminReviewRouteImport.update({
+  id: '/review',
+  path: '/review',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSitesRoute = AdminSitesRouteImport.update({
+  id: '/sites',
+  path: '/sites',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
+} as any)
+const BusinessIndexRoute = BusinessIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BusinessRoute,
+} as any)
+const BusinessNoticeRoute = BusinessNoticeRouteImport.update({
+  id: '/notice',
+  path: '/notice',
+  getParentRoute: () => BusinessRoute,
+} as any)
+const BusinessPlanRoute = BusinessPlanRouteImport.update({
+  id: '/plan',
+  path: '/plan',
+  getParentRoute: () => BusinessRoute,
+} as any)
+const BusinessPlayerRoute = BusinessPlayerRouteImport.update({
+  id: '/player',
+  path: '/player',
+  getParentRoute: () => BusinessRoute,
+} as any)
+const BusinessPlaylistsRoute = BusinessPlaylistsRouteImport.update({
+  id: '/playlists',
+  path: '/playlists',
+  getParentRoute: () => BusinessRoute,
+} as any)
+const CCodeRoute = CCodeRouteImport.update({
+  id: '/c/$code',
+  path: '/c/$code',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InviteTokenRoute = InviteTokenRouteImport.update({
@@ -34,39 +158,277 @@ const InviteTokenRoute = InviteTokenRouteImport.update({
   path: '/invite/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PlaceCodeRoute = PlaceCodeRouteImport.update({
+  id: '/place/$code',
+  path: '/place/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudioIndexRoute = StudioIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => StudioRoute,
+} as any)
+const StudioAgreementRoute = StudioAgreementRouteImport.update({
+  id: '/agreement',
+  path: '/agreement',
+  getParentRoute: () => StudioRoute,
+} as any)
+const StudioDataRoute = StudioDataRouteImport.update({
+  id: '/data',
+  path: '/data',
+  getParentRoute: () => StudioRoute,
+} as any)
+const StudioEarningsRoute = StudioEarningsRouteImport.update({
+  id: '/earnings',
+  path: '/earnings',
+  getParentRoute: () => StudioRoute,
+} as any)
+const StudioProfileRoute = StudioProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => StudioRoute,
+} as any)
+const AdminPlaylistsIdRoute = AdminPlaylistsIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminPlaylistsRoute,
+} as any)
+const AdminReviewIdRoute = AdminReviewIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AdminReviewRoute,
+} as any)
+const StudioReleasesIdRoute = StudioReleasesIdRouteImport.update({
+  id: '/releases/$id',
+  path: '/releases/$id',
+  getParentRoute: () => StudioRoute,
+} as any)
+const StudioReleasesNewRoute = StudioReleasesNewRouteImport.update({
+  id: '/releases/new',
+  path: '/releases/new',
+  getParentRoute: () => StudioRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/business': typeof BusinessRouteWithChildren
+  '/saved': typeof SavedRoute
   '/sign-in': typeof SignInRoute
+  '/studio': typeof StudioRouteWithChildren
   '/welcome': typeof WelcomeRoute
+  '/a/$artistId': typeof AArtistIdRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/ledger': typeof AdminLedgerRoute
+  '/admin/playlists': typeof AdminPlaylistsRouteWithChildren
+  '/admin/policy': typeof AdminPolicyRoute
+  '/admin/review': typeof AdminReviewRouteWithChildren
+  '/admin/sites': typeof AdminSitesRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/business/notice': typeof BusinessNoticeRoute
+  '/business/plan': typeof BusinessPlanRoute
+  '/business/player': typeof BusinessPlayerRoute
+  '/business/playlists': typeof BusinessPlaylistsRoute
+  '/c/$code': typeof CCodeRoute
   '/invite/$token': typeof InviteTokenRoute
+  '/place/$code': typeof PlaceCodeRoute
+  '/studio/agreement': typeof StudioAgreementRoute
+  '/studio/data': typeof StudioDataRoute
+  '/studio/earnings': typeof StudioEarningsRoute
+  '/studio/profile': typeof StudioProfileRoute
+  '/admin/': typeof AdminIndexRoute
+  '/business/': typeof BusinessIndexRoute
+  '/studio/': typeof StudioIndexRoute
+  '/admin/playlists/$id': typeof AdminPlaylistsIdRoute
+  '/admin/review/$id': typeof AdminReviewIdRoute
+  '/studio/releases/$id': typeof StudioReleasesIdRoute
+  '/studio/releases/new': typeof StudioReleasesNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/saved': typeof SavedRoute
   '/sign-in': typeof SignInRoute
   '/welcome': typeof WelcomeRoute
+  '/a/$artistId': typeof AArtistIdRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/ledger': typeof AdminLedgerRoute
+  '/admin/playlists': typeof AdminPlaylistsRouteWithChildren
+  '/admin/policy': typeof AdminPolicyRoute
+  '/admin/review': typeof AdminReviewRouteWithChildren
+  '/admin/sites': typeof AdminSitesRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/business/notice': typeof BusinessNoticeRoute
+  '/business/plan': typeof BusinessPlanRoute
+  '/business/player': typeof BusinessPlayerRoute
+  '/business/playlists': typeof BusinessPlaylistsRoute
+  '/c/$code': typeof CCodeRoute
   '/invite/$token': typeof InviteTokenRoute
+  '/place/$code': typeof PlaceCodeRoute
+  '/studio/agreement': typeof StudioAgreementRoute
+  '/studio/data': typeof StudioDataRoute
+  '/studio/earnings': typeof StudioEarningsRoute
+  '/studio/profile': typeof StudioProfileRoute
+  '/admin': typeof AdminIndexRoute
+  '/business': typeof BusinessIndexRoute
+  '/studio': typeof StudioIndexRoute
+  '/admin/playlists/$id': typeof AdminPlaylistsIdRoute
+  '/admin/review/$id': typeof AdminReviewIdRoute
+  '/studio/releases/$id': typeof StudioReleasesIdRoute
+  '/studio/releases/new': typeof StudioReleasesNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/business': typeof BusinessRouteWithChildren
+  '/saved': typeof SavedRoute
   '/sign-in': typeof SignInRoute
+  '/studio': typeof StudioRouteWithChildren
   '/welcome': typeof WelcomeRoute
+  '/a/$artistId': typeof AArtistIdRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/ledger': typeof AdminLedgerRoute
+  '/admin/playlists': typeof AdminPlaylistsRouteWithChildren
+  '/admin/policy': typeof AdminPolicyRoute
+  '/admin/review': typeof AdminReviewRouteWithChildren
+  '/admin/sites': typeof AdminSitesRoute
+  '/admin/users': typeof AdminUsersRoute
+  '/business/notice': typeof BusinessNoticeRoute
+  '/business/plan': typeof BusinessPlanRoute
+  '/business/player': typeof BusinessPlayerRoute
+  '/business/playlists': typeof BusinessPlaylistsRoute
+  '/c/$code': typeof CCodeRoute
   '/invite/$token': typeof InviteTokenRoute
+  '/place/$code': typeof PlaceCodeRoute
+  '/studio/agreement': typeof StudioAgreementRoute
+  '/studio/data': typeof StudioDataRoute
+  '/studio/earnings': typeof StudioEarningsRoute
+  '/studio/profile': typeof StudioProfileRoute
+  '/admin/': typeof AdminIndexRoute
+  '/business/': typeof BusinessIndexRoute
+  '/studio/': typeof StudioIndexRoute
+  '/admin/playlists/$id': typeof AdminPlaylistsIdRoute
+  '/admin/review/$id': typeof AdminReviewIdRoute
+  '/studio/releases/$id': typeof StudioReleasesIdRoute
+  '/studio/releases/new': typeof StudioReleasesNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sign-in' | '/welcome' | '/invite/$token'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/business'
+    | '/saved'
+    | '/sign-in'
+    | '/studio'
+    | '/welcome'
+    | '/a/$artistId'
+    | '/admin/audit'
+    | '/admin/ledger'
+    | '/admin/playlists'
+    | '/admin/policy'
+    | '/admin/review'
+    | '/admin/sites'
+    | '/admin/users'
+    | '/business/notice'
+    | '/business/plan'
+    | '/business/player'
+    | '/business/playlists'
+    | '/c/$code'
+    | '/invite/$token'
+    | '/place/$code'
+    | '/studio/agreement'
+    | '/studio/data'
+    | '/studio/earnings'
+    | '/studio/profile'
+    | '/admin/'
+    | '/business/'
+    | '/studio/'
+    | '/admin/playlists/$id'
+    | '/admin/review/$id'
+    | '/studio/releases/$id'
+    | '/studio/releases/new'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sign-in' | '/welcome' | '/invite/$token'
-  id: '__root__' | '/' | '/sign-in' | '/welcome' | '/invite/$token'
+  to:
+    | '/'
+    | '/saved'
+    | '/sign-in'
+    | '/welcome'
+    | '/a/$artistId'
+    | '/admin/audit'
+    | '/admin/ledger'
+    | '/admin/playlists'
+    | '/admin/policy'
+    | '/admin/review'
+    | '/admin/sites'
+    | '/admin/users'
+    | '/business/notice'
+    | '/business/plan'
+    | '/business/player'
+    | '/business/playlists'
+    | '/c/$code'
+    | '/invite/$token'
+    | '/place/$code'
+    | '/studio/agreement'
+    | '/studio/data'
+    | '/studio/earnings'
+    | '/studio/profile'
+    | '/admin'
+    | '/business'
+    | '/studio'
+    | '/admin/playlists/$id'
+    | '/admin/review/$id'
+    | '/studio/releases/$id'
+    | '/studio/releases/new'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/business'
+    | '/saved'
+    | '/sign-in'
+    | '/studio'
+    | '/welcome'
+    | '/a/$artistId'
+    | '/admin/audit'
+    | '/admin/ledger'
+    | '/admin/playlists'
+    | '/admin/policy'
+    | '/admin/review'
+    | '/admin/sites'
+    | '/admin/users'
+    | '/business/notice'
+    | '/business/plan'
+    | '/business/player'
+    | '/business/playlists'
+    | '/c/$code'
+    | '/invite/$token'
+    | '/place/$code'
+    | '/studio/agreement'
+    | '/studio/data'
+    | '/studio/earnings'
+    | '/studio/profile'
+    | '/admin/'
+    | '/business/'
+    | '/studio/'
+    | '/admin/playlists/$id'
+    | '/admin/review/$id'
+    | '/studio/releases/$id'
+    | '/studio/releases/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  BusinessRoute: typeof BusinessRouteWithChildren
+  SavedRoute: typeof SavedRoute
   SignInRoute: typeof SignInRoute
+  StudioRoute: typeof StudioRouteWithChildren
   WelcomeRoute: typeof WelcomeRoute
+  AArtistIdRoute: typeof AArtistIdRoute
+  CCodeRoute: typeof CCodeRoute
   InviteTokenRoute: typeof InviteTokenRoute
+  PlaceCodeRoute: typeof PlaceCodeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -78,11 +440,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/business': {
+      id: '/business'
+      path: '/business'
+      fullPath: '/business'
+      preLoaderRoute: typeof BusinessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/saved': {
+      id: '/saved'
+      path: '/saved'
+      fullPath: '/saved'
+      preLoaderRoute: typeof SavedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sign-in': {
       id: '/sign-in'
       path: '/sign-in'
       fullPath: '/sign-in'
       preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/studio': {
+      id: '/studio'
+      path: '/studio'
+      fullPath: '/studio'
+      preLoaderRoute: typeof StudioRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/welcome': {
@@ -92,6 +482,111 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WelcomeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/a/$artistId': {
+      id: '/a/$artistId'
+      path: '/a/$artistId'
+      fullPath: '/a/$artistId'
+      preLoaderRoute: typeof AArtistIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/audit': {
+      id: '/admin/audit'
+      path: '/audit'
+      fullPath: '/admin/audit'
+      preLoaderRoute: typeof AdminAuditRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/ledger': {
+      id: '/admin/ledger'
+      path: '/ledger'
+      fullPath: '/admin/ledger'
+      preLoaderRoute: typeof AdminLedgerRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/playlists': {
+      id: '/admin/playlists'
+      path: '/playlists'
+      fullPath: '/admin/playlists'
+      preLoaderRoute: typeof AdminPlaylistsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/policy': {
+      id: '/admin/policy'
+      path: '/policy'
+      fullPath: '/admin/policy'
+      preLoaderRoute: typeof AdminPolicyRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/review': {
+      id: '/admin/review'
+      path: '/review'
+      fullPath: '/admin/review'
+      preLoaderRoute: typeof AdminReviewRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/sites': {
+      id: '/admin/sites'
+      path: '/sites'
+      fullPath: '/admin/sites'
+      preLoaderRoute: typeof AdminSitesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/business/': {
+      id: '/business/'
+      path: '/'
+      fullPath: '/business/'
+      preLoaderRoute: typeof BusinessIndexRouteImport
+      parentRoute: typeof BusinessRoute
+    }
+    '/business/notice': {
+      id: '/business/notice'
+      path: '/notice'
+      fullPath: '/business/notice'
+      preLoaderRoute: typeof BusinessNoticeRouteImport
+      parentRoute: typeof BusinessRoute
+    }
+    '/business/plan': {
+      id: '/business/plan'
+      path: '/plan'
+      fullPath: '/business/plan'
+      preLoaderRoute: typeof BusinessPlanRouteImport
+      parentRoute: typeof BusinessRoute
+    }
+    '/business/player': {
+      id: '/business/player'
+      path: '/player'
+      fullPath: '/business/player'
+      preLoaderRoute: typeof BusinessPlayerRouteImport
+      parentRoute: typeof BusinessRoute
+    }
+    '/business/playlists': {
+      id: '/business/playlists'
+      path: '/playlists'
+      fullPath: '/business/playlists'
+      preLoaderRoute: typeof BusinessPlaylistsRouteImport
+      parentRoute: typeof BusinessRoute
+    }
+    '/c/$code': {
+      id: '/c/$code'
+      path: '/c/$code'
+      fullPath: '/c/$code'
+      preLoaderRoute: typeof CCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/invite/$token': {
       id: '/invite/$token'
       path: '/invite/$token'
@@ -99,14 +594,182 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InviteTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/place/$code': {
+      id: '/place/$code'
+      path: '/place/$code'
+      fullPath: '/place/$code'
+      preLoaderRoute: typeof PlaceCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/studio/': {
+      id: '/studio/'
+      path: '/'
+      fullPath: '/studio/'
+      preLoaderRoute: typeof StudioIndexRouteImport
+      parentRoute: typeof StudioRoute
+    }
+    '/studio/agreement': {
+      id: '/studio/agreement'
+      path: '/agreement'
+      fullPath: '/studio/agreement'
+      preLoaderRoute: typeof StudioAgreementRouteImport
+      parentRoute: typeof StudioRoute
+    }
+    '/studio/data': {
+      id: '/studio/data'
+      path: '/data'
+      fullPath: '/studio/data'
+      preLoaderRoute: typeof StudioDataRouteImport
+      parentRoute: typeof StudioRoute
+    }
+    '/studio/earnings': {
+      id: '/studio/earnings'
+      path: '/earnings'
+      fullPath: '/studio/earnings'
+      preLoaderRoute: typeof StudioEarningsRouteImport
+      parentRoute: typeof StudioRoute
+    }
+    '/studio/profile': {
+      id: '/studio/profile'
+      path: '/profile'
+      fullPath: '/studio/profile'
+      preLoaderRoute: typeof StudioProfileRouteImport
+      parentRoute: typeof StudioRoute
+    }
+    '/admin/playlists/$id': {
+      id: '/admin/playlists/$id'
+      path: '/$id'
+      fullPath: '/admin/playlists/$id'
+      preLoaderRoute: typeof AdminPlaylistsIdRouteImport
+      parentRoute: typeof AdminPlaylistsRoute
+    }
+    '/admin/review/$id': {
+      id: '/admin/review/$id'
+      path: '/$id'
+      fullPath: '/admin/review/$id'
+      preLoaderRoute: typeof AdminReviewIdRouteImport
+      parentRoute: typeof AdminReviewRoute
+    }
+    '/studio/releases/$id': {
+      id: '/studio/releases/$id'
+      path: '/releases/$id'
+      fullPath: '/studio/releases/$id'
+      preLoaderRoute: typeof StudioReleasesIdRouteImport
+      parentRoute: typeof StudioRoute
+    }
+    '/studio/releases/new': {
+      id: '/studio/releases/new'
+      path: '/releases/new'
+      fullPath: '/studio/releases/new'
+      preLoaderRoute: typeof StudioReleasesNewRouteImport
+      parentRoute: typeof StudioRoute
+    }
   }
 }
 
+interface AdminPlaylistsRouteChildren {
+  AdminPlaylistsIdRoute: typeof AdminPlaylistsIdRoute
+}
+
+const AdminPlaylistsRouteChildren: AdminPlaylistsRouteChildren = {
+  AdminPlaylistsIdRoute: AdminPlaylistsIdRoute,
+}
+
+const AdminPlaylistsRouteWithChildren = AdminPlaylistsRoute._addFileChildren(
+  AdminPlaylistsRouteChildren,
+)
+
+interface AdminReviewRouteChildren {
+  AdminReviewIdRoute: typeof AdminReviewIdRoute
+}
+
+const AdminReviewRouteChildren: AdminReviewRouteChildren = {
+  AdminReviewIdRoute: AdminReviewIdRoute,
+}
+
+const AdminReviewRouteWithChildren = AdminReviewRoute._addFileChildren(
+  AdminReviewRouteChildren,
+)
+
+interface AdminRouteChildren {
+  AdminAuditRoute: typeof AdminAuditRoute
+  AdminLedgerRoute: typeof AdminLedgerRoute
+  AdminPlaylistsRoute: typeof AdminPlaylistsRouteWithChildren
+  AdminPolicyRoute: typeof AdminPolicyRoute
+  AdminReviewRoute: typeof AdminReviewRouteWithChildren
+  AdminSitesRoute: typeof AdminSitesRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAuditRoute: AdminAuditRoute,
+  AdminLedgerRoute: AdminLedgerRoute,
+  AdminPlaylistsRoute: AdminPlaylistsRouteWithChildren,
+  AdminPolicyRoute: AdminPolicyRoute,
+  AdminReviewRoute: AdminReviewRouteWithChildren,
+  AdminSitesRoute: AdminSitesRoute,
+  AdminUsersRoute: AdminUsersRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface BusinessRouteChildren {
+  BusinessNoticeRoute: typeof BusinessNoticeRoute
+  BusinessPlanRoute: typeof BusinessPlanRoute
+  BusinessPlayerRoute: typeof BusinessPlayerRoute
+  BusinessPlaylistsRoute: typeof BusinessPlaylistsRoute
+  BusinessIndexRoute: typeof BusinessIndexRoute
+}
+
+const BusinessRouteChildren: BusinessRouteChildren = {
+  BusinessNoticeRoute: BusinessNoticeRoute,
+  BusinessPlanRoute: BusinessPlanRoute,
+  BusinessPlayerRoute: BusinessPlayerRoute,
+  BusinessPlaylistsRoute: BusinessPlaylistsRoute,
+  BusinessIndexRoute: BusinessIndexRoute,
+}
+
+const BusinessRouteWithChildren = BusinessRoute._addFileChildren(
+  BusinessRouteChildren,
+)
+
+interface StudioRouteChildren {
+  StudioAgreementRoute: typeof StudioAgreementRoute
+  StudioDataRoute: typeof StudioDataRoute
+  StudioEarningsRoute: typeof StudioEarningsRoute
+  StudioProfileRoute: typeof StudioProfileRoute
+  StudioIndexRoute: typeof StudioIndexRoute
+  StudioReleasesIdRoute: typeof StudioReleasesIdRoute
+  StudioReleasesNewRoute: typeof StudioReleasesNewRoute
+}
+
+const StudioRouteChildren: StudioRouteChildren = {
+  StudioAgreementRoute: StudioAgreementRoute,
+  StudioDataRoute: StudioDataRoute,
+  StudioEarningsRoute: StudioEarningsRoute,
+  StudioProfileRoute: StudioProfileRoute,
+  StudioIndexRoute: StudioIndexRoute,
+  StudioReleasesIdRoute: StudioReleasesIdRoute,
+  StudioReleasesNewRoute: StudioReleasesNewRoute,
+}
+
+const StudioRouteWithChildren =
+  StudioRoute._addFileChildren(StudioRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  BusinessRoute: BusinessRouteWithChildren,
+  SavedRoute: SavedRoute,
   SignInRoute: SignInRoute,
+  StudioRoute: StudioRouteWithChildren,
   WelcomeRoute: WelcomeRoute,
+  AArtistIdRoute: AArtistIdRoute,
+  CCodeRoute: CCodeRoute,
   InviteTokenRoute: InviteTokenRoute,
+  PlaceCodeRoute: PlaceCodeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

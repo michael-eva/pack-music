@@ -40,10 +40,12 @@ function Home() {
     <div className="wave-field grad-blue-magenta flex min-h-screen flex-col text-paper">
       <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center px-6 py-16">
         <PackLogo variant="full" className="h-24 text-yellow sm:h-32" />
-        <h1 className="mt-10 max-w-3xl text-5xl sm:text-7xl">Local music, played in real places.</h1>
+        <h1 className="mt-10 max-w-3xl text-5xl sm:text-7xl">
+          Local music, played in real places.
+        </h1>
         <p className="mt-6 max-w-2xl text-lg sm:text-xl">
-          The Pack plays music by local artists in the businesses around you. 70% of every business fee goes to the
-          artists played there.
+          The Pack plays music by local artists in the businesses around you. 70% of every business
+          fee goes to the artists played there.
         </p>
         <div className="mt-10 flex flex-wrap items-center gap-4">
           <Link
@@ -65,7 +67,10 @@ function Home() {
                 </li>
               ))}
               <li className="pt-2">
-                QR page for Example Café: <Link to="/c/$code" params={{ code: "exa" }} className="text-cyan underline">/c/exa</Link>
+                QR page for Example Café:{" "}
+                <Link to="/c/$code" params={{ code: "exa" }} className="text-cyan underline">
+                  /c/exa
+                </Link>
               </li>
             </ul>
           </div>

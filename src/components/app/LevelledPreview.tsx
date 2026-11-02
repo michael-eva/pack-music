@@ -7,7 +7,15 @@ import { dbToLinear } from "@/lib/loudness";
  */
 let stopCurrent: (() => void) | null = null;
 
-export function LevelledPreview({ url, gainDb, label = "Preview" }: { url: string | null; gainDb: number; label?: string }) {
+export function LevelledPreview({
+  url,
+  gainDb,
+  label = "Preview",
+}: {
+  url: string | null;
+  gainDb: number;
+  label?: string;
+}) {
   const [playing, setPlaying] = useState(false);
   const audio = useRef<HTMLAudioElement | null>(null);
   const ctx = useRef<{ context: AudioContext; gain: GainNode } | null>(null);
@@ -52,7 +60,10 @@ export function LevelledPreview({ url, gainDb, label = "Preview" }: { url: strin
       className="press inline-flex h-9 min-w-9 items-center justify-center gap-1 rounded-full bg-ink px-3 text-xs font-bold uppercase tracking-widest text-paper disabled:opacity-40"
     >
       {playing ? "■" : "▶"}
-      <span className="font-mono text-[0.65rem] text-cyan">{gainDb > 0 ? "+" : ""}{gainDb} dB</span>
+      <span className="font-mono text-[0.65rem] text-cyan">
+        {gainDb > 0 ? "+" : ""}
+        {gainDb} dB
+      </span>
     </button>
   );
 }

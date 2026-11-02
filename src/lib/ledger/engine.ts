@@ -119,10 +119,17 @@ export function computeMonth(input: {
     const counts = trackIds.map((id) => playsByTrack.get(id)!);
     const potPlays = counts.reduce((a, c) => a + c, 0);
 
-    pots.push({ siteId: site.siteId, feeCents: site.feeCents, artistPoolCents, packCents, qualifiedPlays: potPlays });
+    pots.push({
+      siteId: site.siteId,
+      feeCents: site.feeCents,
+      artistPoolCents,
+      packCents,
+      qualifiedPlays: potPlays,
+    });
 
     if (potPlays === 0) {
-      if (artistPoolCents > 0) exceptions.push({ kind: "no_plays", siteId: site.siteId, cents: artistPoolCents });
+      if (artistPoolCents > 0)
+        exceptions.push({ kind: "no_plays", siteId: site.siteId, cents: artistPoolCents });
       continue;
     }
 
@@ -138,7 +145,10 @@ export function computeMonth(input: {
       }
       const type = track.held ? "hold" : "accrual";
       if (track.held) exceptions.push({ kind: "held", siteId: site.siteId, trackId, cents });
-      const personCents = largestRemainder(cents, splits.map((s) => s.shareBp));
+      const personCents = largestRemainder(
+        cents,
+        splits.map((s) => s.shareBp),
+      );
       splits.forEach((split, j) => {
         entries.push({
           type,
@@ -178,7 +188,8 @@ function sum(values: number[]) {
 }
 
 function assertCents(value: number) {
-  if (!Number.isSafeInteger(value) || value < 0) throw new Error(`not a whole number of cents: ${value}`);
+  if (!Number.isSafeInteger(value) || value < 0)
+    throw new Error(`not a whole number of cents: ${value}`);
 }
 
 export function formatCents(cents: number): string {

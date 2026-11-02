@@ -19,12 +19,10 @@
   --radius-3xl: 3rem;
   --radius-4xl: 4rem;
 
-
   /* Headline: rounded quirky (Gothiks Round substitute). Body: Inter Variable. */
   --font-display: "Fredoka", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Space Mono", ui-monospace, SFMono-Regular, monospace;
-
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -163,7 +161,6 @@
   --torn-mask-frame: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 320' preserveAspectRatio='none'%3E%3Cfilter id='f' x='-30%' y='-30%' width='160%' height='160%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.035 0.045' numOctaves='4' seed='13' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='13' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='10' y='10' width='380' height='300' fill='white' filter='url(%23f)'/%3E%3C/svg%3E");
   --torn-mask-frame-b: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 320' preserveAspectRatio='none'%3E%3Cfilter id='f' x='-30%' y='-30%' width='160%' height='160%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04 0.05' numOctaves='4' seed='53' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='13' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Crect x='10' y='10' width='380' height='300' fill='white' filter='url(%23f)'/%3E%3C/svg%3E");
   --torn-mask-disc: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cfilter id='f' x='-30%' y='-30%' width='160%' height='160%'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.055' numOctaves='5' seed='19' result='n'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='n' scale='22' xChannelSelector='R' yChannelSelector='G'/%3E%3C/filter%3E%3Ccircle cx='200' cy='200' r='180' fill='white' filter='url(%23f)'/%3E%3C/svg%3E");
-
 
   /* Style guide primaries + secondaries */
   --ink: #000000;
@@ -377,8 +374,6 @@
   }
 }
 
-
-
 /* Halftone dot field, layered over gradients. */
 @utility halftone {
   position: relative;
@@ -421,7 +416,6 @@
     box-shadow: 0 16px 30px -16px color-mix(in oklab, var(--ink) 60%, transparent);
   }
 }
-
 
 /* Style guide gradation fields */
 @utility grad-blue-magenta {
@@ -475,7 +469,12 @@
 }
 
 @utility grad-deep-blue {
-  background-image: linear-gradient(160deg, var(--electric-800), var(--electric) 60%, var(--magenta-700));
+  background-image: linear-gradient(
+    160deg,
+    var(--electric-800),
+    var(--electric) 60%,
+    var(--magenta-700)
+  );
 }
 
 /* ---------------------------------------------------------------
@@ -497,7 +496,6 @@
     background-repeat: repeat;
     background-position: center top;
     opacity: 0.55;
-
   }
   & > * {
     position: relative;
@@ -511,9 +509,6 @@
     opacity: 0.22;
   }
 }
-
-
-
 
 /* ---------------------------------------------------------------
    DIY / zine kit — photocopied flyer energy.
@@ -540,10 +535,22 @@
     background: var(--color-paper);
     -webkit-mask-image: var(--zine-mask), var(--zine-mask), var(--zine-mask-mid);
     mask-image: var(--zine-mask), var(--zine-mask), var(--zine-mask-mid);
-    -webkit-mask-size: 100% 640px, 100% 640px, 100% 640px;
-    mask-size: 100% 640px, 100% 640px, 100% 640px;
-    -webkit-mask-position: top, bottom, 0 0;
-    mask-position: top, bottom, 0 0;
+    -webkit-mask-size:
+      100% 640px,
+      100% 640px,
+      100% 640px;
+    mask-size:
+      100% 640px,
+      100% 640px,
+      100% 640px;
+    -webkit-mask-position:
+      top,
+      bottom,
+      0 0;
+    mask-position:
+      top,
+      bottom,
+      0 0;
     -webkit-mask-repeat: no-repeat, no-repeat, repeat-y;
     mask-repeat: no-repeat, no-repeat, repeat-y;
     filter: drop-shadow(4px 5px 0 color-mix(in oklab, var(--color-ink) 82%, transparent))
@@ -613,7 +620,6 @@
   }
 }
 
-
 @utility grain {
   &::after {
     content: "";
@@ -659,7 +665,6 @@
   }
 }
 
-
 @utility tilt-l {
   rotate: -1.4deg;
 }
@@ -684,16 +689,12 @@
   font-size: 0.7rem;
 }
 
-
 /* Photocopied black block — knocked-out text. */
 @utility xerox {
   background: var(--color-ink);
   color: var(--color-paper);
   border-radius: 0.3rem;
 }
-
-
-
 
 /* Standalone torn masking-tape strip. */
 @utility tape-strip {
@@ -738,7 +739,9 @@
     linear-gradient(45deg, currentColor 25%, transparent 25%, transparent 75%, currentColor 75%),
     linear-gradient(45deg, currentColor 25%, transparent 25%, transparent 75%, currentColor 75%);
   background-size: 18px 18px;
-  background-position: 0 0, 9px 9px;
+  background-position:
+    0 0,
+    9px 9px;
   opacity: 0.85;
 }
 
@@ -758,7 +761,6 @@
   mask-size: 100% 100%;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-
 }
 
 /* Photocopied photograph: crushed contrast, warm paper tint. */

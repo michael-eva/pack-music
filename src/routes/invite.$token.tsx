@@ -9,7 +9,9 @@ import { acceptDocuments, getInvite, redeemInvite } from "@/lib/session.function
 
 export const Route = createFileRoute("/invite/$token")({
   ssr: false,
-  head: () => ({ meta: [{ title: "You're invited · The Pack" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({
+    meta: [{ title: "You're invited · The Pack" }, { name: "robots", content: "noindex" }],
+  }),
   component: InvitePage,
 });
 
@@ -25,8 +27,14 @@ const ROLE_WORDS: Record<string, string> = {
 function InvitePage() {
   const { token } = Route.useParams();
   const navigate = useNavigate();
-  const invite = useQuery({ queryKey: ["invite", token], queryFn: () => getInvite({ data: { token } }) });
-  const session = useQuery({ queryKey: ["session"], queryFn: async () => (await supabase.auth.getSession()).data.session });
+  const invite = useQuery({
+    queryKey: ["invite", token],
+    queryFn: () => getInvite({ data: { token } }),
+  });
+  const session = useQuery({
+    queryKey: ["session"],
+    queryFn: async () => (await supabase.auth.getSession()).data.session,
+  });
   const [name, setName] = useState("");
   const [terms, setTerms] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -65,11 +73,16 @@ function InvitePage() {
             </>
           ) : (
             <>
-              {invite.data.cohort ? <span className="stamp mono-kicker inline-block px-3 py-1">{invite.data.cohort}</span> : null}
+              {invite.data.cohort ? (
+                <span className="stamp mono-kicker inline-block px-3 py-1">
+                  {invite.data.cohort}
+                </span>
+              ) : null}
               <h1 className="mt-3 text-4xl">You're invited</h1>
               <p className="mt-2 text-sm text-ink/70">
                 Join The Pack {ROLE_WORDS[invite.data.role] ?? ""}
-                {invite.data.businessName ? ` for ${invite.data.businessName}` : ""}. It takes a couple of minutes.
+                {invite.data.businessName ? ` for ${invite.data.businessName}` : ""}. It takes a
+                couple of minutes.
               </p>
               <div className="mt-6">
                 {!session.data ? (
@@ -84,15 +97,26 @@ function InvitePage() {
                   <div className="space-y-4">
                     <Notice>Signed in as {session.data.user.email}.</Notice>
                     {invite.data.role === "artist" || invite.data.role === "business_staff" ? (
-                      <Field label={invite.data.role === "artist" ? "Artist or band name" : "Your name"}>
-                        <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="The Southerlies" />
+                      <Field
+                        label={invite.data.role === "artist" ? "Artist or band name" : "Your name"}
+                      >
+                        <Input
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                          placeholder="The Southerlies"
+                        />
                       </Field>
                     ) : null}
                     <Check checked={terms} onChange={setTerms}>
                       I accept the Terms and the Privacy Policy.
                     </Check>
                     {error ? <Notice tone="error">{error}</Notice> : null}
-                    <Button variant="ember" className="w-full" disabled={!terms || busy} onClick={finish}>
+                    <Button
+                      variant="ember"
+                      className="w-full"
+                      disabled={!terms || busy}
+                      onClick={finish}
+                    >
                       {busy ? "Hold on…" : "Continue"}
                     </Button>
                   </div>

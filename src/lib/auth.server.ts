@@ -23,10 +23,15 @@ export async function db() {
 export async function getCaller(userId: string): Promise<Caller> {
   const sb = await db();
   const [{ data: profile }, { data: roles }] = await Promise.all([
-    sb.from("profiles").select("email,display_name,deactivated_at").eq("user_id", userId).maybeSingle(),
+    sb
+      .from("profiles")
+      .select("email,display_name,deactivated_at")
+      .eq("user_id", userId)
+      .maybeSingle(),
     sb.from("user_roles").select("role").eq("user_id", userId),
   ]);
-  if (profile?.deactivated_at) throw new Response("This account has been deactivated.", { status: 403 });
+  if (profile?.deactivated_at)
+    throw new Response("This account has been deactivated.", { status: 403 });
   return {
     userId,
     email: profile?.email ?? "",

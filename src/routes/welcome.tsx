@@ -30,7 +30,11 @@ function Welcome() {
   if (me.isError) return <Navigate to="/sign-in" />;
   const data = me.data;
 
-  const step = !data.termsAccepted ? "terms" : data.needsMembership && !data.membership?.current ? "coop" : "done";
+  const step = !data.termsAccepted
+    ? "terms"
+    : data.needsMembership && !data.membership?.current
+      ? "coop"
+      : "done";
   if (step === "done") return <Navigate to={homeFor(data.roles)} />;
   const rules = data.documents.find((d) => d.kind === "coop_rules");
   const full = data.roles.includes("artist");
@@ -59,7 +63,9 @@ function Welcome() {
           {step === "terms" ? (
             <>
               <h1 className="text-3xl">Before you start</h1>
-              <p className="mt-3 text-sm">Please read and accept the Terms and the Privacy Policy.</p>
+              <p className="mt-3 text-sm">
+                Please read and accept the Terms and the Privacy Policy.
+              </p>
               <div className="mt-5">
                 <Check checked={accepted} onChange={setAccepted}>
                   I accept the Terms and the Privacy Policy.
@@ -76,7 +82,12 @@ function Welcome() {
                   : "Businesses join as Associate members. Associate members don't vote, but they're part of the co-op."}
               </p>
               {rules?.href ? (
-                <a href={rules.href} target="_blank" rel="noreferrer" className="mt-4 inline-block font-bold underline">
+                <a
+                  href={rules.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-4 inline-block font-bold underline"
+                >
                   Read {rules.title} ({rules.version})
                 </a>
               ) : null}
@@ -85,14 +96,23 @@ function Welcome() {
                   I accept the Co-op Rules and join as {full ? "a Full" : "an Associate"} member.
                 </Check>
                 <Check checked={openData} onChange={setOpenData}>
-                  Include my aggregate data in the Open data project (optional). It's shared only at SA2 level, never
-                  identifies anyone, and you can opt out any time.
+                  Include my aggregate data in the Open data project (optional). It's shared only at
+                  SA2 level, never identifies anyone, and you can opt out any time.
                 </Check>
               </div>
             </>
           )}
-          {error ? <div className="mt-4"><Notice tone="error">{error}</Notice></div> : null}
-          <Button variant="ember" className="mt-6 w-full" disabled={!accepted || busy} onClick={submit}>
+          {error ? (
+            <div className="mt-4">
+              <Notice tone="error">{error}</Notice>
+            </div>
+          ) : null}
+          <Button
+            variant="ember"
+            className="mt-6 w-full"
+            disabled={!accepted || busy}
+            onClick={submit}
+          >
             {busy ? "Hold on…" : step === "terms" ? "Continue" : "Join The Pack"}
           </Button>
         </div>

@@ -34,7 +34,8 @@ export function Guard({ roles, children }: { roles: AppRole[]; children: (me: Me
     );
   }
   if (!data.roles.includes("admin")) {
-    if (!data.termsAccepted || (data.needsMembership && !data.membership?.current)) return <Navigate to="/welcome" />;
+    if (!data.termsAccepted || (data.needsMembership && !data.membership?.current))
+      return <Navigate to="/welcome" />;
   }
   return <>{children(data)}</>;
 }

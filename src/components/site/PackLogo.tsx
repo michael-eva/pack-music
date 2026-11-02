@@ -1,4 +1,3 @@
-
 type Props = {
   /** "full" = Stanley + pack music/ wordmark, "mark" = Stanley only */
   variant?: "full" | "mark";

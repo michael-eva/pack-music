@@ -18,7 +18,10 @@ test("PLY-2: the site trim is added on top of levelling", () => {
 });
 
 test("missing loudness falls back to the trim only", () => {
-  assert.equal(playbackGainDb({ targetLufs: -14, trackLufs: null, truePeakDb: null, trimDb: 2 }), 2);
+  assert.equal(
+    playbackGainDb({ targetLufs: -14, trackLufs: null, truePeakDb: null, trimDb: 2 }),
+    2,
+  );
 });
 
 test("dbToLinear", () => {

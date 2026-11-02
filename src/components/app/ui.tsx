@@ -1,5 +1,11 @@
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import type { ButtonHTMLAttributes, InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from "react";
+import type {
+  ButtonHTMLAttributes,
+  InputHTMLAttributes,
+  ReactNode,
+  SelectHTMLAttributes,
+  TextareaHTMLAttributes,
+} from "react";
 import { PackLogo } from "@/components/site/PackLogo";
 import { Stanley } from "@/components/site/blocks";
 import { stanley } from "@/components/site/stanley";
@@ -33,12 +39,20 @@ export function AppShell({
   return (
     <div className="min-h-screen bg-paper text-ink">
       <header className="sticky top-0 z-40 bg-ink text-paper">
-        <div className={`mx-auto flex items-center gap-4 px-4 py-3 sm:px-6 ${wide ? "max-w-[96rem]" : "max-w-6xl"}`}>
+        <div
+          className={`mx-auto flex items-center gap-4 px-4 py-3 sm:px-6 ${wide ? "max-w-[96rem]" : "max-w-6xl"}`}
+        >
           <Link to="/" aria-label="The Pack home">
             <PackLogo variant="full" className={`h-9 ${areaColor}`} />
           </Link>
-          <span className={`font-mono text-xs uppercase tracking-[0.25em] ${areaColor}`}>{area}</span>
-          {title ? <span className="hidden truncate font-mono text-xs uppercase tracking-[0.2em] text-paper/70 sm:inline">{title}</span> : null}
+          <span className={`font-mono text-xs uppercase tracking-[0.25em] ${areaColor}`}>
+            {area}
+          </span>
+          {title ? (
+            <span className="hidden truncate font-mono text-xs uppercase tracking-[0.2em] text-paper/70 sm:inline">
+              {title}
+            </span>
+          ) : null}
           <button
             type="button"
             onClick={async () => {
@@ -52,15 +66,21 @@ export function AppShell({
         </div>
         {tabs?.length ? (
           <nav className="border-t border-paper/15" aria-label={`${area} sections`}>
-            <div className={`mx-auto flex gap-1 overflow-x-auto px-2 sm:px-4 ${wide ? "max-w-[96rem]" : "max-w-6xl"}`}>
+            <div
+              className={`mx-auto flex gap-1 overflow-x-auto px-2 sm:px-4 ${wide ? "max-w-[96rem]" : "max-w-6xl"}`}
+            >
               {tabs.map((tab) => {
-                const active = tab.exact ? pathname === tab.to : pathname === tab.to || pathname.startsWith(`${tab.to}/`);
+                const active = tab.exact
+                  ? pathname === tab.to
+                  : pathname === tab.to || pathname.startsWith(`${tab.to}/`);
                 return (
                   <Link
                     key={tab.to}
                     to={tab.to}
                     className={`whitespace-nowrap border-b-4 px-3 py-2.5 font-mono text-xs uppercase tracking-[0.15em] ${
-                      active ? "border-yellow text-yellow" : "border-transparent text-paper/75 hover:text-paper"
+                      active
+                        ? "border-yellow text-yellow"
+                        : "border-transparent text-paper/75 hover:text-paper"
                     }`}
                   >
                     {tab.label}
@@ -71,20 +91,31 @@ export function AppShell({
           </nav>
         ) : null}
       </header>
-      <main className={`mx-auto px-4 py-8 sm:px-6 ${wide ? "max-w-[96rem]" : "max-w-6xl"}`}>{children}</main>
+      <main className={`mx-auto px-4 py-8 sm:px-6 ${wide ? "max-w-[96rem]" : "max-w-6xl"}`}>
+        {children}
+      </main>
     </div>
   );
 }
 
 /** Mobile-first frame for the public listener pages. */
-export function PhoneShell({ children, tone = "grad-blue-magenta" }: { children: ReactNode; tone?: string }) {
+export function PhoneShell({
+  children,
+  tone = "grad-blue-magenta",
+}: {
+  children: ReactNode;
+  tone?: string;
+}) {
   return (
     <div className={`wave-field min-h-screen ${tone} text-paper`}>
       <header className="mx-auto flex max-w-md items-center justify-between px-5 pt-5">
         <Link to="/" aria-label="The Pack">
           <PackLogo variant="full" className="h-10 text-paper" />
         </Link>
-        <Link to="/saved" className="font-mono text-xs uppercase tracking-[0.2em] hover:text-yellow">
+        <Link
+          to="/saved"
+          className="font-mono text-xs uppercase tracking-[0.2em] hover:text-yellow"
+        >
           Saved
         </Link>
       </header>
@@ -93,13 +124,25 @@ export function PhoneShell({ children, tone = "grad-blue-magenta" }: { children:
   );
 }
 
-export function PageTitle({ kicker, title, lead, actions }: { kicker?: string; title: ReactNode; lead?: ReactNode; actions?: ReactNode }) {
+export function PageTitle({
+  kicker,
+  title,
+  lead,
+  actions,
+}: {
+  kicker?: string;
+  title: ReactNode;
+  lead?: ReactNode;
+  actions?: ReactNode;
+}) {
   return (
     <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
       <div className="max-w-3xl">
         {kicker ? <span className="stamp mono-kicker inline-block px-3 py-1">{kicker}</span> : null}
         <h1 className="mt-3 text-4xl sm:text-5xl">{title}</h1>
-        {lead ? <p className="mt-3 text-base leading-relaxed text-ink/75 sm:text-lg">{lead}</p> : null}
+        {lead ? (
+          <p className="mt-3 text-base leading-relaxed text-ink/75 sm:text-lg">{lead}</p>
+        ) : null}
       </div>
       {actions ? <div className="flex flex-wrap gap-2">{actions}</div> : null}
     </div>
@@ -120,7 +163,9 @@ export function Panel({
   actions?: ReactNode;
 }) {
   return (
-    <section className={`rounded-2xl border-2 border-ink bg-cream p-5 shadow-[4px_4px_0_0_var(--ink)] sm:p-6 ${className}`}>
+    <section
+      className={`rounded-2xl border-2 border-ink bg-cream p-5 shadow-[4px_4px_0_0_var(--ink)] sm:p-6 ${className}`}
+    >
       {title || kicker || actions ? (
         <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
           <div>
@@ -149,7 +194,10 @@ export function Button({
   size = "md",
   className = "",
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: keyof typeof BUTTON; size?: "sm" | "md" | "lg" }) {
+}: ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: keyof typeof BUTTON;
+  size?: "sm" | "md" | "lg";
+}) {
   const sizes = { sm: "px-3 py-1.5 text-xs", md: "px-5 py-2.5 text-sm", lg: "px-7 py-4 text-base" };
   return (
     <button
@@ -187,7 +235,15 @@ export function ButtonLink({
 const inputClass =
   "mt-1.5 w-full rounded-xl border-2 border-ink bg-paper px-3.5 py-2.5 text-base text-ink outline-none focus:ring-4 focus:ring-yellow disabled:opacity-60";
 
-export function Field({ label, hint, children }: { label: string; hint?: ReactNode; children: ReactNode }) {
+export function Field({
+  label,
+  hint,
+  children,
+}: {
+  label: string;
+  hint?: ReactNode;
+  children: ReactNode;
+}) {
   return (
     <label className="block">
       <span className="text-xs font-bold uppercase tracking-widest">{label}</span>
@@ -209,7 +265,15 @@ export function Select(props: SelectHTMLAttributes<HTMLSelectElement>) {
   return <select {...props} className={`${inputClass} ${props.className ?? ""}`} />;
 }
 
-export function Check({ checked, onChange, children }: { checked: boolean; onChange: (v: boolean) => void; children: ReactNode }) {
+export function Check({
+  checked,
+  onChange,
+  children,
+}: {
+  checked: boolean;
+  onChange: (v: boolean) => void;
+  children: ReactNode;
+}) {
   return (
     <label className="flex cursor-pointer items-start gap-3 text-sm leading-relaxed">
       <input
@@ -258,9 +322,17 @@ export function StateBadge({ state }: { state: string }) {
   return <Badge className={STATE_TONE[state] ?? "bg-paper"}>{STATE_LABEL[state] ?? state}</Badge>;
 }
 
-export function Badge({ children, className = "bg-paper text-ink" }: { children: ReactNode; className?: string }) {
+export function Badge({
+  children,
+  className = "bg-paper text-ink",
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return (
-    <span className={`inline-flex items-center rounded-full border-2 border-ink px-2.5 py-0.5 font-mono text-[0.68rem] font-bold uppercase tracking-[0.12em] ${className}`}>
+    <span
+      className={`inline-flex items-center rounded-full border-2 border-ink px-2.5 py-0.5 font-mono text-[0.68rem] font-bold uppercase tracking-[0.12em] ${className}`}
+    >
       {children}
     </span>
   );
@@ -285,7 +357,9 @@ export function TestModeNote({ children, show = true }: { children: ReactNode; s
   if (!show) return null;
   return (
     <div className="mb-6 rounded-xl border-2 border-dashed border-ember bg-yellow-100 px-4 py-3 text-sm">
-      <span className="mr-2 font-mono text-xs font-bold uppercase tracking-[0.2em] text-ember">Test mode</span>
+      <span className="mr-2 font-mono text-xs font-bold uppercase tracking-[0.2em] text-ember">
+        Test mode
+      </span>
       {children}
     </div>
   );
@@ -295,9 +369,19 @@ export function Simulated() {
   return <Badge className="bg-yellow text-ink">Simulated</Badge>;
 }
 
-export function Notice({ tone = "info", children }: { tone?: "info" | "error" | "ok"; children: ReactNode }) {
+export function Notice({
+  tone = "info",
+  children,
+}: {
+  tone?: "info" | "error" | "ok";
+  children: ReactNode;
+}) {
   const tones = { info: "bg-cyan-100", error: "bg-pink-100", ok: "bg-green-100" };
-  return <div className={`rounded-xl border-2 border-ink px-4 py-3 text-sm font-medium ${tones[tone]}`}>{children}</div>;
+  return (
+    <div className={`rounded-xl border-2 border-ink px-4 py-3 text-sm font-medium ${tones[tone]}`}>
+      {children}
+    </div>
+  );
 }
 
 export function Empty({ title, children }: { title: string; children?: ReactNode }) {
@@ -325,7 +409,10 @@ export function Table({ head, children }: { head: ReactNode[]; children: ReactNo
         <thead className="bg-ink text-paper">
           <tr>
             {head.map((h, i) => (
-              <th key={i} className="px-3 py-2 font-mono text-[0.7rem] font-bold uppercase tracking-[0.15em]">
+              <th
+                key={i}
+                className="px-3 py-2 font-mono text-[0.7rem] font-bold uppercase tracking-[0.15em]"
+              >
                 {h}
               </th>
             ))}

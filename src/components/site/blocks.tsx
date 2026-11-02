@@ -43,17 +43,8 @@ export function Stanley({
   );
 }
 
-
-
-
 /** One gradient for the whole page, with the brand wave-particle field over it. */
-export function PageShell({
-  tone = "electric",
-  children,
-}: {
-  tone?: Tone;
-  children: ReactNode;
-}) {
+export function PageShell({ tone = "electric", children }: { tone?: Tone; children: ReactNode }) {
   const t = TONES[tone];
   return (
     <div className={`wave-field ${t.dark ? "" : "wave-field-ink"} ${t.bg} ${t.text}`}>
@@ -87,20 +78,16 @@ export function PageHero({
 }) {
   return (
     <section>
-      <div className={`page-wrap px-5 pb-10 pt-14 sm:pb-12 sm:pt-16 ${aside ? "grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-14" : ""}`}>
+      <div
+        className={`page-wrap px-5 pb-10 pt-14 sm:pb-12 sm:pt-16 ${aside ? "grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-14" : ""}`}
+      >
         <div>
-        <span className="stamp mono-kicker inline-block px-3 py-1.5">
-          {eyebrow}
-        </span>
-        <div className="mt-5 flex items-center gap-2 text-5xl sm:gap-4 sm:text-7xl xl:text-8xl">
-          <h1 className="max-w-4xl flex-1 text-[1em] leading-[1.05] xl:max-w-5xl">
-            {title}
-          </h1>
-        </div>
+          <span className="stamp mono-kicker inline-block px-3 py-1.5">{eyebrow}</span>
+          <div className="mt-5 flex items-center gap-2 text-5xl sm:gap-4 sm:text-7xl xl:text-8xl">
+            <h1 className="max-w-4xl flex-1 text-[1em] leading-[1.05] xl:max-w-5xl">{title}</h1>
+          </div>
 
-        <p className="mt-5 max-w-2xl text-lg sm:text-xl xl:max-w-3xl xl:text-2xl">
-          {lead}
-        </p>
+          <p className="mt-5 max-w-2xl text-lg sm:text-xl xl:max-w-3xl xl:text-2xl">{lead}</p>
         </div>
         {aside ? (
           <div className="mx-auto w-full max-w-sm lg:mx-0 lg:w-[19rem] xl:w-[22rem]">{aside}</div>
@@ -110,16 +97,7 @@ export function PageHero({
   );
 }
 
-
-
-
-export function Slab({
-  children,
-  className = "",
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+export function Slab({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
     <section className={className}>
       <div className="page-wrap px-5 py-14 sm:py-18">{children}</div>
@@ -157,7 +135,6 @@ export function Point({
   );
 }
 
-
 /** Stanley, flipped so he faces the bubble coming out of his mouth. */
 export function StanleySays({
   children,
@@ -189,7 +166,6 @@ export function StanleySays({
         <span className="text-electric">Stanley says: {children}</span>
       </div>
     </div>
-
   );
 }
 
@@ -269,8 +245,14 @@ export function PhotoSticker({
 
   return (
     <figure className={frame}>
-      <span aria-hidden className="tape-strip pointer-events-none absolute -left-6 top-6 z-20 h-8 w-28 -rotate-[38deg] sm:w-32" />
-      <span aria-hidden className="tape-strip pointer-events-none absolute -right-6 top-6 z-20 h-8 w-28 rotate-[38deg] sm:w-32" />
+      <span
+        aria-hidden
+        className="tape-strip pointer-events-none absolute -left-6 top-6 z-20 h-8 w-28 -rotate-[38deg] sm:w-32"
+      />
+      <span
+        aria-hidden
+        className="tape-strip pointer-events-none absolute -right-6 top-6 z-20 h-8 w-28 rotate-[38deg] sm:w-32"
+      />
       <div className="torn-frame grain relative p-6 pb-6 sm:p-8 sm:pb-7">
         {img}
         {caption ? (
@@ -282,8 +264,6 @@ export function PhotoSticker({
     </figure>
   );
 }
-
-
 
 /** Aged-paper panel, torn out on every edge. */
 export function TornPanel({
@@ -301,10 +281,13 @@ export function TornPanel({
   );
 }
 
-
 /** Small cut-out kicker label, ransom-note style. */
-export function CutoutLabel({ children, className = "" }: { children: ReactNode; className?: string }) {
+export function CutoutLabel({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return <span className={`cutout-label ${className}`}>{children}</span>;
 }
-
-

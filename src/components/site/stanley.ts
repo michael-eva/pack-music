@@ -1,4 +1,3 @@
-
 /** Stanley animations from the brand kit. `*White` versions sit on gradients. */
 export const stanley = {
   headphoneWhite: "/brand/stanley-headphone-white.gif",
