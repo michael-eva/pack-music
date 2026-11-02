@@ -1,6 +1,4 @@
 import type { CSSProperties, ReactNode } from "react";
-import { Link } from "@tanstack/react-router";
-import { T } from "@/lib/site-text";
 
 export type Tone = "electric" | "magenta" | "lime" | "ember" | "deep" | "sunset";
 
@@ -92,16 +90,16 @@ export function PageHero({
       <div className={`page-wrap px-5 pb-10 pt-14 sm:pb-12 sm:pt-16 ${aside ? "grid items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto] lg:gap-14" : ""}`}>
         <div>
         <span className="stamp mono-kicker inline-block px-3 py-1.5">
-          {tk ? <T k={`${tk}.eyebrow`}>{eyebrow}</T> : eyebrow}
+          {eyebrow}
         </span>
         <div className="mt-5 flex items-center gap-2 text-5xl sm:gap-4 sm:text-7xl xl:text-8xl">
           <h1 className="max-w-4xl flex-1 text-[1em] leading-[1.05] xl:max-w-5xl">
-            {tk ? <T k={`${tk}.title`}>{title}</T> : title}
+            {title}
           </h1>
         </div>
 
         <p className="mt-5 max-w-2xl text-lg sm:text-xl xl:max-w-3xl xl:text-2xl">
-          {tk ? <T k={`${tk}.lead`}>{lead}</T> : lead}
+          {lead}
         </p>
         </div>
         {aside ? (
@@ -152,23 +150,13 @@ export function Point({
         className={`tape-strip absolute -top-3 z-10 h-7 w-28 ${tilt === "r" ? "right-7 rotate-6" : "left-7 -rotate-5"}`}
       />
 
-      <span className="cutout-label">{tk ? <T k={`${tk}.kicker`}>{kicker}</T> : kicker}</span>
-      <h3 className="mt-4 text-2xl uppercase">{tk ? <T k={`${tk}.title`}>{title}</T> : title}</h3>
-      <p className="mt-3 text-base leading-relaxed">{tk ? <T k={`${tk}.body`}>{body}</T> : body}</p>
+      <span className="cutout-label">{kicker}</span>
+      <h3 className="mt-4 text-2xl uppercase">{title}</h3>
+      <p className="mt-3 text-base leading-relaxed">{body}</p>
     </div>
   );
 }
 
-export function JoinCta({ label = "Join the Pack" }: { label?: string }) {
-  return (
-    <Link
-      to="/join"
-      className="press inline-flex rounded-full bg-ember px-8 py-4 font-display text-lg uppercase tracking-wide text-paper"
-    >
-      {label}
-    </Link>
-  );
-}
 
 /** Stanley, flipped so he faces the bubble coming out of his mouth. */
 export function StanleySays({

@@ -1,1 +1,0 @@
-ALTER TABLE public.board_members ADD COLUMN IF NOT EXISTS photo_url text;

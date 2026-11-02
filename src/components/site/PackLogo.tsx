@@ -1,5 +1,3 @@
-import logo from "@/assets/pack-logo.png.asset.json";
-import mark from "@/assets/pack-mark.png.asset.json";
 
 type Props = {
   /** "full" = Stanley + pack music/ wordmark, "mark" = Stanley only */
@@ -14,7 +12,7 @@ type Props = {
  * lets the mark appear in white or any brand colour per the style guide.
  */
 export function PackLogo({ variant = "full", className = "", title = "pack music" }: Props) {
-  const src = variant === "full" ? logo.url : mark.url;
+  const src = variant === "full" ? "/brand/pack-logo.png" : "/brand/pack-mark.png";
   const ratio = variant === "full" ? "925 / 779" : "427 / 379";
 
   return (
