@@ -411,7 +411,8 @@ export const attachTrackAudio = createServerFn({ method: "POST" })
     return measured;
   });
 
-/** Measures loudness to EBU R128 and duration, if ffmpeg is installed. */
+/** Measures loudness to EBU R128 and duration. Uses the bundled ffmpeg-static binary,
+ *  falling back to an ffmpeg on the PATH. Returns nulls if neither is available. */
 async function measureAudio(sb: Sb, path: string) {
   const empty = {
     lufs: null as number | null,
@@ -424,22 +425,16 @@ async function measureAudio(sb: Sb, path: string) {
     const { writeFileSync, rmSync, mkdtempSync } = await import("node:fs");
     const { tmpdir } = await import("node:os");
     const { join } = await import("node:path");
+    const bundled = (await import("ffmpeg-static").catch(() => null))?.default;
+    const ffmpeg = typeof bundled === "string" ? bundled : "ffmpeg";
     const { data, error } = await sb.storage.from("audio").download(path);
     if (error || !data) return empty;
     const dir = mkdtempSync(join(tmpdir(), "pack-audio-"));
     const file = join(dir, path.split("/").pop() ?? "audio");
     writeFileSync(file, Buffer.from(await data.arrayBuffer()));
     try {
-      const probe = spawnSync(
-        "ffprobe",
-        ["-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", file],
-        { encoding: "utf8" },
-      );
-      const seconds = Number(probe.stdout?.trim());
-      const durationMs =
-        Number.isFinite(seconds) && seconds > 0 ? Math.round(seconds * 1000) : null;
       const run = spawnSync(
-        "ffmpeg",
+        ffmpeg,
         [
           "-hide_banner",
           "-nostats",
@@ -454,6 +449,10 @@ async function measureAudio(sb: Sb, path: string) {
         { encoding: "utf8" },
       );
       const text = run.stderr ?? "";
+      const d = /Duration: (\d+):(\d+):(\d+(?:\.\d+)?)/.exec(text);
+      const durationMs = d
+        ? Math.round((Number(d[1]) * 3600 + Number(d[2]) * 60 + Number(d[3])) * 1000)
+        : null;
       const start = text.lastIndexOf("{");
       if (run.error || start < 0) return { ...empty, durationMs };
       const json = JSON.parse(text.slice(start, text.lastIndexOf("}") + 1));
