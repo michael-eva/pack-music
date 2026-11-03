@@ -20,9 +20,9 @@ function SignIn() {
       <div className="w-full max-w-md">
         <PackLogo variant="full" className="mx-auto block h-20 text-yellow" />
         <div className="mt-8 rounded-3xl border-2 border-ink bg-paper p-7 text-ink shadow-[6px_6px_0_0_var(--ink)]">
-          <h1 className="text-3xl">Sign in</h1>
+          <h1 className="text-3xl">Sign in or join</h1>
           <p className="mt-2 text-sm text-ink/70">
-            Sign in with an email link or a password. That's all we ask for.
+            New or returning, all we ask for is your email. Use a link or a password.
           </p>
           <div className="mt-6">
             <SignInForm

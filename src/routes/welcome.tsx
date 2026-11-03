@@ -4,7 +4,7 @@ import { useState } from "react";
 import { PackLogo } from "@/components/site/PackLogo";
 import { useMe } from "@/components/app/guard";
 import { Button, Check, Loading, Notice, errorMessage } from "@/components/app/ui";
-import { acceptDocuments, joinCoop } from "@/lib/session.functions";
+import { acceptTerms } from "@/lib/session.functions";
 import { homeFor } from "@/lib/home-route";
 
 export const Route = createFileRoute("/welcome")({
@@ -13,44 +13,30 @@ export const Route = createFileRoute("/welcome")({
   component: Welcome,
 });
 
-/**
- * Onboarding gates, one step at a time (ACC-7 to ACC-10):
- * Terms and Privacy, then joining the co-op with its own optional open-data consent.
- */
+/** First sign-in: accept the current Terms and Privacy Policy (ACC-7). News is opt-in (LIS-6). */
 function Welcome() {
   const me = useMe();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const [accepted, setAccepted] = useState(false);
-  const [openData, setOpenData] = useState(false);
+  const [news, setNews] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   if (me.isPending) return <Loading />;
   if (me.isError) return <Navigate to="/sign-in" />;
-  const data = me.data;
-
-  const step = !data.termsAccepted
-    ? "terms"
-    : data.needsMembership && !data.membership?.current
-      ? "coop"
-      : "done";
-  if (step === "done") return <Navigate to={homeFor(data.roles)} />;
-  const rules = data.documents.find((d) => d.kind === "coop_rules");
-  const full = data.roles.includes("artist");
+  if (me.data.termsAccepted) return <Navigate to={homeFor(me.data.roles)} />;
+  const roles = me.data.roles;
 
   async function submit() {
     setBusy(true);
     setError(null);
     try {
-      if (step === "terms") await acceptDocuments({ data: { kinds: ["terms", "privacy"] } });
-      else await joinCoop({ data: { openData } });
-      setAccepted(false);
+      await acceptTerms({ data: { newsOptIn: news } });
       await queryClient.invalidateQueries({ queryKey: ["me"] });
-      if (step === "coop") navigate({ to: homeFor(data.roles) });
+      navigate({ to: homeFor(roles) });
     } catch (e) {
       setError(errorMessage(e));
-    } finally {
       setBusy(false);
     }
   }
@@ -60,48 +46,26 @@ function Welcome() {
       <div className="w-full max-w-lg">
         <PackLogo variant="full" className="mx-auto block h-20 text-yellow" />
         <div className="mt-8 rounded-3xl border-2 border-ink bg-paper p-7 text-ink shadow-[6px_6px_0_0_var(--ink)]">
-          {step === "terms" ? (
-            <>
-              <h1 className="text-3xl">Before you start</h1>
-              <p className="mt-3 text-sm">
-                Please read and accept the Terms and the Privacy Policy.
-              </p>
-              <div className="mt-5">
-                <Check checked={accepted} onChange={setAccepted}>
-                  I accept the Terms and the Privacy Policy.
-                </Check>
-              </div>
-            </>
-          ) : (
-            <>
-              <p className="mono-kicker text-ink/60">Step 2 of 2</p>
-              <h1 className="mt-2 text-3xl">Join the co-op</h1>
-              <p className="mt-3 text-sm leading-relaxed">
-                {full
-                  ? "Artists join as Full members. That means a vote in how The Pack is run."
-                  : "Businesses join as Associate members. Associate members don't vote, but they're part of the co-op."}
-              </p>
-              {rules?.href ? (
-                <a
-                  href={rules.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-4 inline-block font-bold underline"
-                >
-                  Read {rules.title} ({rules.version})
-                </a>
-              ) : null}
-              <div className="mt-5 space-y-4">
-                <Check checked={accepted} onChange={setAccepted}>
-                  I accept the Co-op Rules and join as {full ? "a Full" : "an Associate"} member.
-                </Check>
-                <Check checked={openData} onChange={setOpenData}>
-                  Include my aggregate data in the Open data project (optional). It's shared only at
-                  SA2 level, never identifies anyone, and you can opt out any time.
-                </Check>
-              </div>
-            </>
-          )}
+          <h1 className="text-3xl">Welcome to The Pack</h1>
+          <p className="mt-3 text-sm leading-relaxed">
+            Local music, picked by people. Before you start listening, please read and accept the
+            Terms and the Privacy Policy.
+          </p>
+          <ul className="mt-3 list-disc pl-5 text-sm">
+            {me.data.documents.map((d) => (
+              <li key={d.id}>
+                {d.title} <span className="font-mono text-xs text-ink/60">({d.version})</span>
+              </li>
+            ))}
+          </ul>
+          <div className="mt-5 space-y-4">
+            <Check checked={accepted} onChange={setAccepted}>
+              I accept the Terms and the Privacy Policy.
+            </Check>
+            <Check checked={news} onChange={setNews}>
+              Send me the occasional email about new music and the co-op (optional).
+            </Check>
+          </div>
           {error ? (
             <div className="mt-4">
               <Notice tone="error">{error}</Notice>
@@ -113,7 +77,7 @@ function Welcome() {
             disabled={!accepted || busy}
             onClick={submit}
           >
-            {busy ? "Hold on…" : step === "terms" ? "Continue" : "Join The Pack"}
+            {busy ? "Hold on…" : "Start listening"}
           </Button>
         </div>
       </div>

@@ -15,6 +15,15 @@ export type Caller = {
   roles: AppRole[];
 };
 
+/**
+ * Thrown when the caller lacks a role. An Error, not a Response: a Response thrown
+ * from a server function reaches the browser as a normal return value, so the
+ * screen would think the call worked.
+ */
+export class AccessError extends Error {
+  readonly status = 403;
+}
+
 export async function db() {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   return supabaseAdmin;
@@ -30,8 +39,7 @@ export async function getCaller(userId: string): Promise<Caller> {
       .maybeSingle(),
     sb.from("user_roles").select("role").eq("user_id", userId),
   ]);
-  if (profile?.deactivated_at)
-    throw new Response("This account has been deactivated.", { status: 403 });
+  if (profile?.deactivated_at) throw new AccessError("This account has been deactivated.");
   return {
     userId,
     email: profile?.email ?? "",
@@ -44,7 +52,7 @@ export async function getCaller(userId: string): Promise<Caller> {
 export async function requireRole(userId: string, ...roles: AppRole[]): Promise<Caller> {
   const caller = await getCaller(userId);
   if (caller.roles.includes("admin") || roles.some((r) => caller.roles.includes(r))) return caller;
-  throw new Response("Forbidden", { status: 403 });
+  throw new AccessError("You don't have access to do that.");
 }
 
 export async function audit(entry: {
@@ -67,27 +75,13 @@ export async function audit(entry: {
 }
 
 export type Settings = {
-  testMode: boolean;
-  siteFeeCents: number;
-  artistShareBp: number;
-  playThresholdSeconds: number;
-  payoutThresholdCents: number;
   loudnessTargetLufs: number;
-  acceptedAiAnswers: string[];
   playlistRules: { noArtistTwiceInARow: boolean; repeatWindowMinutes: number };
-  featureFlags: Record<string, boolean>;
 };
 
 const SETTING_KEYS: Record<keyof Settings, string> = {
-  testMode: "test_mode",
-  siteFeeCents: "site_fee_cents",
-  artistShareBp: "artist_share_bp",
-  playThresholdSeconds: "play_threshold_seconds",
-  payoutThresholdCents: "payout_threshold_cents",
   loudnessTargetLufs: "loudness_target_lufs",
-  acceptedAiAnswers: "accepted_ai_answers",
   playlistRules: "playlist_rules",
-  featureFlags: "feature_flags",
 };
 
 export async function getSettings(): Promise<Settings> {

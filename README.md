@@ -1,18 +1,15 @@
 # The Pack
 
-The Pack's streaming app for the Living Labs pilot: local music played in real businesses, with a
-ledger that pays the artists played at each site. Built from *Pack MVP Scope from Michael.md*.
+The Pack's listening app: music by local, original artists, in playlists curated by people.
+Admins upload the music and build the playlists; listeners sign in and play.
+Scope source: *Pack MVP Scope from Michael.md* (cut down: no payments in this MVP).
 
 ## What's in it
 
 | Area | Who | Path |
 | --- | --- | --- |
-| Now playing, artist and business pages, saved songs | Listener (no login to look) | `/c/:code`, `/a/:artistId`, `/place/:code`, `/saved` |
-| Site, player, playlists, plan | Business owner and staff | `/business` |
-| Releases, who gets paid, earnings, my data | Artist | `/studio` |
-| Review, playlists, sites, users, ledger, policy, audit | Admin and curator | `/admin` |
-
-The pilot is ledger-only: the payments engine runs the real rules on notional money and no money moves.
+| Home, playlists, releases, artists, search, saved songs, player | Listener | `/listen` |
+| Music upload, playlists, users, settings, audit log | Admin (curators: playlists and tagging) | `/admin` |
 
 ## Run it locally
 
@@ -33,11 +30,9 @@ Demo accounts all use the password `packpack`:
 | --- | --- |
 | admin@pack.test | Admin and curator |
 | curator@pack.test | Curator |
-| sam@pack.test | Artist, The Southerlies |
-| cafe@pack.test | Business owner, Example Café (`/c/exa`) |
-| jess@pack.test | Staff at Example Café |
-| books@pack.test | Owner of Corner Books and Harbour Salon |
 | listener@pack.test | Listener |
+
+Anyone can create a listener account from the sign-in page. Admin and curator accounts come from an invite link.
 
 Sign-in links and other auth emails go to the local mailbox at http://127.0.0.1:54324.
 Supabase Studio is at http://127.0.0.1:54323.
@@ -47,7 +42,7 @@ Supabase Studio is at http://127.0.0.1:54323.
 | Command | What it does |
 | --- | --- |
 | `npm run dev` | App on port 3000 |
-| `npm test` | Unit tests (payments engine, loudness, checks, playlist rules) |
+| `npm test` | Unit tests (loudness, playlist rules, player queue) |
 | `npm run db:reset` | Rebuild the local database and reload the demo |
 | `npm run db:types` | Regenerate `src/integrations/supabase/types.ts` after a migration |
 | `npm run build && npm start` | Production build on Node |
@@ -57,15 +52,13 @@ Supabase Studio is at http://127.0.0.1:54323.
 - **Stack**: TanStack Start (React 19, SSR, server functions), Tailwind 4, Supabase (Postgres, Auth, Storage).
 - **Access**: the browser never queries the database. Every table has row-level security on with no
   policies; server functions check the caller's roles (`src/lib/auth.server.ts`) and then use the service role.
-- **Schema**: `supabase/migrations/`. Money is integer cents, shares are basis points, the ledger is
-  append-only (a trigger refuses updates and deletes).
-- **Payments engine**: `src/lib/ledger/engine.ts`, pure and tested against the worked example in section 8.
+- **Schema**: `supabase/migrations/`. Audio is private and played through short-lived signed links.
 - **Loudness**: masters are never altered; the player applies `target − measured` gain, capped by
   true-peak headroom (`src/lib/loudness.ts`).
 - **Brand**: colours, type and the torn-paper look come from The Pack Style Guide V3 (`src/styles.css`).
 
 ## Not built yet
 
-MetaGen package ingestion (no sample package yet, so artists enter releases through a form that
-captures the same fields), real email sending for invites, real payouts (Phase 2), and everything the
-scope places after the pilot.
+Payments and the ledger, businesses and the in-venue player, artist accounts, MetaGen package
+ingestion, and email sending for invites. An earlier version of the payments engine and business
+player is in git history (commit 80179c2) if those come back.

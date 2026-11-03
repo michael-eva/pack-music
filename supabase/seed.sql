@@ -45,34 +45,14 @@ insert into public.descriptors (id, facet, label) values
   ('vocals-led', 'vocals', 'Vocal-led'),
   ('tempo-slow', 'tempo', 'Slow'), ('tempo-mid', 'tempo', 'Mid tempo'), ('tempo-fast', 'tempo', 'Fast');
 
--- Documents. PLACEHOLDER wording: the real text is Pack legal text (ART-3, VEN-7).
-insert into public.documents (kind, version, title, summary, body, href, is_current) values
-  ('terms', '0.1-draft', 'Terms of use', '[]',
-   'Draft terms. Replace with the approved text before the pilot opens.', null, true),
-  ('privacy', '0.1-draft', 'Privacy policy', '[]',
-   'Draft privacy policy. We collect the minimum: your email, and anything you choose to add.', null, true),
-  ('coop_rules', '2021', 'The Pack Music Co-operative Rules', '[]',
-   'The Rules of The Pack Music Co-operative Ltd.', '/docs/pack-coop-rules-2021.pdf', true),
-  ('artist_agreement', '0.1-draft', 'Artist Agreement',
-   '[{"heading":"Permission to stream","body":"You let The Pack stream your songs to businesses that play local music."},
-     {"heading":"Licence-back","body":"The Pack streams under your own APRA AMCOS membership, and pays you directly."},
-     {"heading":"How you''re paid","body":"70% of each business fee goes to the artists played there. Statements show the working."},
-     {"heading":"Your data stays yours","body":"Export it or withdraw a release whenever you like."}]',
-   'Draft agreement. The full legal text goes here once approved.', null, true),
-  ('licensing_notice', '0.1-draft', 'Before you switch on The Pack',
-   '[{"heading":"What The Pack is","body":"A music service that plays music by local, original artists who have given their permission."},
-     {"heading":"What it does not do yet","body":"It does not replace your OneMusic licence."},
-     {"heading":"What that means for you","body":"Keep your OneMusic licence until The Pack confirms otherwise in writing. The Pack costs $49.99 per site, per month. Your plan page shows the details."}]',
-   'Wording to be reviewed by a person with licensing knowledge before launch (D-25).', null, true);
+-- Documents. PLACEHOLDER wording until The Pack approves the real text.
+insert into public.documents (kind, version, title, body, is_current) values
+  ('terms', '0.1-draft', 'Terms of use',
+   'Draft terms. Replace with the approved text before the pilot opens.', true),
+  ('privacy', '0.1-draft', 'Privacy policy',
+   'Draft privacy policy. We collect the minimum: your email, and anything you choose to add.', true);
 
--- Policy settings (ADM-4). The numbers that drive the ledger live here, not in code.
+-- Settings that drive playback and the playlist builder.
 insert into public.settings (key, value) values
-  ('test_mode', 'true'),
-  ('site_fee_cents', '4999'),
-  ('artist_share_bp', '7000'),
-  ('play_threshold_seconds', '30'),
-  ('payout_threshold_cents', '1000'),
   ('loudness_target_lufs', '-14'),
-  ('accepted_ai_answers', '["no"]'),
-  ('playlist_rules', '{"noArtistTwiceInARow": true, "repeatWindowMinutes": 180}'),
-  ('feature_flags', '{"businessPlayer": true, "listenerSaves": true, "listenerSuggestions": false}');
+  ('playlist_rules', '{"noArtistTwiceInARow": true, "repeatWindowMinutes": 180}');

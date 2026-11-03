@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { LevelledPreview } from "@/components/app/LevelledPreview";
@@ -15,7 +15,13 @@ import {
   errorMessage,
   formatDuration,
 } from "@/components/app/ui";
-import { assignVersion, getBuilder, publishVersion } from "@/lib/curation.functions";
+import {
+  deletePlaylist,
+  getBuilder,
+  publishVersion,
+  updatePlaylistDetails,
+} from "@/lib/curation.functions";
+import { ImageUpload } from "@/components/admin/upload";
 import { checkPlaylist } from "@/lib/playlist-rules";
 
 export const Route = createFileRoute("/admin/playlists/$id")({ component: Builder });
@@ -50,7 +56,7 @@ const NO_FILTERS: Filters = {
   lufsMax: "",
 };
 
-/** D3: filter, pick by hand, check the rules as you go, preview levelled, publish a version, assign. */
+/** D3: filter, pick by hand, check the rules as you go, preview levelled, publish a version, feature it. */
 function Builder() {
   const { id } = Route.useParams();
   const queryClient = useQueryClient();
@@ -62,8 +68,6 @@ function Builder() {
   const [curatedBy, setCuratedBy] = useState("");
   const [filters, setFilters] = useState<Filters>(NO_FILTERS);
   const [ack, setAck] = useState(false);
-  const [siteIds, setSiteIds] = useState<string[]>([]);
-  const [assignFrom, setAssignFrom] = useState<string>("");
   const [message, setMessage] = useState<{ tone: "ok" | "error"; text: string } | null>(null);
 
   useEffect(() => {
@@ -98,27 +102,15 @@ function Builder() {
         },
       }),
     onSuccess: (r) => {
-      setMessage({ tone: "ok", text: `Published version ${r.version}. Assign it to sites below.` });
+      setMessage({
+        tone: "ok",
+        text: `Published version ${r.version}. Listeners hear it straight away.`,
+      });
       setAck(false);
-      setAssignFrom(r.versionId);
       refresh();
     },
     onError: (e) => setMessage({ tone: "error", text: errorMessage(e) }),
   });
-  const assign = useMutation({
-    mutationFn: () => assignVersion({ data: { versionId: assignFrom, siteIds } }),
-    onSuccess: () => {
-      setMessage({ tone: "ok", text: "Assigned. Each site switches at its next track boundary." });
-      setSiteIds([]);
-      refresh();
-    },
-    onError: (e) => setMessage({ tone: "error", text: errorMessage(e) }),
-  });
-
-  useEffect(() => {
-    if (q.data && !assignFrom && q.data.versions[0]) setAssignFrom(q.data.versions[0].id);
-  }, [q.data, assignFrom]);
-
   if (q.isPending || draft === null) return <Loading />;
   if (q.isError) return <Notice tone="error">{errorMessage(q.error)}</Notice>;
   const d = q.data;
@@ -299,14 +291,6 @@ function Builder() {
                     {formatDuration(t.durationMs)}
                     {t.genreLabel ? ` · ${t.genreLabel}` : ""}
                   </p>
-                  {d.skipFeedback[t.id] ? (
-                    <p className="text-[0.7rem] text-ember">
-                      Skips:{" "}
-                      {Object.entries(d.skipFeedback[t.id]!)
-                        .map(([r, n]) => `${r} ${n}`)
-                        .join(", ")}
-                    </p>
-                  ) : null}
                 </div>
                 <Button
                   size="sm"
@@ -443,62 +427,19 @@ function Builder() {
             </div>
           </Panel>
 
-          <Panel title="Assign to sites" kicker="A change is a new assignment from now">
-            {d.versions.length === 0 ? (
-              <p className="text-sm text-ink/60">Publish a version first.</p>
-            ) : (
-              <div className="space-y-3">
-                <Field label="Version" hint="Pick an older version to roll a site back.">
-                  <Select value={assignFrom} onChange={(e) => setAssignFrom(e.target.value)}>
-                    {d.versions.map((v) => (
-                      <option key={v.id} value={v.id}>
-                        v{v.version} · {v.trackIds.length} songs
-                        {v.publishedAt
-                          ? ` · ${new Date(v.publishedAt).toLocaleDateString("en-AU")}`
-                          : ""}
-                      </option>
-                    ))}
-                  </Select>
-                </Field>
-                <ul className="space-y-1.5 text-sm">
-                  {d.sites.map((s) => (
-                    <li key={s.id}>
-                      <Check
-                        checked={siteIds.includes(s.id)}
-                        onChange={(v) =>
-                          setSiteIds(v ? [...siteIds, s.id] : siteIds.filter((x) => x !== s.id))
-                        }
-                      >
-                        <span className="font-bold">{s.name}</span>
-                        <span className="text-ink/60">
-                          {" "}
-                          · {s.region ? (regionName.get(s.region) ?? s.region) : "No region"} ·{" "}
-                          {s.currentVersion
-                            ? `playing v${s.currentVersion}`
-                            : s.playingOther
-                              ? "playing another playlist"
-                              : "nothing assigned"}
-                        </span>
-                      </Check>
-                    </li>
-                  ))}
-                </ul>
-                <Button
-                  disabled={!siteIds.length || !assignFrom || assign.isPending}
-                  onClick={() => assign.mutate()}
-                >
-                  Assign to {siteIds.length || ""} site{siteIds.length === 1 ? "" : "s"}
-                </Button>
-              </div>
-            )}
-          </Panel>
+          <DetailsPanel
+            key={`${d.playlist.id}-${d.versions.length}`}
+            playlist={d.playlist}
+            published={d.versions.some((v) => v.publishedAt)}
+            onSaved={refresh}
+          />
         </div>
       </div>
 
       {message ? <Notice tone={message.tone}>{message.text}</Notice> : null}
 
       <Panel
-        title="Exposure, last 30 days"
+        title="Exposure across published playlists"
         kicker="Shown so no artist is favoured by accident. Information only, never a ranking."
       >
         <ul className="grid gap-2 text-sm sm:grid-cols-2 lg:grid-cols-4">
@@ -507,12 +448,121 @@ function Builder() {
               <p className="font-bold">{e.name}</p>
               <p className="text-xs text-ink/70">
                 {e.region ? (regionName.get(e.region) ?? e.region) : "No region"} · {e.slots} slot
-                {e.slots === 1 ? "" : "s"} · {e.plays} play{e.plays === 1 ? "" : "s"}
+                {e.slots === 1 ? "" : "s"}
               </p>
             </li>
           ))}
         </ul>
       </Panel>
     </div>
+  );
+}
+
+type Details = {
+  id: string;
+  name: string;
+  description: string;
+  coverUrl: string | null;
+  featured: boolean;
+  featuredOrder: number;
+};
+
+/** Name, description, cover and the listener-home spot. Saved straight away: no new version needed. */
+function DetailsPanel({
+  playlist,
+  published,
+  onSaved,
+}: {
+  playlist: Details & { curatedBy: string };
+  published: boolean;
+  onSaved: () => void;
+}) {
+  const navigate = useNavigate();
+  const [form, setForm] = useState<Details>({
+    id: playlist.id,
+    name: playlist.name,
+    description: playlist.description,
+    coverUrl: playlist.coverUrl,
+    featured: playlist.featured,
+    featuredOrder: playlist.featuredOrder,
+  });
+  const save = useMutation({
+    mutationFn: () => updatePlaylistDetails({ data: form }),
+    onSuccess: onSaved,
+  });
+  const remove = useMutation({
+    mutationFn: () => deletePlaylist({ data: { id: playlist.id } }),
+    onSuccess: () => navigate({ to: "/admin/playlists" }),
+  });
+  return (
+    <Panel title="Details" kicker="Saved straight away, no new version">
+      <form
+        className="space-y-4"
+        onSubmit={(e) => {
+          e.preventDefault();
+          save.mutate();
+        }}
+      >
+        <Field label="Name">
+          <Input
+            required
+            value={form.name}
+            onChange={(e) => setForm({ ...form, name: e.target.value })}
+          />
+        </Field>
+        <Field label="Description" hint="Shown to listeners under the title.">
+          <Input
+            value={form.description}
+            onChange={(e) => setForm({ ...form, description: e.target.value })}
+            placeholder="Slow coffee, big windows, the local songs turned low."
+          />
+        </Field>
+        <ImageUpload
+          label="Cover"
+          scope="playlists"
+          value={form.coverUrl}
+          onChange={(coverUrl) => setForm({ ...form, coverUrl })}
+        />
+        <Check checked={form.featured} onChange={(featured) => setForm({ ...form, featured })}>
+          Featured on the listener home
+        </Check>
+        {form.featured ? (
+          <Field label="Order on the home page" hint="Lower numbers show first.">
+            <Input
+              type="number"
+              min={0}
+              max={999}
+              value={form.featuredOrder}
+              onChange={(e) =>
+                setForm({ ...form, featuredOrder: Math.round(Number(e.target.value)) })
+              }
+            />
+          </Field>
+        ) : null}
+        {!published && form.featured ? (
+          <p className="text-xs text-ember">Publish a version first, then it can be featured.</p>
+        ) : null}
+        {save.isError ? <Notice tone="error">{errorMessage(save.error)}</Notice> : null}
+        {save.isSuccess && !save.isPending ? <Notice tone="ok">Saved.</Notice> : null}
+        <div className="flex flex-wrap gap-2">
+          <Button type="submit" disabled={save.isPending}>
+            Save details
+          </Button>
+          {!published ? (
+            <Button
+              variant="danger"
+              disabled={remove.isPending}
+              onClick={() => {
+                if (window.confirm(`Delete “${playlist.name}”? It has never been published.`))
+                  remove.mutate();
+              }}
+            >
+              Delete playlist
+            </Button>
+          ) : null}
+        </div>
+        {remove.isError ? <Notice tone="error">{errorMessage(remove.error)}</Notice> : null}
+      </form>
+    </Panel>
   );
 }

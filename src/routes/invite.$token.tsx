@@ -5,7 +5,7 @@ import { PackLogo } from "@/components/site/PackLogo";
 import { SignInForm } from "@/components/app/SignInForm";
 import { Button, Check, Field, Input, Loading, Notice, errorMessage } from "@/components/app/ui";
 import { supabase } from "@/integrations/supabase/client";
-import { acceptDocuments, getInvite, redeemInvite } from "@/lib/session.functions";
+import { acceptTerms, getInvite, redeemInvite } from "@/lib/session.functions";
 
 export const Route = createFileRoute("/invite/$token")({
   ssr: false,
@@ -16,9 +16,6 @@ export const Route = createFileRoute("/invite/$token")({
 });
 
 const ROLE_WORDS: Record<string, string> = {
-  artist: "as an artist",
-  business_owner: "as a business",
-  business_staff: "to run the player",
   curator: "as a curator",
   admin: "as an admin",
 };
@@ -44,8 +41,8 @@ function InvitePage() {
     setBusy(true);
     setError(null);
     try {
-      await redeemInvite({ data: { token, publicName: name || undefined } });
-      await acceptDocuments({ data: { kinds: ["terms", "privacy"] } });
+      await redeemInvite({ data: { token, displayName: name || undefined } });
+      await acceptTerms({ data: { newsOptIn: false } });
       navigate({ to: "/welcome" });
     } catch (e) {
       setError(errorMessage(e));
@@ -73,16 +70,9 @@ function InvitePage() {
             </>
           ) : (
             <>
-              {invite.data.cohort ? (
-                <span className="stamp mono-kicker inline-block px-3 py-1">
-                  {invite.data.cohort}
-                </span>
-              ) : null}
               <h1 className="mt-3 text-4xl">You're invited</h1>
               <p className="mt-2 text-sm text-ink/70">
-                Join The Pack {ROLE_WORDS[invite.data.role] ?? ""}
-                {invite.data.businessName ? ` for ${invite.data.businessName}` : ""}. It takes a
-                couple of minutes.
+                Join The Pack {ROLE_WORDS[invite.data.role] ?? ""}. It takes a couple of minutes.
               </p>
               <div className="mt-6">
                 {!session.data ? (
@@ -96,17 +86,13 @@ function InvitePage() {
                 ) : (
                   <div className="space-y-4">
                     <Notice>Signed in as {session.data.user.email}.</Notice>
-                    {invite.data.role === "artist" || invite.data.role === "business_staff" ? (
-                      <Field
-                        label={invite.data.role === "artist" ? "Artist or band name" : "Your name"}
-                      >
-                        <Input
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          placeholder="The Southerlies"
-                        />
-                      </Field>
-                    ) : null}
+                    <Field label="Your name" hint="Shown on playlists you curate.">
+                      <Input
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Alex"
+                      />
+                    </Field>
                     <Check checked={terms} onChange={setTerms}>
                       I accept the Terms and the Privacy Policy.
                     </Check>

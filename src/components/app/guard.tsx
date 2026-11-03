@@ -18,7 +18,7 @@ export async function requireSession() {
 
 /**
  * Gate for a signed-in area: right role, then the onboarding steps in order
- * (Terms, then Co-op membership), before any of the area's screens (ACC-7, ACC-9).
+ * (accept the current Terms) before any of the area's screens (ACC-7).
  */
 export function Guard({ roles, children }: { roles: AppRole[]; children: (me: Me) => ReactNode }) {
   const me = useMe();
@@ -34,8 +34,7 @@ export function Guard({ roles, children }: { roles: AppRole[]; children: (me: Me
     );
   }
   if (!data.roles.includes("admin")) {
-    if (!data.termsAccepted || (data.needsMembership && !data.membership?.current))
-      return <Navigate to="/welcome" />;
+    if (!data.termsAccepted) return <Navigate to="/welcome" />;
   }
   return <>{children(data)}</>;
 }

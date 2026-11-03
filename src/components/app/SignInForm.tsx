@@ -117,9 +117,13 @@ export function SignInForm({
             Use a password
           </button>
         )}
-        {initialMode === "create" && mode !== "password" ? (
+        {mode === "create" ? (
           <button type="button" className="underline" onClick={() => setMode("password")}>
             I already have an account
+          </button>
+        ) : mode === "password" && initialMode !== "create" ? (
+          <button type="button" className="underline" onClick={() => setMode("create")}>
+            New here? Create an account
           </button>
         ) : null}
       </div>

@@ -15,8 +15,6 @@ export const Route = createFileRoute("/")({
 const DEMO = [
   ["Admin", "admin@pack.test"],
   ["Curator", "curator@pack.test"],
-  ["Artist (The Southerlies)", "sam@pack.test"],
-  ["Business owner (Example Café)", "cafe@pack.test"],
   ["Listener", "listener@pack.test"],
 ];
 
@@ -44,8 +42,7 @@ function Home() {
           Local music, played in real places.
         </h1>
         <p className="mt-6 max-w-2xl text-lg sm:text-xl">
-          The Pack plays music by local artists in the businesses around you. 70% of every business
-          fee goes to the artists played there.
+          Music by local, original artists, picked by real people. No algorithm, no ads.
         </p>
         <div className="mt-10 flex flex-wrap items-center gap-4">
           <Link
@@ -66,12 +63,6 @@ function Home() {
                   {label}: <span className="text-cyan">{email}</span>
                 </li>
               ))}
-              <li className="pt-2">
-                QR page for Example Café:{" "}
-                <Link to="/c/$code" params={{ code: "exa" }} className="text-cyan underline">
-                  /c/exa
-                </Link>
-              </li>
             </ul>
           </div>
         ) : null}

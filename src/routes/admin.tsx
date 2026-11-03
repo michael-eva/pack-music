@@ -10,19 +10,19 @@ export const Route = createFileRoute("/admin")({
 
 const ADMIN_TABS: Tab[] = [
   { to: "/admin", label: "Dashboard", exact: true },
-  { to: "/admin/review", label: "Review queue" },
+  { to: "/admin/music", label: "Music" },
   { to: "/admin/playlists", label: "Playlists" },
-  { to: "/admin/sites", label: "Sites" },
   { to: "/admin/users", label: "Users" },
-  { to: "/admin/ledger", label: "Ledger" },
-  { to: "/admin/policy", label: "Policy" },
+  { to: "/admin/settings", label: "Settings" },
   { to: "/admin/audit", label: "Audit log" },
+  { to: "/listen", label: "Listener app ↗", exact: true },
 ];
 
-// A curator can preview and build, and see the queue, but not approve (D intro).
+// A curator builds playlists and tags music, but doesn't upload or publish it.
 const CURATOR_TABS: Tab[] = [
   { to: "/admin/playlists", label: "Playlists" },
-  { to: "/admin/review", label: "Review queue" },
+  { to: "/admin/music", label: "Music" },
+  { to: "/listen", label: "Listener app ↗", exact: true },
 ];
 
 function AdminLayout() {

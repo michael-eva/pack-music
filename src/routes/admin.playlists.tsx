@@ -53,10 +53,17 @@ function PlaylistList() {
           ) : q.data.playlists.length === 0 ? (
             <Empty title="No playlists yet">Start one on the right.</Empty>
           ) : (
-            <Table head={["Playlist", "Curated by", "Version", "Songs", "Playing at"]}>
+            <Table head={["Playlist", "Curated by", "Version", "Songs", "Listener home"]}>
               {q.data.playlists.map((p) => (
                 <tr key={p.id}>
                   <Td>
+                    {p.coverUrl ? (
+                      <img
+                        src={p.coverUrl}
+                        alt=""
+                        className="mr-3 inline-block h-9 w-9 rounded-md border-2 border-ink object-cover align-middle"
+                      />
+                    ) : null}
                     <Link
                       to="/admin/playlists/$id"
                       params={{ id: p.id }}
@@ -68,7 +75,7 @@ function PlaylistList() {
                   <Td>{p.curatedBy}</Td>
                   <Td>{p.latestVersion ? `v${p.latestVersion}` : "Draft"}</Td>
                   <Td>{p.trackCount}</Td>
-                  <Td>{p.playingAt.join(", ") || "—"}</Td>
+                  <Td>{p.featured ? `Featured · #${p.featuredOrder}` : "—"}</Td>
                 </tr>
               ))}
             </Table>
@@ -87,7 +94,7 @@ function PlaylistList() {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Quiet afternoon, retail"
+                placeholder="Sunday slow"
               />
             </Field>
             <Field label="Curated by" hint="Shown wherever the playlist appears.">

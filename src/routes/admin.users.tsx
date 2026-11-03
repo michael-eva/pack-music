@@ -1,6 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { useMe } from "@/components/app/guard";
 import {
   Badge,
   Button,
@@ -15,217 +16,251 @@ import {
   Td,
   errorMessage,
 } from "@/components/app/ui";
-import { createInvite, listUsers, resendInvite, setUserActive } from "@/lib/admin.functions";
+import {
+  createInvite,
+  listUsers,
+  resendInvite,
+  setCurator,
+  setUserActive,
+} from "@/lib/admin.functions";
 
 export const Route = createFileRoute("/admin/users")({ component: Users });
 
 const ROLE_LABEL: Record<string, string> = {
   admin: "Admin",
   curator: "Curator",
-  artist: "Artist",
-  business_owner: "Business owner",
-  business_staff: "Business staff",
   listener: "Listener",
 };
-
-const STATUS_TONE: Record<string, string> = {
-  Invited: "bg-cyan-200",
-  "Invite expired": "bg-ink/15",
-  "Membership pending": "bg-yellow",
-  Joined: "bg-green",
-  Deactivated: "bg-ink text-paper",
+const ROLE_TONE: Record<string, string> = {
+  admin: "bg-yellow",
+  curator: "bg-cyan-200",
+  listener: "bg-paper",
 };
 
-/** D1: invite artists and businesses, one list across roles (ACC-3, ADM-3, ADM-8). */
+/** ADM-3: every account in one list. Listeners sign up themselves; admins and curators come by invite. */
 function Users() {
+  const me = useMe();
+  const isAdmin = me.data?.roles.includes("admin");
   const queryClient = useQueryClient();
-  const q = useQuery({ queryKey: ["admin", "users"], queryFn: () => listUsers() });
-  const [cohort, setCohort] = useState("");
+  const q = useQuery({
+    queryKey: ["admin", "users"],
+    queryFn: () => listUsers(),
+    enabled: !!isAdmin,
+  });
   const [role, setRole] = useState("");
+  const [search, setSearch] = useState("");
   const [link, setLink] = useState<string | null>(null);
   const refresh = () => queryClient.invalidateQueries({ queryKey: ["admin", "users"] });
-  const showLink = (token: string) => setLink(`${window.location.origin}/invite/${token}`);
 
-  const resend = useMutation({
-    mutationFn: (inviteId: string) => resendInvite({ data: { inviteId } }),
-    onSuccess: (r) => (showLink(r.token), refresh()),
-  });
   const active = useMutation({
     mutationFn: (v: { userId: string; active: boolean }) => setUserActive({ data: v }),
     onSuccess: refresh,
   });
+  const curator = useMutation({
+    mutationFn: (v: { userId: string; curator: boolean }) => setCurator({ data: v }),
+    onSuccess: refresh,
+  });
+  const resend = useMutation({
+    mutationFn: (inviteId: string) => resendInvite({ data: { inviteId } }),
+    onSuccess: (r) => {
+      setLink(`${window.location.origin}/invite/${r.token}`);
+      refresh();
+    },
+  });
+
+  if (me.data && !isAdmin) return <Navigate to="/admin/playlists" />;
+  if (q.isPending) return <Loading />;
+  if (q.isError) return <Notice tone="error">{errorMessage(q.error)}</Notice>;
+  const users = q.data.users.filter(
+    (u) =>
+      (!role || u.roles.includes(role as never)) &&
+      (!search || `${u.email} ${u.name ?? ""}`.toLowerCase().includes(search.toLowerCase())),
+  );
+  const error = active.error ?? curator.error ?? resend.error;
 
   return (
     <>
       <PageTitle
-        kicker="Pilot: invite only"
+        kicker="Every change is logged"
         title="Users"
-        lead="Invite links are single use and tied to a cohort label. Open sign-up with review starts in Phase 2."
+        lead="Listeners create their own accounts. Admins and curators join with an invite link."
       />
-      <div className="grid gap-6 lg:grid-cols-3">
-        <InviteForm kind="artist" onCreated={(t) => (showLink(t), refresh())} />
-        <InviteForm kind="business_owner" onCreated={(t) => (showLink(t), refresh())} />
-        <InviteForm kind="curator" onCreated={(t) => (showLink(t), refresh())} />
-      </div>
-      {link ? (
-        <div className="mt-4">
-          <Notice tone="ok">
-            Invite link (email sending isn't set up yet, so copy and send it yourself):{" "}
-            <button
-              type="button"
-              className="break-all font-mono underline"
-              onClick={() => navigator.clipboard?.writeText(link)}
-              title="Copy"
-            >
-              {link}
-            </button>
-          </Notice>
-        </div>
-      ) : null}
-
-      <Panel className="mt-8" title="Everyone">
-        {q.isPending ? (
-          <Loading />
-        ) : q.isError ? (
-          <Notice tone="error">{errorMessage(q.error)}</Notice>
-        ) : (
-          <>
-            <div className="mb-4 flex flex-wrap gap-3">
-              <Field label="Cohort">
-                <Select value={cohort} onChange={(e) => setCohort(e.target.value)}>
-                  <option value="">All</option>
-                  {q.data.cohorts.map((c) => (
-                    <option key={c}>{c}</option>
-                  ))}
-                </Select>
-              </Field>
-              <Field label="Role">
-                <Select value={role} onChange={(e) => setRole(e.target.value)}>
-                  <option value="">All</option>
-                  {Object.entries(ROLE_LABEL).map(([k, v]) => (
-                    <option key={k} value={k}>
-                      {v}
-                    </option>
-                  ))}
-                </Select>
-              </Field>
-            </div>
-            <Table head={["Person", "Role", "Cohort", "Status", ""]}>
-              {q.data.rows
-                .filter(
-                  (r) =>
-                    (!cohort || r.cohort === cohort) &&
-                    (!role || (r.roles as string[]).includes(role)),
-                )
-                .map((r) => (
-                  <tr key={`${r.kind}-${r.id}`}>
-                    <Td>
-                      <span className="font-bold">{r.name}</span>
-                      <span className="block text-xs text-ink/60">{r.email}</span>
-                    </Td>
-                    <Td>{r.roles.map((x) => ROLE_LABEL[x] ?? x).join(", ")}</Td>
-                    <Td>{r.cohort ?? "None"}</Td>
-                    <Td>
-                      <Badge className={STATUS_TONE[r.status] ?? ""}>{r.status}</Badge>
-                    </Td>
-                    <Td>
-                      {r.kind === "invite" ? (
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
+        <div className="space-y-4">
+          <div className="flex flex-wrap gap-3">
+            <Field label="Search">
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Email or name"
+              />
+            </Field>
+            <Field label="Role">
+              <Select value={role} onChange={(e) => setRole(e.target.value)}>
+                <option value="">Everyone</option>
+                <option value="admin">Admins</option>
+                <option value="curator">Curators</option>
+                <option value="listener">Listeners</option>
+              </Select>
+            </Field>
+          </div>
+          {error ? <Notice tone="error">{errorMessage(error)}</Notice> : null}
+          <Table head={["Person", "Roles", "Joined", "Status", ""]}>
+            {users.map((u) => (
+              <tr key={u.id}>
+                <Td>
+                  <p className="font-bold">{u.name ?? u.email}</p>
+                  {u.name ? <p className="text-xs text-ink/60">{u.email}</p> : null}
+                </Td>
+                <Td>
+                  <div className="flex flex-wrap gap-1">
+                    {u.roles.map((r) => (
+                      <Badge key={r} className={ROLE_TONE[r] ?? "bg-paper"}>
+                        {ROLE_LABEL[r] ?? r}
+                      </Badge>
+                    ))}
+                  </div>
+                </Td>
+                <Td>{new Date(u.joinedAt).toLocaleDateString("en-AU")}</Td>
+                <Td>
+                  {u.deactivated ? (
+                    <Badge className="bg-ink text-paper">Deactivated</Badge>
+                  ) : (
+                    <Badge className="bg-green">Active</Badge>
+                  )}
+                </Td>
+                <Td className="whitespace-nowrap text-right">
+                  {u.isMe ? (
+                    <span className="text-xs text-ink/50">You</span>
+                  ) : (
+                    <div className="flex justify-end gap-2">
+                      {!u.roles.includes("admin") ? (
                         <Button
                           size="sm"
                           variant="ghost"
-                          disabled={resend.isPending}
-                          onClick={() => resend.mutate(r.id)}
+                          disabled={curator.isPending}
+                          onClick={() =>
+                            curator.mutate({ userId: u.id, curator: !u.roles.includes("curator") })
+                          }
                         >
-                          Resend
+                          {u.roles.includes("curator") ? "Remove curator" : "Make curator"}
                         </Button>
-                      ) : r.deactivated ? (
+                      ) : null}
+                      <Button
+                        size="sm"
+                        variant={u.deactivated ? "green" : "danger"}
+                        disabled={active.isPending}
+                        onClick={() => active.mutate({ userId: u.id, active: u.deactivated })}
+                      >
+                        {u.deactivated ? "Reactivate" : "Deactivate"}
+                      </Button>
+                    </div>
+                  )}
+                </Td>
+              </tr>
+            ))}
+          </Table>
+          {q.data.invites.length ? (
+            <Panel title="Waiting to join" kicker="Invite links not used yet">
+              <ul className="divide-y divide-ink/15 text-sm">
+                {q.data.invites.map((i) => (
+                  <li key={i.id} className="flex flex-wrap items-center justify-between gap-2 py-2">
+                    <span>
+                      <span className="font-bold">{i.email}</span> · {ROLE_LABEL[i.role] ?? i.role}
+                      {i.expired ? <span className="text-ember"> · expired</span> : null}
+                    </span>
+                    <div className="flex gap-2">
+                      {!i.expired ? (
                         <Button
                           size="sm"
                           variant="ghost"
-                          onClick={() => active.mutate({ userId: r.id, active: true })}
+                          onClick={() => setLink(`${window.location.origin}/invite/${i.token}`)}
                         >
-                          Reactivate
+                          Show link
                         </Button>
-                      ) : (
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => active.mutate({ userId: r.id, active: false })}
-                        >
-                          Deactivate
-                        </Button>
-                      )}
-                    </Td>
-                  </tr>
+                      ) : null}
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        disabled={resend.isPending}
+                        onClick={() => resend.mutate(i.id)}
+                      >
+                        New link
+                      </Button>
+                    </div>
+                  </li>
                 ))}
-            </Table>
-            {active.isError ? (
-              <div className="mt-3">
-                <Notice tone="error">{errorMessage(active.error)}</Notice>
-              </div>
-            ) : null}
-          </>
-        )}
-      </Panel>
+              </ul>
+            </Panel>
+          ) : null}
+        </div>
+        <div className="space-y-6">
+          <InviteForm
+            onCreated={(token) => {
+              setLink(`${window.location.origin}/invite/${token}`);
+              refresh();
+            }}
+          />
+          {link ? (
+            <Panel title="Invite link" kicker="Single use, expires in 14 days">
+              <p className="text-sm">
+                Email isn't wired up yet, so copy this link and send it yourself.
+              </p>
+              <Input
+                readOnly
+                value={link}
+                onFocus={(e) => e.currentTarget.select()}
+                className="mt-3 font-mono text-xs"
+              />
+              <Button
+                size="sm"
+                className="mt-3"
+                onClick={() => navigator.clipboard?.writeText(link)}
+              >
+                Copy link
+              </Button>
+            </Panel>
+          ) : null}
+        </div>
+      </div>
     </>
   );
 }
 
-function InviteForm({
-  kind,
-  onCreated,
-}: {
-  kind: "artist" | "business_owner" | "curator";
-  onCreated: (token: string) => void;
-}) {
+function InviteForm({ onCreated }: { onCreated: (token: string) => void }) {
   const [email, setEmail] = useState("");
-  const [extra, setExtra] = useState(kind === "artist" ? "Fremantle 1" : "");
-  const m = useMutation({
-    mutationFn: () =>
-      createInvite({
-        data: {
-          email,
-          role: kind,
-          ...(kind === "artist" ? { cohort: extra } : {}),
-          ...(kind === "business_owner" ? { businessName: extra } : {}),
-        },
-      }),
+  const [role, setRole] = useState<"admin" | "curator">("curator");
+  const create = useMutation({
+    mutationFn: () => createInvite({ data: { email, role } }),
     onSuccess: (r) => {
       setEmail("");
-      if (kind === "business_owner") setExtra("");
       onCreated(r.token);
     },
   });
-  const title =
-    kind === "artist"
-      ? "Invite an artist"
-      : kind === "business_owner"
-        ? "Invite a business"
-        : "Invite a curator";
   return (
-    <Panel title={title}>
+    <Panel title="Invite someone">
       <form
-        className="space-y-3"
+        className="space-y-4"
         onSubmit={(e) => {
           e.preventDefault();
-          m.mutate();
+          create.mutate();
         }}
       >
         <Field label="Email">
-          <Input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
         </Field>
-        {kind !== "curator" ? (
-          <Field label={kind === "artist" ? "Cohort label" : "Business name"}>
-            <Input
-              required={kind === "business_owner"}
-              value={extra}
-              onChange={(e) => setExtra(e.target.value)}
-            />
-          </Field>
-        ) : null}
-        {m.isError ? <Notice tone="error">{errorMessage(m.error)}</Notice> : null}
-        <Button type="submit" disabled={m.isPending} className="w-full">
-          Send invite
+        <Field
+          label="Role"
+          hint="Curators build playlists and tag music. Admins can do everything."
+        >
+          <Select value={role} onChange={(e) => setRole(e.target.value as "admin" | "curator")}>
+            <option value="curator">Curator</option>
+            <option value="admin">Admin</option>
+          </Select>
+        </Field>
+        {create.isError ? <Notice tone="error">{errorMessage(create.error)}</Notice> : null}
+        <Button type="submit" className="w-full" disabled={create.isPending}>
+          Make invite link
         </Button>
       </form>
     </Panel>
