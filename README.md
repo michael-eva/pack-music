@@ -47,6 +47,25 @@ Supabase Studio is at http://127.0.0.1:54323.
 | `npm run db:types` | Regenerate `src/integrations/supabase/types.ts` after a migration |
 | `npm run build && npm start` | Production build on Node |
 
+## Hosted
+
+- **App**: Vercel project `pack-music` (Michael's projects), https://pack-music.vercel.app. Server functions
+  run in Sydney (`syd1`). Vercel Authentication protects every deployment, including production.
+- **Database**: Supabase `pack-music` (free plan, Sydney), created through the Vercel Marketplace, so its keys
+  are injected into the Vercel project automatically. Free projects pause after a week without activity.
+
+Deploy: `vercel deploy --prod`. To change the hosted database:
+
+```sh
+vercel env pull .env.production.local --environment production
+set -a; . ./.env.production.local; set +a
+supabase db push --db-url "$POSTGRES_URL_NON_POOLING"        # new migrations
+ENV_FILE=.env.production.local node scripts/seed-demo.ts    # demo data (empty database only)
+```
+
+The hosted database has the same demo accounts and password as local. Change or delete them before
+anyone outside the team can open the site.
+
 ## How it fits together
 
 - **Stack**: TanStack Start (React 19, SSR, server functions), Tailwind 4, Supabase (Postgres, Auth, Storage).

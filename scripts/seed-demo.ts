@@ -3,6 +3,7 @@
  * featured playlists for the listener home.
  *
  * Run after `supabase db reset` (npm run db:reset does both). Needs ffmpeg.
+ * To load a hosted database instead: ENV_FILE=.env.production.local node scripts/seed-demo.ts
  *
  * Audio is synthetic: generated tones standing in for real masters, each at a
  * different level so loudness levelling can be heard working.
@@ -14,10 +15,13 @@ import { createClient } from "@supabase/supabase-js";
 
 const root = join(import.meta.dirname, "..");
 const env = Object.fromEntries(
-  readFileSync(join(root, ".env"), "utf8")
+  readFileSync(join(root, process.env.ENV_FILE ?? ".env"), "utf8")
     .split("\n")
     .filter((line) => line.includes("=") && !line.startsWith("#"))
-    .map((line) => [line.slice(0, line.indexOf("=")), line.slice(line.indexOf("=") + 1)]),
+    .map((line) => [
+      line.slice(0, line.indexOf("=")),
+      line.slice(line.indexOf("=") + 1).replace(/^"(.*)"$/, "$1"),
+    ]),
 );
 const sb = createClient(env.SUPABASE_URL!, env.SUPABASE_SERVICE_ROLE_KEY!, {
   auth: { persistSession: false },
@@ -490,15 +494,13 @@ async function main() {
       "version",
     );
     await must(
-      sb
-        .from("playlist_tracks")
-        .insert(
-          p.slugs.map((slug, position) => ({
-            playlist_version_id: version.id,
-            position: position + 1,
-            track_id: trackIds[slug]!,
-          })),
-        ),
+      sb.from("playlist_tracks").insert(
+        p.slugs.map((slug, position) => ({
+          playlist_version_id: version.id,
+          position: position + 1,
+          track_id: trackIds[slug]!,
+        })),
+      ),
       "playlist tracks",
     );
   }
