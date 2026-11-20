@@ -10,41 +10,86 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AdminRouteImport } from './routes/admin'
-import { Route as ListenRouteImport } from './routes/listen'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as HomeRouteImport } from './routes/home'
+import { Route as LibraryRouteImport } from './routes/library'
+import { Route as MapRouteImport } from './routes/map'
+import { Route as MeRouteImport } from './routes/me'
+import { Route as MembershipRouteImport } from './routes/membership'
+import { Route as MoneyRouteImport } from './routes/money'
+import { Route as PlayerRouteImport } from './routes/player'
 import { Route as SavedRouteImport } from './routes/saved'
 import { Route as SignInRouteImport } from './routes/sign-in'
-import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminAuditRouteImport } from './routes/admin.audit'
-import { Route as AdminMusicRouteImport } from './routes/admin.music'
+import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
 import { Route as AdminPlaylistsRouteImport } from './routes/admin.playlists'
-import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminPolicyRouteImport } from './routes/admin.policy'
+import { Route as AdminReviewRouteImport } from './routes/admin.review'
+import { Route as AdminSitesRouteImport } from './routes/admin.sites'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
-import { Route as InviteTokenRouteImport } from './routes/invite.$token'
-import { Route as ListenIndexRouteImport } from './routes/listen.index'
-import { Route as ListenLibraryRouteImport } from './routes/listen.library'
-import { Route as ListenSearchRouteImport } from './routes/listen.search'
-import { Route as AdminPlaylistsIdRouteImport } from './routes/admin.playlists.$id'
-import { Route as ListenArtistIdRouteImport } from './routes/listen.artist.$id'
-import { Route as ListenPlaylistIdRouteImport } from './routes/listen.playlist.$id'
-import { Route as ListenReleaseIdRouteImport } from './routes/listen.release.$id'
-import { Route as AdminMusicArtistsIdRouteImport } from './routes/admin.music.artists.$id'
-import { Route as AdminMusicReleasesIdRouteImport } from './routes/admin.music.releases.$id'
+import { Route as ArtistPortalIndexRouteImport } from './routes/artist-portal.index'
+import { Route as ArtistPortalAgreementRouteImport } from './routes/artist-portal.agreement'
+import { Route as ArtistPortalAgreementFullRouteImport } from './routes/artist-portal.agreement-full'
+import { Route as ArtistPortalJoinRouteImport } from './routes/artist-portal.join'
+import { Route as ArtistPortalProfileRouteImport } from './routes/artist-portal.profile'
+import { Route as ArtistPortalSplitsRouteImport } from './routes/artist-portal.splits'
+import { Route as ArtistPortalStatementRouteImport } from './routes/artist-portal.statement'
+import { Route as ArtistPortalStatusRouteImport } from './routes/artist-portal.status'
+import { Route as ArtistPortalUploadRouteImport } from './routes/artist-portal.upload'
+import { Route as ArtistSlugRouteImport } from './routes/artist.$slug'
+import { Route as BizIndexRouteImport } from './routes/biz.index'
+import { Route as BizPlanRouteImport } from './routes/biz.plan'
+import { Route as BizPlayerRouteImport } from './routes/biz.player'
+import { Route as BizPlaylistsRouteImport } from './routes/biz.playlists'
+import { Route as BizSiteRouteImport } from './routes/biz.site'
+import { Route as BizStaffRouteImport } from './routes/biz.staff'
+import { Route as BusinessSlugRouteImport } from './routes/business.$slug'
+import { Route as CCodeRouteImport } from './routes/c.$code'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ListenRoute = ListenRouteImport.update({
-  id: '/listen',
-  path: '/listen',
+const HomeRoute = HomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LibraryRoute = LibraryRouteImport.update({
+  id: '/library',
+  path: '/library',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MapRoute = MapRouteImport.update({
+  id: '/map',
+  path: '/map',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MeRoute = MeRouteImport.update({
+  id: '/me',
+  path: '/me',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MembershipRoute = MembershipRouteImport.update({
+  id: '/membership',
+  path: '/membership',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MoneyRoute = MoneyRouteImport.update({
+  id: '/money',
+  path: '/money',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlayerRoute = PlayerRouteImport.update({
+  id: '/player',
+  path: '/player',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SavedRoute = SavedRouteImport.update({
@@ -57,244 +102,414 @@ const SignInRoute = SignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => rootRouteImport,
 } as any)
-const WelcomeRoute = WelcomeRouteImport.update({
-  id: '/welcome',
-  path: '/welcome',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AdminRoute,
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminAuditRoute = AdminAuditRouteImport.update({
-  id: '/audit',
-  path: '/audit',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminMusicRoute = AdminMusicRouteImport.update({
-  id: '/music',
-  path: '/music',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminPlaylistsRoute = AdminPlaylistsRouteImport.update({
-  id: '/playlists',
-  path: '/playlists',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminSettingsRoute = AdminSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AdminRoute,
-} as any)
-const AdminUsersRoute = AdminUsersRouteImport.update({
-  id: '/users',
-  path: '/users',
-  getParentRoute: () => AdminRoute,
-} as any)
-const InviteTokenRoute = InviteTokenRouteImport.update({
-  id: '/invite/$token',
-  path: '/invite/$token',
+  id: '/admin/audit',
+  path: '/admin/audit',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ListenIndexRoute = ListenIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ListenRoute,
+const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
+  id: '/admin/payments',
+  path: '/admin/payments',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const ListenLibraryRoute = ListenLibraryRouteImport.update({
-  id: '/library',
-  path: '/library',
-  getParentRoute: () => ListenRoute,
+const AdminPlaylistsRoute = AdminPlaylistsRouteImport.update({
+  id: '/admin/playlists',
+  path: '/admin/playlists',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const ListenSearchRoute = ListenSearchRouteImport.update({
-  id: '/search',
-  path: '/search',
-  getParentRoute: () => ListenRoute,
+const AdminPolicyRoute = AdminPolicyRouteImport.update({
+  id: '/admin/policy',
+  path: '/admin/policy',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AdminPlaylistsIdRoute = AdminPlaylistsIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => AdminPlaylistsRoute,
+const AdminReviewRoute = AdminReviewRouteImport.update({
+  id: '/admin/review',
+  path: '/admin/review',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const ListenArtistIdRoute = ListenArtistIdRouteImport.update({
-  id: '/artist/$id',
-  path: '/artist/$id',
-  getParentRoute: () => ListenRoute,
+const AdminSitesRoute = AdminSitesRouteImport.update({
+  id: '/admin/sites',
+  path: '/admin/sites',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const ListenPlaylistIdRoute = ListenPlaylistIdRouteImport.update({
-  id: '/playlist/$id',
-  path: '/playlist/$id',
-  getParentRoute: () => ListenRoute,
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const ListenReleaseIdRoute = ListenReleaseIdRouteImport.update({
-  id: '/release/$id',
-  path: '/release/$id',
-  getParentRoute: () => ListenRoute,
+const ArtistPortalIndexRoute = ArtistPortalIndexRouteImport.update({
+  id: '/artist-portal/',
+  path: '/artist-portal/',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AdminMusicArtistsIdRoute = AdminMusicArtistsIdRouteImport.update({
-  id: '/artists/$id',
-  path: '/artists/$id',
-  getParentRoute: () => AdminMusicRoute,
+const ArtistPortalAgreementRoute = ArtistPortalAgreementRouteImport.update({
+  id: '/artist-portal/agreement',
+  path: '/artist-portal/agreement',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const AdminMusicReleasesIdRoute = AdminMusicReleasesIdRouteImport.update({
-  id: '/releases/$id',
-  path: '/releases/$id',
-  getParentRoute: () => AdminMusicRoute,
+const ArtistPortalAgreementFullRoute =
+  ArtistPortalAgreementFullRouteImport.update({
+    id: '/artist-portal/agreement-full',
+    path: '/artist-portal/agreement-full',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ArtistPortalJoinRoute = ArtistPortalJoinRouteImport.update({
+  id: '/artist-portal/join',
+  path: '/artist-portal/join',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArtistPortalProfileRoute = ArtistPortalProfileRouteImport.update({
+  id: '/artist-portal/profile',
+  path: '/artist-portal/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArtistPortalSplitsRoute = ArtistPortalSplitsRouteImport.update({
+  id: '/artist-portal/splits',
+  path: '/artist-portal/splits',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArtistPortalStatementRoute = ArtistPortalStatementRouteImport.update({
+  id: '/artist-portal/statement',
+  path: '/artist-portal/statement',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArtistPortalStatusRoute = ArtistPortalStatusRouteImport.update({
+  id: '/artist-portal/status',
+  path: '/artist-portal/status',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArtistPortalUploadRoute = ArtistPortalUploadRouteImport.update({
+  id: '/artist-portal/upload',
+  path: '/artist-portal/upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ArtistSlugRoute = ArtistSlugRouteImport.update({
+  id: '/artist/$slug',
+  path: '/artist/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BizIndexRoute = BizIndexRouteImport.update({
+  id: '/biz/',
+  path: '/biz/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BizPlanRoute = BizPlanRouteImport.update({
+  id: '/biz/plan',
+  path: '/biz/plan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BizPlayerRoute = BizPlayerRouteImport.update({
+  id: '/biz/player',
+  path: '/biz/player',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BizPlaylistsRoute = BizPlaylistsRouteImport.update({
+  id: '/biz/playlists',
+  path: '/biz/playlists',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BizSiteRoute = BizSiteRouteImport.update({
+  id: '/biz/site',
+  path: '/biz/site',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BizStaffRoute = BizStaffRouteImport.update({
+  id: '/biz/staff',
+  path: '/biz/staff',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BusinessSlugRoute = BusinessSlugRouteImport.update({
+  id: '/business/$slug',
+  path: '/business/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CCodeRoute = CCodeRouteImport.update({
+  id: '/c/$code',
+  path: '/c/$code',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteWithChildren
-  '/listen': typeof ListenRouteWithChildren
+  '/contact': typeof ContactRoute
+  '/home': typeof HomeRoute
+  '/library': typeof LibraryRoute
+  '/map': typeof MapRoute
+  '/me': typeof MeRoute
+  '/membership': typeof MembershipRoute
+  '/money': typeof MoneyRoute
+  '/player': typeof PlayerRoute
   '/saved': typeof SavedRoute
   '/sign-in': typeof SignInRoute
-  '/welcome': typeof WelcomeRoute
   '/admin/audit': typeof AdminAuditRoute
-  '/admin/music': typeof AdminMusicRouteWithChildren
-  '/admin/playlists': typeof AdminPlaylistsRouteWithChildren
-  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/playlists': typeof AdminPlaylistsRoute
+  '/admin/policy': typeof AdminPolicyRoute
+  '/admin/review': typeof AdminReviewRoute
+  '/admin/sites': typeof AdminSitesRoute
   '/admin/users': typeof AdminUsersRoute
-  '/invite/$token': typeof InviteTokenRoute
-  '/listen/library': typeof ListenLibraryRoute
-  '/listen/search': typeof ListenSearchRoute
+  '/artist-portal/agreement': typeof ArtistPortalAgreementRoute
+  '/artist-portal/agreement-full': typeof ArtistPortalAgreementFullRoute
+  '/artist-portal/join': typeof ArtistPortalJoinRoute
+  '/artist-portal/profile': typeof ArtistPortalProfileRoute
+  '/artist-portal/splits': typeof ArtistPortalSplitsRoute
+  '/artist-portal/statement': typeof ArtistPortalStatementRoute
+  '/artist-portal/status': typeof ArtistPortalStatusRoute
+  '/artist-portal/upload': typeof ArtistPortalUploadRoute
+  '/artist/$slug': typeof ArtistSlugRoute
+  '/biz/plan': typeof BizPlanRoute
+  '/biz/player': typeof BizPlayerRoute
+  '/biz/playlists': typeof BizPlaylistsRoute
+  '/biz/site': typeof BizSiteRoute
+  '/biz/staff': typeof BizStaffRoute
+  '/business/$slug': typeof BusinessSlugRoute
+  '/c/$code': typeof CCodeRoute
   '/admin/': typeof AdminIndexRoute
-  '/listen/': typeof ListenIndexRoute
-  '/admin/playlists/$id': typeof AdminPlaylistsIdRoute
-  '/listen/artist/$id': typeof ListenArtistIdRoute
-  '/listen/playlist/$id': typeof ListenPlaylistIdRoute
-  '/listen/release/$id': typeof ListenReleaseIdRoute
-  '/admin/music/artists/$id': typeof AdminMusicArtistsIdRoute
-  '/admin/music/releases/$id': typeof AdminMusicReleasesIdRoute
+  '/artist-portal/': typeof ArtistPortalIndexRoute
+  '/biz/': typeof BizIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/home': typeof HomeRoute
+  '/library': typeof LibraryRoute
+  '/map': typeof MapRoute
+  '/me': typeof MeRoute
+  '/membership': typeof MembershipRoute
+  '/money': typeof MoneyRoute
+  '/player': typeof PlayerRoute
   '/saved': typeof SavedRoute
   '/sign-in': typeof SignInRoute
-  '/welcome': typeof WelcomeRoute
   '/admin/audit': typeof AdminAuditRoute
-  '/admin/music': typeof AdminMusicRouteWithChildren
-  '/admin/playlists': typeof AdminPlaylistsRouteWithChildren
-  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/playlists': typeof AdminPlaylistsRoute
+  '/admin/policy': typeof AdminPolicyRoute
+  '/admin/review': typeof AdminReviewRoute
+  '/admin/sites': typeof AdminSitesRoute
   '/admin/users': typeof AdminUsersRoute
-  '/invite/$token': typeof InviteTokenRoute
-  '/listen/library': typeof ListenLibraryRoute
-  '/listen/search': typeof ListenSearchRoute
+  '/artist-portal/agreement': typeof ArtistPortalAgreementRoute
+  '/artist-portal/agreement-full': typeof ArtistPortalAgreementFullRoute
+  '/artist-portal/join': typeof ArtistPortalJoinRoute
+  '/artist-portal/profile': typeof ArtistPortalProfileRoute
+  '/artist-portal/splits': typeof ArtistPortalSplitsRoute
+  '/artist-portal/statement': typeof ArtistPortalStatementRoute
+  '/artist-portal/status': typeof ArtistPortalStatusRoute
+  '/artist-portal/upload': typeof ArtistPortalUploadRoute
+  '/artist/$slug': typeof ArtistSlugRoute
+  '/biz/plan': typeof BizPlanRoute
+  '/biz/player': typeof BizPlayerRoute
+  '/biz/playlists': typeof BizPlaylistsRoute
+  '/biz/site': typeof BizSiteRoute
+  '/biz/staff': typeof BizStaffRoute
+  '/business/$slug': typeof BusinessSlugRoute
+  '/c/$code': typeof CCodeRoute
   '/admin': typeof AdminIndexRoute
-  '/listen': typeof ListenIndexRoute
-  '/admin/playlists/$id': typeof AdminPlaylistsIdRoute
-  '/listen/artist/$id': typeof ListenArtistIdRoute
-  '/listen/playlist/$id': typeof ListenPlaylistIdRoute
-  '/listen/release/$id': typeof ListenReleaseIdRoute
-  '/admin/music/artists/$id': typeof AdminMusicArtistsIdRoute
-  '/admin/music/releases/$id': typeof AdminMusicReleasesIdRoute
+  '/artist-portal': typeof ArtistPortalIndexRoute
+  '/biz': typeof BizIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/admin': typeof AdminRouteWithChildren
-  '/listen': typeof ListenRouteWithChildren
+  '/contact': typeof ContactRoute
+  '/home': typeof HomeRoute
+  '/library': typeof LibraryRoute
+  '/map': typeof MapRoute
+  '/me': typeof MeRoute
+  '/membership': typeof MembershipRoute
+  '/money': typeof MoneyRoute
+  '/player': typeof PlayerRoute
   '/saved': typeof SavedRoute
   '/sign-in': typeof SignInRoute
-  '/welcome': typeof WelcomeRoute
   '/admin/audit': typeof AdminAuditRoute
-  '/admin/music': typeof AdminMusicRouteWithChildren
-  '/admin/playlists': typeof AdminPlaylistsRouteWithChildren
-  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/payments': typeof AdminPaymentsRoute
+  '/admin/playlists': typeof AdminPlaylistsRoute
+  '/admin/policy': typeof AdminPolicyRoute
+  '/admin/review': typeof AdminReviewRoute
+  '/admin/sites': typeof AdminSitesRoute
   '/admin/users': typeof AdminUsersRoute
-  '/invite/$token': typeof InviteTokenRoute
-  '/listen/library': typeof ListenLibraryRoute
-  '/listen/search': typeof ListenSearchRoute
+  '/artist-portal/agreement': typeof ArtistPortalAgreementRoute
+  '/artist-portal/agreement-full': typeof ArtistPortalAgreementFullRoute
+  '/artist-portal/join': typeof ArtistPortalJoinRoute
+  '/artist-portal/profile': typeof ArtistPortalProfileRoute
+  '/artist-portal/splits': typeof ArtistPortalSplitsRoute
+  '/artist-portal/statement': typeof ArtistPortalStatementRoute
+  '/artist-portal/status': typeof ArtistPortalStatusRoute
+  '/artist-portal/upload': typeof ArtistPortalUploadRoute
+  '/artist/$slug': typeof ArtistSlugRoute
+  '/biz/plan': typeof BizPlanRoute
+  '/biz/player': typeof BizPlayerRoute
+  '/biz/playlists': typeof BizPlaylistsRoute
+  '/biz/site': typeof BizSiteRoute
+  '/biz/staff': typeof BizStaffRoute
+  '/business/$slug': typeof BusinessSlugRoute
+  '/c/$code': typeof CCodeRoute
   '/admin/': typeof AdminIndexRoute
-  '/listen/': typeof ListenIndexRoute
-  '/admin/playlists/$id': typeof AdminPlaylistsIdRoute
-  '/listen/artist/$id': typeof ListenArtistIdRoute
-  '/listen/playlist/$id': typeof ListenPlaylistIdRoute
-  '/listen/release/$id': typeof ListenReleaseIdRoute
-  '/admin/music/artists/$id': typeof AdminMusicArtistsIdRoute
-  '/admin/music/releases/$id': typeof AdminMusicReleasesIdRoute
+  '/artist-portal/': typeof ArtistPortalIndexRoute
+  '/biz/': typeof BizIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/admin'
-    | '/listen'
+    | '/contact'
+    | '/home'
+    | '/library'
+    | '/map'
+    | '/me'
+    | '/membership'
+    | '/money'
+    | '/player'
     | '/saved'
     | '/sign-in'
-    | '/welcome'
     | '/admin/audit'
-    | '/admin/music'
+    | '/admin/payments'
     | '/admin/playlists'
-    | '/admin/settings'
+    | '/admin/policy'
+    | '/admin/review'
+    | '/admin/sites'
     | '/admin/users'
-    | '/invite/$token'
-    | '/listen/library'
-    | '/listen/search'
+    | '/artist-portal/agreement'
+    | '/artist-portal/agreement-full'
+    | '/artist-portal/join'
+    | '/artist-portal/profile'
+    | '/artist-portal/splits'
+    | '/artist-portal/statement'
+    | '/artist-portal/status'
+    | '/artist-portal/upload'
+    | '/artist/$slug'
+    | '/biz/plan'
+    | '/biz/player'
+    | '/biz/playlists'
+    | '/biz/site'
+    | '/biz/staff'
+    | '/business/$slug'
+    | '/c/$code'
     | '/admin/'
-    | '/listen/'
-    | '/admin/playlists/$id'
-    | '/listen/artist/$id'
-    | '/listen/playlist/$id'
-    | '/listen/release/$id'
-    | '/admin/music/artists/$id'
-    | '/admin/music/releases/$id'
+    | '/artist-portal/'
+    | '/biz/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/contact'
+    | '/home'
+    | '/library'
+    | '/map'
+    | '/me'
+    | '/membership'
+    | '/money'
+    | '/player'
     | '/saved'
     | '/sign-in'
-    | '/welcome'
     | '/admin/audit'
-    | '/admin/music'
+    | '/admin/payments'
     | '/admin/playlists'
-    | '/admin/settings'
+    | '/admin/policy'
+    | '/admin/review'
+    | '/admin/sites'
     | '/admin/users'
-    | '/invite/$token'
-    | '/listen/library'
-    | '/listen/search'
+    | '/artist-portal/agreement'
+    | '/artist-portal/agreement-full'
+    | '/artist-portal/join'
+    | '/artist-portal/profile'
+    | '/artist-portal/splits'
+    | '/artist-portal/statement'
+    | '/artist-portal/status'
+    | '/artist-portal/upload'
+    | '/artist/$slug'
+    | '/biz/plan'
+    | '/biz/player'
+    | '/biz/playlists'
+    | '/biz/site'
+    | '/biz/staff'
+    | '/business/$slug'
+    | '/c/$code'
     | '/admin'
-    | '/listen'
-    | '/admin/playlists/$id'
-    | '/listen/artist/$id'
-    | '/listen/playlist/$id'
-    | '/listen/release/$id'
-    | '/admin/music/artists/$id'
-    | '/admin/music/releases/$id'
+    | '/artist-portal'
+    | '/biz'
   id:
     | '__root__'
     | '/'
-    | '/admin'
-    | '/listen'
+    | '/contact'
+    | '/home'
+    | '/library'
+    | '/map'
+    | '/me'
+    | '/membership'
+    | '/money'
+    | '/player'
     | '/saved'
     | '/sign-in'
-    | '/welcome'
     | '/admin/audit'
-    | '/admin/music'
+    | '/admin/payments'
     | '/admin/playlists'
-    | '/admin/settings'
+    | '/admin/policy'
+    | '/admin/review'
+    | '/admin/sites'
     | '/admin/users'
-    | '/invite/$token'
-    | '/listen/library'
-    | '/listen/search'
+    | '/artist-portal/agreement'
+    | '/artist-portal/agreement-full'
+    | '/artist-portal/join'
+    | '/artist-portal/profile'
+    | '/artist-portal/splits'
+    | '/artist-portal/statement'
+    | '/artist-portal/status'
+    | '/artist-portal/upload'
+    | '/artist/$slug'
+    | '/biz/plan'
+    | '/biz/player'
+    | '/biz/playlists'
+    | '/biz/site'
+    | '/biz/staff'
+    | '/business/$slug'
+    | '/c/$code'
     | '/admin/'
-    | '/listen/'
-    | '/admin/playlists/$id'
-    | '/listen/artist/$id'
-    | '/listen/playlist/$id'
-    | '/listen/release/$id'
-    | '/admin/music/artists/$id'
-    | '/admin/music/releases/$id'
+    | '/artist-portal/'
+    | '/biz/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRouteWithChildren
-  ListenRoute: typeof ListenRouteWithChildren
+  ContactRoute: typeof ContactRoute
+  HomeRoute: typeof HomeRoute
+  LibraryRoute: typeof LibraryRoute
+  MapRoute: typeof MapRoute
+  MeRoute: typeof MeRoute
+  MembershipRoute: typeof MembershipRoute
+  MoneyRoute: typeof MoneyRoute
+  PlayerRoute: typeof PlayerRoute
   SavedRoute: typeof SavedRoute
   SignInRoute: typeof SignInRoute
-  WelcomeRoute: typeof WelcomeRoute
-  InviteTokenRoute: typeof InviteTokenRoute
+  AdminAuditRoute: typeof AdminAuditRoute
+  AdminPaymentsRoute: typeof AdminPaymentsRoute
+  AdminPlaylistsRoute: typeof AdminPlaylistsRoute
+  AdminPolicyRoute: typeof AdminPolicyRoute
+  AdminReviewRoute: typeof AdminReviewRoute
+  AdminSitesRoute: typeof AdminSitesRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+  ArtistPortalAgreementRoute: typeof ArtistPortalAgreementRoute
+  ArtistPortalAgreementFullRoute: typeof ArtistPortalAgreementFullRoute
+  ArtistPortalJoinRoute: typeof ArtistPortalJoinRoute
+  ArtistPortalProfileRoute: typeof ArtistPortalProfileRoute
+  ArtistPortalSplitsRoute: typeof ArtistPortalSplitsRoute
+  ArtistPortalStatementRoute: typeof ArtistPortalStatementRoute
+  ArtistPortalStatusRoute: typeof ArtistPortalStatusRoute
+  ArtistPortalUploadRoute: typeof ArtistPortalUploadRoute
+  ArtistSlugRoute: typeof ArtistSlugRoute
+  BizPlanRoute: typeof BizPlanRoute
+  BizPlayerRoute: typeof BizPlayerRoute
+  BizPlaylistsRoute: typeof BizPlaylistsRoute
+  BizSiteRoute: typeof BizSiteRoute
+  BizStaffRoute: typeof BizStaffRoute
+  BusinessSlugRoute: typeof BusinessSlugRoute
+  CCodeRoute: typeof CCodeRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  ArtistPortalIndexRoute: typeof ArtistPortalIndexRoute
+  BizIndexRoute: typeof BizIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -306,18 +521,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/listen': {
-      id: '/listen'
-      path: '/listen'
-      fullPath: '/listen'
-      preLoaderRoute: typeof ListenRouteImport
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/library': {
+      id: '/library'
+      path: '/library'
+      fullPath: '/library'
+      preLoaderRoute: typeof LibraryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/map': {
+      id: '/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof MapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/me': {
+      id: '/me'
+      path: '/me'
+      fullPath: '/me'
+      preLoaderRoute: typeof MeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/membership': {
+      id: '/membership'
+      path: '/membership'
+      fullPath: '/membership'
+      preLoaderRoute: typeof MembershipRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/money': {
+      id: '/money'
+      path: '/money'
+      fullPath: '/money'
+      preLoaderRoute: typeof MoneyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/player': {
+      id: '/player'
+      path: '/player'
+      fullPath: '/player'
+      preLoaderRoute: typeof PlayerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/saved': {
@@ -334,203 +591,229 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignInRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/welcome': {
-      id: '/welcome'
-      path: '/welcome'
-      fullPath: '/welcome'
-      preLoaderRoute: typeof WelcomeRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/admin/': {
       id: '/admin/'
-      path: '/'
+      path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof AdminRoute
+      parentRoute: typeof rootRouteImport
     }
     '/admin/audit': {
       id: '/admin/audit'
-      path: '/audit'
+      path: '/admin/audit'
       fullPath: '/admin/audit'
       preLoaderRoute: typeof AdminAuditRouteImport
-      parentRoute: typeof AdminRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/admin/music': {
-      id: '/admin/music'
-      path: '/music'
-      fullPath: '/admin/music'
-      preLoaderRoute: typeof AdminMusicRouteImport
-      parentRoute: typeof AdminRoute
+    '/admin/payments': {
+      id: '/admin/payments'
+      path: '/admin/payments'
+      fullPath: '/admin/payments'
+      preLoaderRoute: typeof AdminPaymentsRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/admin/playlists': {
       id: '/admin/playlists'
-      path: '/playlists'
+      path: '/admin/playlists'
       fullPath: '/admin/playlists'
       preLoaderRoute: typeof AdminPlaylistsRouteImport
-      parentRoute: typeof AdminRoute
+      parentRoute: typeof rootRouteImport
     }
-    '/admin/settings': {
-      id: '/admin/settings'
-      path: '/settings'
-      fullPath: '/admin/settings'
-      preLoaderRoute: typeof AdminSettingsRouteImport
-      parentRoute: typeof AdminRoute
+    '/admin/policy': {
+      id: '/admin/policy'
+      path: '/admin/policy'
+      fullPath: '/admin/policy'
+      preLoaderRoute: typeof AdminPolicyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/review': {
+      id: '/admin/review'
+      path: '/admin/review'
+      fullPath: '/admin/review'
+      preLoaderRoute: typeof AdminReviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/sites': {
+      id: '/admin/sites'
+      path: '/admin/sites'
+      fullPath: '/admin/sites'
+      preLoaderRoute: typeof AdminSitesRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/admin/users': {
       id: '/admin/users'
-      path: '/users'
+      path: '/admin/users'
       fullPath: '/admin/users'
       preLoaderRoute: typeof AdminUsersRouteImport
-      parentRoute: typeof AdminRoute
-    }
-    '/invite/$token': {
-      id: '/invite/$token'
-      path: '/invite/$token'
-      fullPath: '/invite/$token'
-      preLoaderRoute: typeof InviteTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/listen/': {
-      id: '/listen/'
-      path: '/'
-      fullPath: '/listen/'
-      preLoaderRoute: typeof ListenIndexRouteImport
-      parentRoute: typeof ListenRoute
+    '/artist-portal/': {
+      id: '/artist-portal/'
+      path: '/artist-portal'
+      fullPath: '/artist-portal/'
+      preLoaderRoute: typeof ArtistPortalIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/listen/library': {
-      id: '/listen/library'
-      path: '/library'
-      fullPath: '/listen/library'
-      preLoaderRoute: typeof ListenLibraryRouteImport
-      parentRoute: typeof ListenRoute
+    '/artist-portal/agreement': {
+      id: '/artist-portal/agreement'
+      path: '/artist-portal/agreement'
+      fullPath: '/artist-portal/agreement'
+      preLoaderRoute: typeof ArtistPortalAgreementRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/listen/search': {
-      id: '/listen/search'
-      path: '/search'
-      fullPath: '/listen/search'
-      preLoaderRoute: typeof ListenSearchRouteImport
-      parentRoute: typeof ListenRoute
+    '/artist-portal/agreement-full': {
+      id: '/artist-portal/agreement-full'
+      path: '/artist-portal/agreement-full'
+      fullPath: '/artist-portal/agreement-full'
+      preLoaderRoute: typeof ArtistPortalAgreementFullRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/admin/playlists/$id': {
-      id: '/admin/playlists/$id'
-      path: '/$id'
-      fullPath: '/admin/playlists/$id'
-      preLoaderRoute: typeof AdminPlaylistsIdRouteImport
-      parentRoute: typeof AdminPlaylistsRoute
+    '/artist-portal/join': {
+      id: '/artist-portal/join'
+      path: '/artist-portal/join'
+      fullPath: '/artist-portal/join'
+      preLoaderRoute: typeof ArtistPortalJoinRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/listen/artist/$id': {
-      id: '/listen/artist/$id'
-      path: '/artist/$id'
-      fullPath: '/listen/artist/$id'
-      preLoaderRoute: typeof ListenArtistIdRouteImport
-      parentRoute: typeof ListenRoute
+    '/artist-portal/profile': {
+      id: '/artist-portal/profile'
+      path: '/artist-portal/profile'
+      fullPath: '/artist-portal/profile'
+      preLoaderRoute: typeof ArtistPortalProfileRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/listen/playlist/$id': {
-      id: '/listen/playlist/$id'
-      path: '/playlist/$id'
-      fullPath: '/listen/playlist/$id'
-      preLoaderRoute: typeof ListenPlaylistIdRouteImport
-      parentRoute: typeof ListenRoute
+    '/artist-portal/splits': {
+      id: '/artist-portal/splits'
+      path: '/artist-portal/splits'
+      fullPath: '/artist-portal/splits'
+      preLoaderRoute: typeof ArtistPortalSplitsRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/listen/release/$id': {
-      id: '/listen/release/$id'
-      path: '/release/$id'
-      fullPath: '/listen/release/$id'
-      preLoaderRoute: typeof ListenReleaseIdRouteImport
-      parentRoute: typeof ListenRoute
+    '/artist-portal/statement': {
+      id: '/artist-portal/statement'
+      path: '/artist-portal/statement'
+      fullPath: '/artist-portal/statement'
+      preLoaderRoute: typeof ArtistPortalStatementRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/admin/music/artists/$id': {
-      id: '/admin/music/artists/$id'
-      path: '/artists/$id'
-      fullPath: '/admin/music/artists/$id'
-      preLoaderRoute: typeof AdminMusicArtistsIdRouteImport
-      parentRoute: typeof AdminMusicRoute
+    '/artist-portal/status': {
+      id: '/artist-portal/status'
+      path: '/artist-portal/status'
+      fullPath: '/artist-portal/status'
+      preLoaderRoute: typeof ArtistPortalStatusRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/admin/music/releases/$id': {
-      id: '/admin/music/releases/$id'
-      path: '/releases/$id'
-      fullPath: '/admin/music/releases/$id'
-      preLoaderRoute: typeof AdminMusicReleasesIdRouteImport
-      parentRoute: typeof AdminMusicRoute
+    '/artist-portal/upload': {
+      id: '/artist-portal/upload'
+      path: '/artist-portal/upload'
+      fullPath: '/artist-portal/upload'
+      preLoaderRoute: typeof ArtistPortalUploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/artist/$slug': {
+      id: '/artist/$slug'
+      path: '/artist/$slug'
+      fullPath: '/artist/$slug'
+      preLoaderRoute: typeof ArtistSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/biz/': {
+      id: '/biz/'
+      path: '/biz'
+      fullPath: '/biz/'
+      preLoaderRoute: typeof BizIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/biz/plan': {
+      id: '/biz/plan'
+      path: '/biz/plan'
+      fullPath: '/biz/plan'
+      preLoaderRoute: typeof BizPlanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/biz/player': {
+      id: '/biz/player'
+      path: '/biz/player'
+      fullPath: '/biz/player'
+      preLoaderRoute: typeof BizPlayerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/biz/playlists': {
+      id: '/biz/playlists'
+      path: '/biz/playlists'
+      fullPath: '/biz/playlists'
+      preLoaderRoute: typeof BizPlaylistsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/biz/site': {
+      id: '/biz/site'
+      path: '/biz/site'
+      fullPath: '/biz/site'
+      preLoaderRoute: typeof BizSiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/biz/staff': {
+      id: '/biz/staff'
+      path: '/biz/staff'
+      fullPath: '/biz/staff'
+      preLoaderRoute: typeof BizStaffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/business/$slug': {
+      id: '/business/$slug'
+      path: '/business/$slug'
+      fullPath: '/business/$slug'
+      preLoaderRoute: typeof BusinessSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/c/$code': {
+      id: '/c/$code'
+      path: '/c/$code'
+      fullPath: '/c/$code'
+      preLoaderRoute: typeof CCodeRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface AdminMusicRouteChildren {
-  AdminMusicArtistsIdRoute: typeof AdminMusicArtistsIdRoute
-  AdminMusicReleasesIdRoute: typeof AdminMusicReleasesIdRoute
-}
-
-const AdminMusicRouteChildren: AdminMusicRouteChildren = {
-  AdminMusicArtistsIdRoute: AdminMusicArtistsIdRoute,
-  AdminMusicReleasesIdRoute: AdminMusicReleasesIdRoute,
-}
-
-const AdminMusicRouteWithChildren = AdminMusicRoute._addFileChildren(
-  AdminMusicRouteChildren,
-)
-
-interface AdminPlaylistsRouteChildren {
-  AdminPlaylistsIdRoute: typeof AdminPlaylistsIdRoute
-}
-
-const AdminPlaylistsRouteChildren: AdminPlaylistsRouteChildren = {
-  AdminPlaylistsIdRoute: AdminPlaylistsIdRoute,
-}
-
-const AdminPlaylistsRouteWithChildren = AdminPlaylistsRoute._addFileChildren(
-  AdminPlaylistsRouteChildren,
-)
-
-interface AdminRouteChildren {
-  AdminAuditRoute: typeof AdminAuditRoute
-  AdminMusicRoute: typeof AdminMusicRouteWithChildren
-  AdminPlaylistsRoute: typeof AdminPlaylistsRouteWithChildren
-  AdminSettingsRoute: typeof AdminSettingsRoute
-  AdminUsersRoute: typeof AdminUsersRoute
-  AdminIndexRoute: typeof AdminIndexRoute
-}
-
-const AdminRouteChildren: AdminRouteChildren = {
-  AdminAuditRoute: AdminAuditRoute,
-  AdminMusicRoute: AdminMusicRouteWithChildren,
-  AdminPlaylistsRoute: AdminPlaylistsRouteWithChildren,
-  AdminSettingsRoute: AdminSettingsRoute,
-  AdminUsersRoute: AdminUsersRoute,
-  AdminIndexRoute: AdminIndexRoute,
-}
-
-const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
-
-interface ListenRouteChildren {
-  ListenLibraryRoute: typeof ListenLibraryRoute
-  ListenSearchRoute: typeof ListenSearchRoute
-  ListenIndexRoute: typeof ListenIndexRoute
-  ListenArtistIdRoute: typeof ListenArtistIdRoute
-  ListenPlaylistIdRoute: typeof ListenPlaylistIdRoute
-  ListenReleaseIdRoute: typeof ListenReleaseIdRoute
-}
-
-const ListenRouteChildren: ListenRouteChildren = {
-  ListenLibraryRoute: ListenLibraryRoute,
-  ListenSearchRoute: ListenSearchRoute,
-  ListenIndexRoute: ListenIndexRoute,
-  ListenArtistIdRoute: ListenArtistIdRoute,
-  ListenPlaylistIdRoute: ListenPlaylistIdRoute,
-  ListenReleaseIdRoute: ListenReleaseIdRoute,
-}
-
-const ListenRouteWithChildren =
-  ListenRoute._addFileChildren(ListenRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminRoute: AdminRouteWithChildren,
-  ListenRoute: ListenRouteWithChildren,
+  ContactRoute: ContactRoute,
+  HomeRoute: HomeRoute,
+  LibraryRoute: LibraryRoute,
+  MapRoute: MapRoute,
+  MeRoute: MeRoute,
+  MembershipRoute: MembershipRoute,
+  MoneyRoute: MoneyRoute,
+  PlayerRoute: PlayerRoute,
   SavedRoute: SavedRoute,
   SignInRoute: SignInRoute,
-  WelcomeRoute: WelcomeRoute,
-  InviteTokenRoute: InviteTokenRoute,
+  AdminAuditRoute: AdminAuditRoute,
+  AdminPaymentsRoute: AdminPaymentsRoute,
+  AdminPlaylistsRoute: AdminPlaylistsRoute,
+  AdminPolicyRoute: AdminPolicyRoute,
+  AdminReviewRoute: AdminReviewRoute,
+  AdminSitesRoute: AdminSitesRoute,
+  AdminUsersRoute: AdminUsersRoute,
+  ArtistPortalAgreementRoute: ArtistPortalAgreementRoute,
+  ArtistPortalAgreementFullRoute: ArtistPortalAgreementFullRoute,
+  ArtistPortalJoinRoute: ArtistPortalJoinRoute,
+  ArtistPortalProfileRoute: ArtistPortalProfileRoute,
+  ArtistPortalSplitsRoute: ArtistPortalSplitsRoute,
+  ArtistPortalStatementRoute: ArtistPortalStatementRoute,
+  ArtistPortalStatusRoute: ArtistPortalStatusRoute,
+  ArtistPortalUploadRoute: ArtistPortalUploadRoute,
+  ArtistSlugRoute: ArtistSlugRoute,
+  BizPlanRoute: BizPlanRoute,
+  BizPlayerRoute: BizPlayerRoute,
+  BizPlaylistsRoute: BizPlaylistsRoute,
+  BizSiteRoute: BizSiteRoute,
+  BizStaffRoute: BizStaffRoute,
+  BusinessSlugRoute: BusinessSlugRoute,
+  CCodeRoute: CCodeRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  ArtistPortalIndexRoute: ArtistPortalIndexRoute,
+  BizIndexRoute: BizIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -13,10 +13,8 @@ export default defineConfig({
     // src/server.ts wraps the SSR entry with a friendly error page.
     tanstackStart({ server: { entry: "server" } }),
     nitro({
-      // Bundle the static ffmpeg binary so the server can measure uploaded audio.
-      traceDeps: ["ffmpeg-static*"],
-      // On Vercel, run server functions in Sydney, next to the database.
-      vercel: { functions: { regions: ["syd1"], maxDuration: 60 } },
+      // On Vercel, run server functions in Singapore, next to the database.
+      vercel: { functions: { regions: ["sin1"] } },
     }),
     viteReact(),
   ],

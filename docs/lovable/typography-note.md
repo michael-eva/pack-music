@@ -1,0 +1,1 @@
+Brand typography reference: Gothiks Round (headlines) and Inter Variable (body). Use Gothiks Round when licensed webfont files or an Adobe Fonts kit are supplied; until then use M PLUS Rounded 1c as the close rounded display substitute. Avoid the extra-heavy Black weight in app UI.

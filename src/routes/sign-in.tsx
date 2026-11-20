@@ -1,41 +1,19 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { z } from "zod";
-import { PackLogo } from "@/components/site/PackLogo";
-import { SignInForm } from "@/components/app/SignInForm";
-import { getMe } from "@/lib/session.functions";
-import { homeFor } from "@/lib/home-route";
+import { createFileRoute } from "@tanstack/react-router";
+import { SignInApp, type Role } from "@/components/PackWelcome";
+
+const valid: Role[] = ["listener", "artist", "business", "government"];
 
 export const Route = createFileRoute("/sign-in")({
-  ssr: false,
-  validateSearch: z.object({ next: z.string().startsWith("/").optional() }),
-  head: () => ({ meta: [{ title: "Sign in · The Pack" }, { name: "robots", content: "noindex" }] }),
-  component: SignIn,
+  validateSearch: (search: Record<string, unknown>): { role: Role } => {
+    const role = String(search['role'] ?? "listener") as Role;
+    return { role: valid.includes(role) ? role : "listener" };
+  },
+  head: () => ({ meta: [
+    { title: "Sign in — The Pack" },
+    { name: "description", content: "Sign in with email and password or a magic link. Separate pathways for listeners, artists, businesses and government." },
+    { property: "og:title", content: "Sign in — The Pack" },
+    { property: "og:description", content: "Separate sign-in pathways for listeners, artists, businesses and government." },
+    { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
+  ]}),
+  component: SignInApp,
 });
-
-function SignIn() {
-  const navigate = useNavigate();
-  const { next } = Route.useSearch();
-  return (
-    <div className="wave-field grad-deep-blue flex min-h-screen items-center justify-center px-5 py-16 text-paper">
-      <div className="w-full max-w-md">
-        <PackLogo variant="full" className="mx-auto block h-20 text-yellow" />
-        <div className="mt-8 rounded-3xl border-2 border-ink bg-paper p-7 text-ink shadow-[6px_6px_0_0_var(--ink)]">
-          <h1 className="text-3xl">Sign in or join</h1>
-          <p className="mt-2 text-sm text-ink/70">
-            New or returning, all we ask for is your email. Use a link or a password.
-          </p>
-          <div className="mt-6">
-            <SignInForm
-              redirectTo={next ?? "/"}
-              onSignedIn={async () => {
-                if (next) return navigate({ to: next });
-                const me = await getMe();
-                navigate({ to: homeFor(me.roles) });
-              }}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}

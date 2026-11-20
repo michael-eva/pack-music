@@ -1,0 +1,3 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { MembershipApp } from "@/components/PackApp";
+export const Route = createFileRoute("/membership")({ head:()=>({meta:[{title:"Co-op membership — The Pack"},{name:"description",content:"Choose a listener, artist or business membership with The Pack."},{property:"og:title",content:"Co-op membership — The Pack"},{property:"og:description",content:"Choose a listener, artist or business membership with The Pack."}]}), component: MembershipApp });

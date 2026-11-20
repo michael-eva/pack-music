@@ -1,72 +1,13 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { PackLogo } from "@/components/site/PackLogo";
-import { Stanley } from "@/components/site/blocks";
-import { stanley } from "@/components/site/stanley";
-import { supabase } from "@/integrations/supabase/client";
-import { getMe } from "@/lib/session.functions";
-import { homeFor } from "@/lib/home-route";
+import { createFileRoute } from "@tanstack/react-router";
+import { WelcomeApp } from "@/components/PackWelcome";
 
 export const Route = createFileRoute("/")({
-  head: () => ({ meta: [{ title: "The Pack" }] }),
-  component: Home,
+  head: () => ({ meta: [
+    { title: "The Pack — Streaming that puts musicians first" },
+    { name: "description", content: "Choose your pathway into The Pack: listener, artist, business or government. Co-operative streaming for local music." },
+    { property: "og:title", content: "The Pack — Streaming that puts musicians first" },
+    { property: "og:description", content: "Choose your pathway into The Pack: listener, artist, business or government." },
+    { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
+  ]}),
+  component: WelcomeApp,
 });
-
-const DEMO = [
-  ["Admin", "admin@pack.test"],
-  ["Curator", "curator@pack.test"],
-  ["Listener", "listener@pack.test"],
-];
-
-function Home() {
-  const navigate = useNavigate();
-  const [checking, setChecking] = useState(true);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(async ({ data }) => {
-      if (!data.session) return setChecking(false);
-      try {
-        const me = await getMe();
-        navigate({ to: homeFor(me.roles) });
-      } catch {
-        setChecking(false);
-      }
-    });
-  }, [navigate]);
-
-  return (
-    <div className="wave-field grad-blue-magenta flex min-h-screen flex-col text-paper">
-      <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col justify-center px-6 py-16">
-        <PackLogo variant="full" className="h-24 text-yellow sm:h-32" />
-        <h1 className="mt-10 max-w-3xl text-5xl sm:text-7xl">
-          Local music, played in real places.
-        </h1>
-        <p className="mt-6 max-w-2xl text-lg sm:text-xl">
-          Music by local, original artists, picked by real people. No algorithm, no ads.
-        </p>
-        <div className="mt-10 flex flex-wrap items-center gap-4">
-          <Link
-            to="/sign-in"
-            className="press rounded-full bg-yellow px-7 py-4 text-base font-bold uppercase tracking-widest text-ink"
-          >
-            {checking ? "Hold on…" : "Sign in"}
-          </Link>
-          <Stanley src={stanley.dancingWhite} className="h-24 w-auto" flip />
-        </div>
-
-        {import.meta.env.DEV ? (
-          <div className="mt-14 max-w-xl rounded-2xl border-2 border-paper/40 bg-ink/40 p-5 text-sm">
-            <p className="mono-kicker text-yellow">Local demo accounts · password "packpack"</p>
-            <ul className="mt-3 space-y-1 font-mono text-xs">
-              {DEMO.map(([label, email]) => (
-                <li key={email}>
-                  {label}: <span className="text-cyan">{email}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ) : null}
-      </main>
-    </div>
-  );
-}
