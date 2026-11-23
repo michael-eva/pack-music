@@ -1,0 +1,13 @@
+-- Applied to PackDatabase by the payments team before this repo tracked its schema.
+-- Its effect is captured in 20261112163309_remote_schema.sql; kept so local and
+-- remote migration history match. Original statements:
+--
+-- alter table public.payer drop constraint payer_payer_id_fkey;
+-- alter table public.payer drop constraint payer_payer_id_fkey1;
+-- alter table public.business_and_site
+--   add constraint business_and_site_site_id_fkey
+--   foreign key (site_id) references public.payer(payer_id) on update cascade on delete restrict;
+-- alter table public.listeners_profile
+--   add constraint listeners_profile_listener_id_fkey
+--   foreign key (listener_id) references public.payer(payer_id) on update cascade on delete restrict;
+select 1;
