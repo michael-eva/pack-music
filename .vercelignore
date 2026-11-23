@@ -1,0 +1,7 @@
+.env
+.env.*
+.demo-audio
+.output
+node_modules
+supabase/.temp
+supabase/.branches

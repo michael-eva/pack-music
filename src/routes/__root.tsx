@@ -12,6 +12,7 @@ import type { ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { PackProvider } from "../lib/pack-store";
+import { Feedback } from "../components/Feedback";
 
 function NotFoundComponent() {
   return (
@@ -134,6 +135,7 @@ function RootComponent() {
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
       </PackProvider>
+      <Feedback />
     </QueryClientProvider>
   );
 }
