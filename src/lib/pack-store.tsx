@@ -48,9 +48,15 @@ export type AuditEntry = { who: string; what: string; when: string; old?: string
 export type Invite = { id: string; person: string; role: "Artist" | "Business"; cohort: string; status: "Invited" | "Joined" | "Deactivated" };
 export type Setting = { key: string; label: string; value: string; changed: string };
 
+// Listener account fields are the LIS-6 minimum; terms records the ACC-7 acceptance.
+export type PackUser = {
+  email: string; displayName?: string | undefined; postcode?: string | undefined; newsOptIn?: boolean | undefined;
+  terms?: { version: string; acceptedAt: string } | undefined;
+};
+
 export type PackState = {
   playbackHours: PlaybackHoursRow[];
-  user: { email: string } | null;
+  user: PackUser | null;
   guestSaved: boolean;
   saves: Save[];
   playlists: Playlist[];

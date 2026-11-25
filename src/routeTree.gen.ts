@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as LibraryRouteImport } from './routes/library'
 import { Route as MapRouteImport } from './routes/map'
@@ -18,8 +19,10 @@ import { Route as MeRouteImport } from './routes/me'
 import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as MoneyRouteImport } from './routes/money'
 import { Route as PlayerRouteImport } from './routes/player'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SavedRouteImport } from './routes/saved'
 import { Route as SignInRouteImport } from './routes/sign-in'
+import { Route as SignUpRouteImport } from './routes/sign-up'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminAuditRouteImport } from './routes/admin.audit'
 import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
@@ -57,6 +60,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HomeRoute = HomeRouteImport.update({
   id: '/home',
   path: '/home',
@@ -92,6 +100,11 @@ const PlayerRoute = PlayerRouteImport.update({
   path: '/player',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SavedRoute = SavedRouteImport.update({
   id: '/saved',
   path: '/saved',
@@ -100,6 +113,11 @@ const SavedRoute = SavedRouteImport.update({
 const SignInRoute = SignInRouteImport.update({
   id: '/sign-in',
   path: '/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignUpRoute = SignUpRouteImport.update({
+  id: '/sign-up',
+  path: '/sign-up',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -237,6 +255,7 @@ const CCodeRoute = CCodeRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/home': typeof HomeRoute
   '/library': typeof LibraryRoute
   '/map': typeof MapRoute
@@ -244,8 +263,10 @@ export interface FileRoutesByFullPath {
   '/membership': typeof MembershipRoute
   '/money': typeof MoneyRoute
   '/player': typeof PlayerRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/saved': typeof SavedRoute
   '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
   '/admin/audit': typeof AdminAuditRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/playlists': typeof AdminPlaylistsRoute
@@ -276,6 +297,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/home': typeof HomeRoute
   '/library': typeof LibraryRoute
   '/map': typeof MapRoute
@@ -283,8 +305,10 @@ export interface FileRoutesByTo {
   '/membership': typeof MembershipRoute
   '/money': typeof MoneyRoute
   '/player': typeof PlayerRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/saved': typeof SavedRoute
   '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
   '/admin/audit': typeof AdminAuditRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/playlists': typeof AdminPlaylistsRoute
@@ -316,6 +340,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/home': typeof HomeRoute
   '/library': typeof LibraryRoute
   '/map': typeof MapRoute
@@ -323,8 +348,10 @@ export interface FileRoutesById {
   '/membership': typeof MembershipRoute
   '/money': typeof MoneyRoute
   '/player': typeof PlayerRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/saved': typeof SavedRoute
   '/sign-in': typeof SignInRoute
+  '/sign-up': typeof SignUpRoute
   '/admin/audit': typeof AdminAuditRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/playlists': typeof AdminPlaylistsRoute
@@ -357,6 +384,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/contact'
+    | '/forgot-password'
     | '/home'
     | '/library'
     | '/map'
@@ -364,8 +392,10 @@ export interface FileRouteTypes {
     | '/membership'
     | '/money'
     | '/player'
+    | '/reset-password'
     | '/saved'
     | '/sign-in'
+    | '/sign-up'
     | '/admin/audit'
     | '/admin/payments'
     | '/admin/playlists'
@@ -396,6 +426,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/contact'
+    | '/forgot-password'
     | '/home'
     | '/library'
     | '/map'
@@ -403,8 +434,10 @@ export interface FileRouteTypes {
     | '/membership'
     | '/money'
     | '/player'
+    | '/reset-password'
     | '/saved'
     | '/sign-in'
+    | '/sign-up'
     | '/admin/audit'
     | '/admin/payments'
     | '/admin/playlists'
@@ -435,6 +468,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/contact'
+    | '/forgot-password'
     | '/home'
     | '/library'
     | '/map'
@@ -442,8 +476,10 @@ export interface FileRouteTypes {
     | '/membership'
     | '/money'
     | '/player'
+    | '/reset-password'
     | '/saved'
     | '/sign-in'
+    | '/sign-up'
     | '/admin/audit'
     | '/admin/payments'
     | '/admin/playlists'
@@ -475,6 +511,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContactRoute: typeof ContactRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   HomeRoute: typeof HomeRoute
   LibraryRoute: typeof LibraryRoute
   MapRoute: typeof MapRoute
@@ -482,8 +519,10 @@ export interface RootRouteChildren {
   MembershipRoute: typeof MembershipRoute
   MoneyRoute: typeof MoneyRoute
   PlayerRoute: typeof PlayerRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SavedRoute: typeof SavedRoute
   SignInRoute: typeof SignInRoute
+  SignUpRoute: typeof SignUpRoute
   AdminAuditRoute: typeof AdminAuditRoute
   AdminPaymentsRoute: typeof AdminPaymentsRoute
   AdminPlaylistsRoute: typeof AdminPlaylistsRoute
@@ -526,6 +565,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/home': {
@@ -577,6 +623,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlayerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/saved': {
       id: '/saved'
       path: '/saved'
@@ -589,6 +642,13 @@ declare module '@tanstack/react-router' {
       path: '/sign-in'
       fullPath: '/sign-in'
       preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sign-up': {
+      id: '/sign-up'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof SignUpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -779,6 +839,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactRoute: ContactRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   HomeRoute: HomeRoute,
   LibraryRoute: LibraryRoute,
   MapRoute: MapRoute,
@@ -786,8 +847,10 @@ const rootRouteChildren: RootRouteChildren = {
   MembershipRoute: MembershipRoute,
   MoneyRoute: MoneyRoute,
   PlayerRoute: PlayerRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SavedRoute: SavedRoute,
   SignInRoute: SignInRoute,
+  SignUpRoute: SignUpRoute,
   AdminAuditRoute: AdminAuditRoute,
   AdminPaymentsRoute: AdminPaymentsRoute,
   AdminPlaylistsRoute: AdminPlaylistsRoute,

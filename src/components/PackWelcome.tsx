@@ -1,8 +1,9 @@
 import { Link, useSearch } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Building2, Check, Headphones, Landmark, Mail, Music2 } from "lucide-react";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { PASSWORD_MIN, passwordStrength, signInWithPassword, validateAbn, validateOtp } from "@/lib/pack-auth";
+import { PASSWORD_MIN, passwordStrength, requestEmailLink, signInWithPassword, validateAbn, validateOtp } from "@/lib/pack-auth";
+import { usePack } from "@/lib/pack-store";
 import { Button } from "@/components/ui/button";
 import { Shell, BrandBackground } from "@/components/PackApp";
 import bluePink from "@/assets/pack-blue-pink-stanley.jpg";
@@ -64,6 +65,34 @@ export const roles: Record<Role, {
   },
 };
 
+// Government is hidden for the pilot: its sign-in falls back to the listener pathway.
+const signInRoles: Role[] = ["listener", "artist", "business"];
+export const parseRole = (search: Record<string, unknown>): { role: Role } => {
+  const role = String(search["role"] ?? "listener") as Role;
+  return { role: signInRoles.includes(role) ? role : "listener" };
+};
+
+export function PasswordMeter({ password }: { password: string }) {
+  if (!password) return null;
+  const strength = passwordStrength(password); const bars = strength === "Weak" ? 1 : strength === "OK" ? 2 : 3;
+  return <span className="pw-meter" aria-live="polite">{[1, 2, 3].map(i => <span key={i} className={i <= bars ? "on" : ""}/>)} {strength}</span>;
+}
+
+// No real email is sent yet, so the continue button stands in for tapping the emailed link.
+export function CheckInbox({ children, continueLabel, onContinue, onChangeEmail }: { children: ReactNode; continueLabel: string; onContinue: () => void; onChangeEmail: () => void }) {
+  const [resent, setResent] = useState(false);
+  return <>
+    <h3><Mail size={18} className="inline mr-2"/>Check your inbox</h3>
+    <p>{children}</p>
+    {resent && <div className="notice"><Check size={16}/> Sent again. It can take a minute to arrive.</div>}
+    <Button className="wide" onClick={onContinue}>{continueLabel} <ArrowRight/></Button>
+    <p className="fineprint left">Simulated: there's no real email yet, so this button stands in for tapping the link.</p>
+    <p className="fineprint left">
+      <button type="button" className="underline font-bold" onClick={() => setResent(true)}>Send it again</button> · <button type="button" className="underline font-bold" onClick={onChangeEmail}>Use a different email</button>
+    </p>
+  </>;
+}
+
 export function WelcomeApp() {
   const entryPoints: Array<{ key: Role; title: string; copy: string; action: string }> = [
     { key: "artist", title: "Musicians", copy: "Share your music, grow your audience and manage your catalogue.", action: "Enter the artist workspace" },
@@ -98,6 +127,7 @@ export function WelcomeApp() {
 export function SignInApp() {
   const { role } = useSearch({ from: "/sign-in" });
   const r = roles[role]; const Icon = r.icon;
+  const { set } = usePack();
   const [mode, setMode] = useState<"password" | "magic">("password");
   const [sent, setSent] = useState(false);
   const navigate = useNavigate();
@@ -106,15 +136,15 @@ export function SignInApp() {
   const [step, setStep] = useState<"form" | "code">("form"); const [code, setCode] = useState("");
   const [err, setErr] = useState<string | null>(null);
   const needsCode = role === "artist" || role === "business";
-  const strength = passwordStrength(pw); const bars = pw ? (strength === "Weak" ? 1 : strength === "OK" ? 2 : 3) : 0;
   const abnValid = validateAbn(abn);
-  const go = () => navigate({ to: r.nextTo });
+  const go = () => { set(s => ({ ...s, user: { ...(s.user?.email === email.trim() ? s.user : {}), email: email.trim() } })); navigate({ to: r.nextTo }); };
+  const signedIn = () => needsCode ? setStep("code") : go();
   async function submit() {
     setErr(null);
     if (role === "business" && !(abnValid && abnOk)) { setErr("Enter a valid ABN and confirm the registered business name."); return; }
-    const res = await signInWithPassword(email, pw);
+    const res = mode === "password" ? await signInWithPassword(email, pw) : await requestEmailLink(email);
     if (!res.ok) { setErr(res.error ?? "Check your details."); return; }
-    if (needsCode) setStep("code"); else go();
+    if (mode === "magic") setSent(true); else signedIn();
   }
   return <Shell mini={false} active="none" role={role === "government" ? "listener" : role} style={{ background: r.page }}>
     <section className="page-head pink"><BrandBackground src={r.banner}/>
@@ -123,9 +153,9 @@ export function SignInApp() {
     </section>
     <section className="content narrow">
       <p className="lead">{r.lead}</p>
-      <div className="tabs">{(["password", "magic"] as const).map(m =>
-        <button key={m} className={mode === m ? "active" : ""} onClick={() => { setMode(m); setSent(false); }}>{m === "password" ? "Email & password" : "Magic link"}</button>)}
-      </div>
+      {step === "form" && !sent && <div className="tabs">{(["password", "magic"] as const).map(m =>
+        <button key={m} className={mode === m ? "active" : ""} onClick={() => { setMode(m); setErr(null); }}>{m === "password" ? "Email & password" : "Magic link"}</button>)}
+      </div>}
       <div className="form-card" style={{ boxShadow: `7px 7px 0 ${r.accent}` }}>
         {step === "code" ? <>
           <h3>Two-step sign-in</h3>
@@ -133,8 +163,10 @@ export function SignInApp() {
           <label>6-digit code<input inputMode="numeric" maxLength={6} value={code} onChange={e => setCode(e.target.value.replace(/\D/g, ""))} placeholder="123456"/></label>
           {err && <div className="notice">{err}</div>}
           <Button className="wide" onClick={() => validateOtp(code) ? go() : setErr("The code needs exactly 6 digits.")}>{r.nextLabel} <ArrowRight/></Button>
-        </> : <>
-        <label>Email address<input type="email" placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)}/></label>
+        </> : sent ? <CheckInbox continueLabel="I've tapped the link, continue" onContinue={signedIn} onChangeEmail={() => setSent(false)}>
+            We've sent a one-time sign-in link to <strong>{email.trim()}</strong>.
+          </CheckInbox> : <>
+        <label>Email address<input type="email" autoComplete="email" placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)}/></label>
         {r.extraFields.map(f => f === "ABN"
           ? <label key={f}>ABN<input type="text" inputMode="numeric" value={abn} onChange={e => { setAbn(e.target.value); setAbnOk(false); }} placeholder="11 digits"/>
               {abn.replace(/\s/g, "").length === 11 && (abnValid
@@ -143,17 +175,18 @@ export function SignInApp() {
                 : <span className="notice">That ABN doesn't pass the check. Check the number and try again.</span>)}
             </label>
           : <label key={f}>{f}<input type="text"/></label>)}
-        {mode === "password" && <label>Password<input type="password" placeholder={`At least ${PASSWORD_MIN} characters`} value={pw} onChange={e => setPw(e.target.value)}/>
-          {pw && <span className="pw-meter" aria-live="polite">{[1,2,3].map(i => <span key={i} className={i <= bars ? "on" : ""}/>)} {strength}</span>}
+        {mode === "password" && <label>Password<input type="password" autoComplete="current-password" placeholder={`At least ${PASSWORD_MIN} characters`} value={pw} onChange={e => setPw(e.target.value)}/>
+          <PasswordMeter password={pw}/>
           <span className="fineprint left">At least {PASSWORD_MIN} characters. Avoid common passwords.{needsCode ? " You'll then enter a code from your authenticator app." : ""}</span></label>}
-        {err && mode === "password" && <div className="notice">{err}</div>}
-        {mode === "magic"
-          ? (sent ? <div className="notice"><Check size={16}/> Check your inbox — we've sent a one-time sign-in link.</div>
-            : <Button className="wide" onClick={() => setSent(true)}><Mail/> Email me a link</Button>)
-          : <Button className="wide" onClick={submit}>{needsCode ? "Continue" : r.nextLabel} <ArrowRight/></Button>}
+        {err && <div className="notice" role="alert">{err}</div>}
+        <Button className="wide" onClick={submit}>{mode === "magic" ? <><Mail/> Email me a link</> : <>{needsCode ? "Continue" : r.nextLabel} <ArrowRight/></>}</Button>
+        {mode === "password" && <p className="fineprint left"><Link to="/forgot-password" search={{ role }} className="underline font-bold">Forgot your password?</Link></p>}
         </>}
         <p className="fineprint left">{r.nextCopy}</p>
       </div>
+      {role === "listener"
+        ? <p className="fineprint">New to The Pack? <Link to="/sign-up" className="underline font-bold">Create a listener account</Link></p>
+        : <p className="fineprint">{role === "artist" ? "Artist" : "Business"} accounts are by invitation during the pilot. <Link to="/contact" className="underline font-bold">Contact The Pack</Link></p>}
       <p className="fineprint">No Facebook. No Google. No third-party tracking of who you are.</p>
     </section>
   </Shell>;

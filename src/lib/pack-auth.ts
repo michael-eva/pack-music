@@ -1,6 +1,7 @@
 // Placeholder auth module. Any email is accepted; swap for a real provider later.
 const COMMON_PASSWORDS = new Set(["password1234", "qwertyuiop12", "123456789012", "letmein12345", "thepack12345"]);
 export const PASSWORD_MIN = 12;
+export const TERMS_VERSION = "1.0";
 
 export async function requestEmailLink(email: string): Promise<{ ok: boolean; error?: string }> {
   if (!/^\S+@\S+\.\S+$/.test(email)) return { ok: false, error: "That email doesn't look quite right. Check it and try again." };
@@ -24,6 +25,23 @@ export async function signInWithPassword(email: string, password: string) {
   if (!r.ok) return r;
   return checkPassword(password);
 }
+
+export async function signUpListener(email: string, password?: string) {
+  const r = await requestEmailLink(email);
+  if (!r.ok || password === undefined) return r;
+  return checkPassword(password);
+}
+
+// Same answer whether or not the account exists, so the form can't be used to probe for emails.
+export const requestPasswordReset = requestEmailLink;
+
+export function checkNewPassword(password: string, confirm: string): { ok: boolean; error?: string } {
+  const r = checkPassword(password);
+  if (!r.ok) return r;
+  return password === confirm ? r : { ok: false, error: "The two passwords don't match." };
+}
+
+export const validatePostcode = (value: string) => value.trim() === "" || /^\d{4}$/.test(value.trim());
 
 export const validateOtp = (code: string) => /^\d{6}$/.test(code);
 
